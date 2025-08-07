@@ -7,7 +7,7 @@ extension Mailgun.Suppressions.Bounces {
         case importList(domain: Domain, request: Foundation.Data)
         case get(domain: Domain, address: EmailAddress)
         case delete(domain: Domain, address: EmailAddress)
-        case list(domain: Domain, request: Mailgun.Suppressions.Bounces.List.Request)
+        case list(domain: Domain, request: Mailgun.Suppressions.Bounces.List.Request?)
         case create(domain: Domain, request: Mailgun.Suppressions.Bounces.Create.Request)
         case deleteAll(domain: Domain)
     }
@@ -56,16 +56,18 @@ extension Mailgun.Suppressions.Bounces.API {
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }
                     Path.bounces
-                    Parse(.memberwise(Mailgun.Suppressions.Bounces.List.Request.init)) {
-                        URLRouting.Query {
-                            Optionally {
-                                Field("limit") { Digits() }
-                            }
-                            Optionally {
-                                Field("page") { Parse(.string) }
-                            }
-                            Optionally {
-                                Field("term") { Parse(.string) }
+                    Optionally {
+                        Parse(.memberwise(Mailgun.Suppressions.Bounces.List.Request.init)) {
+                            URLRouting.Query {
+                                Optionally {
+                                    Field("limit") { Digits() }
+                                }
+                                Optionally {
+                                    Field("page") { Parse(.string) }
+                                }
+                                Optionally {
+                                    Field("term") { Parse(.string) }
+                                }
                             }
                         }
                     }

@@ -1,6 +1,15 @@
+import Foundation
 import Mailgun_Types_Shared
 extension Mailgun.Suppressions {
     public enum Bounces {}
+}
+
+extension Mailgun.Suppressions.Bounces {
+    public enum Get {}
+}
+
+extension Mailgun.Suppressions.Bounces.Get {
+    public typealias Response = Mailgun.Suppressions.Bounces.Record
 }
 
 extension Mailgun.Suppressions.Bounces {
@@ -36,6 +45,14 @@ extension Mailgun.Suppressions.Bounces {
 }
 
 extension Mailgun.Suppressions.Bounces.Import {
+    public struct Request: Sendable, Codable, Equatable {
+        public let file: Data
+        
+        public init(file: Data) {
+            self.file = file
+        }
+    }
+    
     public struct Response: Sendable, Codable, Equatable {
         public let message: String
 

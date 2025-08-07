@@ -14,7 +14,7 @@ extension Mailgun.Suppressions.Bounces {
         public var delete: @Sendable (_ address: EmailAddress) async throws -> Mailgun.Suppressions.Bounces.Delete.Response
 
         @DependencyEndpoint
-        public var list: @Sendable (_ request: Mailgun.Suppressions.Bounces.List.Request) async throws -> Mailgun.Suppressions.Bounces.List.Response
+        public var list: @Sendable (_ request: Mailgun.Suppressions.Bounces.List.Request?) async throws -> Mailgun.Suppressions.Bounces.List.Response
 
         @DependencyEndpoint
         public var create: @Sendable (_ request: Mailgun.Suppressions.Bounces.Create.Request) async throws -> Mailgun.Suppressions.Bounces.Create.Response
