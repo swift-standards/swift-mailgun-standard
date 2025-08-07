@@ -34,7 +34,7 @@ extension Mailgun.Users.API {
                     Path.org
                     Path { Parse(.string) }
                 }
-                
+
                 // DELETE /v5/users/{user_id}/org/{org_id}
                 URLRouting.Route(.case(Mailgun.Users.API.removeFromOrganization)) {
                     Method.delete
@@ -44,7 +44,7 @@ extension Mailgun.Users.API {
                     Path.org
                     Path { Parse(.string) }
                 }
-                
+
                 // GET /v5/users/me
                 URLRouting.Route(.case(Mailgun.Users.API.me)) {
                     Method.get
@@ -52,7 +52,7 @@ extension Mailgun.Users.API {
                     Path.users
                     Path.me
                 }
-                
+
                 // GET /v5/users/{user_id}
                 URLRouting.Route(.case(Mailgun.Users.API.get)) {
                     Method.get
@@ -60,7 +60,7 @@ extension Mailgun.Users.API {
                     Path.users
                     Path { Parse(.string) }
                 }
-                
+
                 // GET /v5/users
                 URLRouting.Route(.case(Mailgun.Users.API.list)) {
                     Method.get

@@ -5,10 +5,10 @@
 //  Created by Coen ten Thije Boonkkamp on 24/12/2024.
 //
 
+import Foundation
 import Mailgun_Types_Shared
 import RFC_2822
 import UnixEpochParsing
-import Foundation
 
 extension Mailgun.Reporting.Events {
     @CasePathable

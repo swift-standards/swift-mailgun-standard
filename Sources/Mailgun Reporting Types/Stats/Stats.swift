@@ -31,7 +31,7 @@ extension Mailgun.Reporting.Stats.AggregateCountries {
 extension Mailgun.Reporting.Stats {
     public enum Total {
         public typealias Response = Mailgun.Reporting.Stats.StatsList
-        
+
         public struct Request: Sendable, Codable, Equatable {
             public let event: String
             public let start: String?
@@ -57,7 +57,7 @@ extension Mailgun.Reporting.Stats {
 
     public enum Filter {
         public typealias Response = Mailgun.Reporting.Stats.StatsList
-        
+
         public struct Request: Sendable, Codable, Equatable {
             public let event: String
             public let start: String?

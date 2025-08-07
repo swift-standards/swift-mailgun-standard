@@ -65,7 +65,7 @@ extension Mailgun.Suppressions.Unsubscribe.Get {
         public let address: EmailAddress
         public let tags: [String]
         public let createdAt: String
-        
+
         public init(
             address: EmailAddress,
             tags: [String],
@@ -75,7 +75,7 @@ extension Mailgun.Suppressions.Unsubscribe.Get {
             self.tags = tags
             self.createdAt = createdAt
         }
-        
+
         private enum CodingKeys: String, CodingKey {
             case address
             case tags

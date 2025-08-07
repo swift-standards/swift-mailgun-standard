@@ -117,7 +117,7 @@ extension Mailgun.Templates.List {
         public let page: Mailgun.Templates.Page?
         public let limit: Int?
         public let p: String?
-        
+
         public init(
             page: Mailgun.Templates.Page? = nil,
             limit: Int? = nil,
@@ -128,11 +128,11 @@ extension Mailgun.Templates.List {
             self.p = p
         }
     }
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let items: [Mailgun.Templates.Template]?
         public let paging: Mailgun.Templates.Paging
-        
+
         public init(items: [Mailgun.Templates.Template]?, paging: Mailgun.Templates.Paging) {
             self.items = items
             self.paging = paging
@@ -154,7 +154,7 @@ extension Mailgun.Templates.Create {
         public let tag: String?
         public let comment: String?
         public let headers: String?
-        
+
         public init(
             name: String,
             description: String? = nil,
@@ -173,11 +173,11 @@ extension Mailgun.Templates.Create {
             self.headers = headers
         }
     }
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let message: String
         public let template: Mailgun.Templates.Template?
-        
+
         public init(message: String, template: Mailgun.Templates.Template?) {
             self.message = message
             self.template = template
@@ -193,7 +193,7 @@ extension Mailgun.Templates {
 extension Mailgun.Templates.DeleteAll {
     public struct Response: Sendable, Decodable, Equatable {
         public let message: String
-        
+
         public init(message: String) {
             self.message = message
         }
@@ -208,15 +208,15 @@ extension Mailgun.Templates {
 extension Mailgun.Templates.Get {
     public struct Request: Sendable, Codable, Equatable {
         public let active: String?
-        
+
         public init(active: String? = nil) {
             self.active = active
         }
     }
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let template: Mailgun.Templates.Template?
-        
+
         public init(template: Mailgun.Templates.Template?) {
             self.template = template
         }
@@ -231,31 +231,31 @@ extension Mailgun.Templates {
 extension Mailgun.Templates.Update {
     public struct Request: Sendable, Codable, Equatable {
         public let description: String?
-        
+
         public init(description: String?) {
             self.description = description
         }
     }
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let message: String
         public let template: TemplateUpdate
-        
+
         public init(message: String, template: TemplateUpdate) {
             self.message = message
             self.template = template
         }
-        
+
         public struct TemplateUpdate: Sendable, Decodable, Equatable {
             public let name: String
             public let version: VersionUpdate?
-            
+
             public init(name: String, version: VersionUpdate? = nil) {
                 self.name = name
                 self.version = version
             }
         }
-        
+
         public struct VersionUpdate: Sendable, Decodable, Equatable {
             // Version update details if needed
         }
@@ -271,22 +271,22 @@ extension Mailgun.Templates.Delete {
     public struct Response: Sendable, Decodable, Equatable {
         public let message: String
         public let template: TemplateDelete
-        
+
         public init(message: String, template: TemplateDelete) {
             self.message = message
             self.template = template
         }
-        
+
         public struct TemplateDelete: Sendable, Decodable, Equatable {
             public let name: String
             public let version: VersionDelete?
-            
+
             public init(name: String, version: VersionDelete? = nil) {
                 self.name = name
                 self.version = version
             }
         }
-        
+
         public struct VersionDelete: Sendable, Decodable, Equatable {
             // Version delete details if needed
         }
@@ -303,7 +303,7 @@ extension Mailgun.Templates.Versions {
         public let page: Mailgun.Templates.Page?
         public let limit: Int?
         public let p: String?
-        
+
         public init(
             page: Mailgun.Templates.Page? = nil,
             limit: Int? = nil,
@@ -314,11 +314,11 @@ extension Mailgun.Templates.Versions {
             self.p = p
         }
     }
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let template: Mailgun.Templates.Template?
         public let paging: Mailgun.Templates.Paging
-        
+
         public init(template: Mailgun.Templates.Template?, paging: Mailgun.Templates.Paging) {
             self.template = template
             self.paging = paging
@@ -339,7 +339,7 @@ extension Mailgun.Templates.Version.Create {
         public let comment: String?
         public let active: String?
         public let headers: String?
-        
+
         public init(
             template: String,
             tag: String,
@@ -354,11 +354,11 @@ extension Mailgun.Templates.Version.Create {
             self.headers = headers
         }
     }
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let message: String
         public let template: Mailgun.Templates.Template?
-        
+
         public init(message: String, template: Mailgun.Templates.Template?) {
             self.message = message
             self.template = template
@@ -374,7 +374,7 @@ extension Mailgun.Templates.Version {
 extension Mailgun.Templates.Version.Get {
     public struct Response: Sendable, Decodable, Equatable {
         public let template: Mailgun.Templates.Template?
-        
+
         public init(template: Mailgun.Templates.Template?) {
             self.template = template
         }
@@ -392,7 +392,7 @@ extension Mailgun.Templates.Version.Update {
         public let comment: String?
         public let active: String?
         public let headers: String?
-        
+
         public init(
             template: String? = nil,
             comment: String? = nil,
@@ -405,26 +405,26 @@ extension Mailgun.Templates.Version.Update {
             self.headers = headers
         }
     }
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let message: String
         public let template: TemplateUpdate
-        
+
         public init(message: String, template: TemplateUpdate) {
             self.message = message
             self.template = template
         }
-        
+
         public struct TemplateUpdate: Sendable, Decodable, Equatable {
             public let name: String
             public let version: VersionUpdate?
-            
+
             public init(name: String, version: VersionUpdate? = nil) {
                 self.name = name
                 self.version = version
             }
         }
-        
+
         public struct VersionUpdate: Sendable, Decodable, Equatable {
             // Version update details if needed
         }
@@ -440,22 +440,22 @@ extension Mailgun.Templates.Version.Delete {
     public struct Response: Sendable, Decodable, Equatable {
         public let message: String
         public let template: TemplateDelete
-        
+
         public init(message: String, template: TemplateDelete) {
             self.message = message
             self.template = template
         }
-        
+
         public struct TemplateDelete: Sendable, Decodable, Equatable {
             public let name: String
             public let version: VersionDelete?
-            
+
             public init(name: String, version: VersionDelete? = nil) {
                 self.name = name
                 self.version = version
             }
         }
-        
+
         public struct VersionDelete: Sendable, Decodable, Equatable {
             // Version delete details if needed
         }
@@ -470,17 +470,17 @@ extension Mailgun.Templates.Version {
 extension Mailgun.Templates.Version.Copy {
     public struct Request: Sendable, Codable, Equatable {
         public let comment: String?
-        
+
         public init(comment: String? = nil) {
             self.comment = comment
         }
     }
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let message: String
         public let version: Mailgun.Templates.Version?
         public let template: Mailgun.Templates.Version? // Deprecated field
-        
+
         public init(message: String, version: Mailgun.Templates.Version?, template: Mailgun.Templates.Version? = nil) {
             self.message = message
             self.version = version

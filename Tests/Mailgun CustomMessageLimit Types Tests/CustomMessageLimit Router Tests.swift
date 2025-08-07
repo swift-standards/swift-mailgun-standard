@@ -6,8 +6,8 @@
 //
 
 import DependenciesTestSupport
-@testable import Mailgun_CustomMessageLimit_Types
 import Foundation
+@testable import Mailgun_CustomMessageLimit_Types
 import Testing
 
 @Suite(

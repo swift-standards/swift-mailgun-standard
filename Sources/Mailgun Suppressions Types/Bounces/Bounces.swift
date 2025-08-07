@@ -48,12 +48,12 @@ extension Mailgun.Suppressions.Bounces {
 extension Mailgun.Suppressions.Bounces.Import {
     public struct Request: Sendable, Codable, Equatable {
         public let file: Data
-        
+
         public init(file: Data) {
             self.file = file
         }
     }
-    
+
     public struct Response: Sendable, Codable, Equatable {
         public let message: String
 

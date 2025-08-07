@@ -36,7 +36,7 @@ extension Mailgun.Users {
         public let githubUserId: String?
         public let salesforceUserId: String?
         public let migrationStatus: String?
-        
+
         public init(
             id: String,
             activated: Bool? = nil,
@@ -80,7 +80,7 @@ extension Mailgun.Users {
             self.salesforceUserId = salesforceUserId
             self.migrationStatus = migrationStatus
         }
-        
+
         private enum CodingKeys: String, CodingKey {
             case id
             case activated
@@ -104,13 +104,13 @@ extension Mailgun.Users {
             case migrationStatus = "migration_status"
         }
     }
-    
+
     public struct EmailDetails: Sendable, Decodable, Equatable {
         public let address: String
         public let isValid: Bool?
         public let reason: String?
         public let parts: EmailParts?
-        
+
         public init(
             address: String,
             isValid: Bool? = nil,
@@ -122,7 +122,7 @@ extension Mailgun.Users {
             self.reason = reason
             self.parts = parts
         }
-        
+
         private enum CodingKeys: String, CodingKey {
             case address
             case isValid = "is_valid"
@@ -130,12 +130,12 @@ extension Mailgun.Users {
             case parts
         }
     }
-    
+
     public struct EmailParts: Sendable, Decodable, Equatable {
         public let domain: String?
         public let localPart: String?
         public let displayName: String?
-        
+
         public init(
             domain: String? = nil,
             localPart: String? = nil,
@@ -145,19 +145,19 @@ extension Mailgun.Users {
             self.localPart = localPart
             self.displayName = displayName
         }
-        
+
         private enum CodingKeys: String, CodingKey {
             case domain
             case localPart = "local_part"
             case displayName = "display_name"
         }
     }
-    
+
     public struct Preferences: Sendable, Decodable, Equatable {
         public let timeZone: String?
         public let timeFormat: String?
         public let programmingLanguage: String?
-        
+
         public init(
             timeZone: String? = nil,
             timeFormat: String? = nil,
@@ -167,19 +167,19 @@ extension Mailgun.Users {
             self.timeFormat = timeFormat
             self.programmingLanguage = programmingLanguage
         }
-        
+
         private enum CodingKeys: String, CodingKey {
             case timeZone = "time_zone"
             case timeFormat = "time_format"
             case programmingLanguage = "programming_language"
         }
     }
-    
+
     public struct AuthDetails: Sendable, Decodable, Equatable {
         public let method: String
         public let priorMethod: String?
         public let priorDetails: [String: String]?
-        
+
         public init(
             method: String,
             priorMethod: String? = nil,
@@ -189,14 +189,14 @@ extension Mailgun.Users {
             self.priorMethod = priorMethod
             self.priorDetails = priorDetails
         }
-        
+
         private enum CodingKeys: String, CodingKey {
             case method
             case priorMethod = "prior_method"
             case priorDetails = "prior_details"
         }
     }
-    
+
     public enum Role: String, Sendable, Codable, Equatable {
         case basic = "basic"
         case billing = "billing"
@@ -216,7 +216,7 @@ extension Mailgun.Users.List {
         public let role: Mailgun.Users.Role?
         public let limit: Int?
         public let skip: Int?
-        
+
         public init(
             role: Mailgun.Users.Role? = nil,
             limit: Int? = nil,
@@ -227,11 +227,11 @@ extension Mailgun.Users.List {
             self.skip = skip
         }
     }
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let users: [Mailgun.Users.User]
         public let total: Int
-        
+
         public init(
             users: [Mailgun.Users.User],
             total: Int
@@ -272,10 +272,10 @@ extension Mailgun.Users.Organization {
 
 extension Mailgun.Users.Organization.Add {
     public typealias Request = Void  // No request body needed
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let message: String
-        
+
         public init(message: String) {
             self.message = message
         }
@@ -285,7 +285,7 @@ extension Mailgun.Users.Organization.Add {
 extension Mailgun.Users.Organization.Remove {
     public struct Response: Sendable, Decodable, Equatable {
         public let message: String
-        
+
         public init(message: String) {
             self.message = message
         }

@@ -42,7 +42,7 @@ extension Mailgun.Suppressions.Unsubscribe.API {
 
                     Body(multipart)
                 }
-                
+
                 // DELETE /v3/{domainID}/unsubscribes/{address}
                 URLRouting.Route(.case(Mailgun.Suppressions.Unsubscribe.API.delete)) {
                     Method.delete
@@ -51,7 +51,7 @@ extension Mailgun.Suppressions.Unsubscribe.API {
                     Path.unsubscribes
                     Path { Parse(.string.representing(EmailAddress.self)) }
                 }
-                
+
                 // DELETE /v3/{domainID}/unsubscribes
                 URLRouting.Route(.case(Mailgun.Suppressions.Unsubscribe.API.deleteAll)) {
                     Method.delete

@@ -21,7 +21,7 @@ extension Mailgun.Webhooks {
             self.urls = urls
         }
     }
-    
+
     public enum WebhookType: String, Sendable, Codable, Equatable, CaseIterable {
         case accepted = "accepted"
         case delivered = "delivered"
@@ -43,12 +43,12 @@ extension Mailgun.Webhooks {
 extension Mailgun.Webhooks.List {
     public struct Response: Sendable, Codable, Equatable {
         public let webhooks: Webhooks
-        
+
         public init(webhooks: Webhooks) {
             self.webhooks = webhooks
         }
     }
-    
+
     public struct Webhooks: Sendable, Codable, Equatable {
         public let accepted: Mailgun.Webhooks.Webhook?
         public let delivered: Mailgun.Webhooks.Webhook?
@@ -58,7 +58,7 @@ extension Mailgun.Webhooks.List {
         public let complained: Mailgun.Webhooks.Webhook?
         public let temporary_fail: Mailgun.Webhooks.Webhook?
         public let permanent_fail: Mailgun.Webhooks.Webhook?
-        
+
         public init(
             accepted: Mailgun.Webhooks.Webhook? = nil,
             delivered: Mailgun.Webhooks.Webhook? = nil,
@@ -78,7 +78,7 @@ extension Mailgun.Webhooks.List {
             self.temporary_fail = temporary_fail
             self.permanent_fail = permanent_fail
         }
-        
+
         public subscript(_ type: Mailgun.Webhooks.WebhookType) -> Mailgun.Webhooks.Webhook? {
             switch type {
             case .accepted: return accepted
@@ -103,7 +103,7 @@ extension Mailgun.Webhooks {
 extension Mailgun.Webhooks.Get {
     public struct Response: Sendable, Codable, Equatable {
         public let webhook: Mailgun.Webhooks.Webhook
-        
+
         public init(webhook: Mailgun.Webhooks.Webhook) {
             self.webhook = webhook
         }
@@ -120,22 +120,22 @@ extension Mailgun.Webhooks.Create {
     public struct Request: Sendable, Codable, Equatable {
         public let id: Mailgun.Webhooks.WebhookType
         public let url: [String]
-        
+
         public init(id: Mailgun.Webhooks.WebhookType, url: [String]) {
             self.id = id
             self.url = url
         }
-        
+
         public init(id: Mailgun.Webhooks.WebhookType, url: String) {
             self.id = id
             self.url = [url]
         }
     }
-    
+
     public struct Response: Sendable, Codable, Equatable {
         public let message: String
         public let webhook: Mailgun.Webhooks.Webhook
-        
+
         public init(message: String, webhook: Mailgun.Webhooks.Webhook) {
             self.message = message
             self.webhook = webhook
@@ -152,20 +152,20 @@ extension Mailgun.Webhooks {
 extension Mailgun.Webhooks.Update {
     public struct Request: Sendable, Codable, Equatable {
         public let url: [String]
-        
+
         public init(url: [String]) {
             self.url = url
         }
-        
+
         public init(url: String) {
             self.url = [url]
         }
     }
-    
+
     public struct Response: Sendable, Codable, Equatable {
         public let message: String
         public let webhook: Mailgun.Webhooks.Webhook
-        
+
         public init(message: String, webhook: Mailgun.Webhooks.Webhook) {
             self.message = message
             self.webhook = webhook
@@ -183,7 +183,7 @@ extension Mailgun.Webhooks.Delete {
     public struct Response: Sendable, Codable, Equatable {
         public let message: String
         public let webhook: Mailgun.Webhooks.Webhook
-        
+
         public init(message: String, webhook: Mailgun.Webhooks.Webhook) {
             self.message = message
             self.webhook = webhook

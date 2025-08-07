@@ -30,7 +30,7 @@ extension Form.Decoder {
             arrayParsingStrategy: .brackets
         )
     }
-    
+
     public static var mailgunRoutes: Form.Decoder {
         return Form.Decoder(
             dataDecodingStrategy: .base64,
@@ -62,7 +62,7 @@ extension Form.Encoder {
             arrayEncodingStrategy: .brackets
         )
     }
-    
+
     public static var mailgunRoutes: Form.Encoder {
         return Form.Encoder(
             dataEncodingStrategy: .base64,
@@ -70,7 +70,7 @@ extension Form.Encoder {
             arrayEncodingStrategy: .accumulateValues
         )
     }
-    
+
     public static var mailgunEvents: Form.Encoder {
         return Form.Encoder(
             dataEncodingStrategy: .base64,

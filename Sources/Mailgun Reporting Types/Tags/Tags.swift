@@ -26,12 +26,12 @@ extension Mailgun.Reporting.Tags {
 extension Mailgun.Reporting.Tags.Update {
     public struct Request: Sendable, Codable, Equatable {
         public let description: String
-        
+
         public init(description: String) {
             self.description = description
         }
     }
-    
+
     public typealias Response = Mailgun.Reporting.Tags.Tag
 }
 
@@ -319,7 +319,7 @@ extension Mailgun.Reporting.Tags {
 extension Mailgun.Reporting.Tags.Delete {
     public struct Response: Sendable, Decodable, Equatable {
         public let message: String
-        
+
         public init(message: String) {
             self.message = message
         }

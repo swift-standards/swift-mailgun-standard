@@ -41,7 +41,7 @@ extension Mailgun.Subaccounts {
             case open
             case closed
         }
-        
+
         private enum CodingKeys: String, CodingKey {
             case id
             case name
@@ -61,7 +61,7 @@ extension Mailgun.Subaccounts {
 extension Mailgun.Subaccounts.Get {
     public struct Response: Sendable, Decodable, Equatable {
         public let subaccount: Mailgun.Subaccounts.Subaccount
-        
+
         public init(subaccount: Mailgun.Subaccounts.Subaccount) {
             self.subaccount = subaccount
         }
@@ -81,7 +81,7 @@ extension Mailgun.Subaccounts.List {
         public let skip: Int?
         public let enabled: Bool?
         public let closed: Bool?
-        
+
         public init(
             sort: Sort? = nil,
             filter: String? = nil,
@@ -97,13 +97,13 @@ extension Mailgun.Subaccounts.List {
             self.enabled = enabled
             self.closed = closed
         }
-        
+
         public enum Sort: String, Sendable, Codable, Equatable {
             case asc
             case desc
         }
     }
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let subaccounts: [Mailgun.Subaccounts.Subaccount]
         public let total: Int
@@ -128,10 +128,10 @@ extension Mailgun.Subaccounts.Create {
             self.name = name
         }
     }
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let subaccount: Mailgun.Subaccounts.Subaccount
-        
+
         public init(subaccount: Mailgun.Subaccounts.Subaccount) {
             self.subaccount = subaccount
         }
@@ -162,13 +162,13 @@ extension Mailgun.Subaccounts.Disable {
     public struct Request: Sendable, Codable, Equatable {
         public let reason: String?
         public let note: String?
-        
+
         public init(reason: String? = nil, note: String? = nil) {
             self.reason = reason
             self.note = note
         }
     }
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let subaccount: Mailgun.Subaccounts.Subaccount
 
@@ -226,10 +226,10 @@ extension Mailgun.Subaccounts.CustomLimit.Update {
             self.limit = limit
         }
     }
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let success: Bool
-        
+
         public init(success: Bool) {
             self.success = success
         }
@@ -276,7 +276,7 @@ extension Mailgun.Subaccounts.Features.Update {
             self.validations = validations
             self.validationsBulk = validationsBulk
         }
-        
+
         private enum CodingKeys: String, CodingKey {
             case emailPreview = "email_preview"
             case inboxPlacement = "inbox_placement"
@@ -284,16 +284,16 @@ extension Mailgun.Subaccounts.Features.Update {
             case validations
             case validationsBulk = "validations_bulk"
         }
-        
+
         public struct FeatureOverride: Sendable, Codable, Equatable {
             public let enabled: Bool
-            
+
             public init(enabled: Bool) {
                 self.enabled = enabled
             }
         }
     }
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let features: [String: String]
 

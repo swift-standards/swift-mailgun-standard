@@ -2,11 +2,13 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Swift-6.0-orange.svg" alt="Swift 6.0">
+  <img src="https://img.shields.io/badge/Swift-5.10-orange.svg" alt="Swift 5.10">
   <img src="https://img.shields.io/badge/Platforms-macOS%2014%2B%20|%20iOS%2017%2B%20|%20Linux-lightgray.svg" alt="Platforms">
   <img src="https://img.shields.io/badge/API%20Coverage-100%25-brightgreen.svg" alt="API Coverage">
   <img src="https://img.shields.io/badge/Type%20Safe-100%25-brightgreen.svg" alt="Type Safety">
   <img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License">
   <img src="https://img.shields.io/badge/Status-Production%20Ready-green.svg" alt="Status">
+  <img src="https://img.shields.io/badge/Version-0.1.0-brightgreen.svg" alt="Version">
 </p>
 
 <p align="center">
@@ -253,12 +255,18 @@ All Mailgun API features are fully typed and organized by domain:
 
 ## Recent Updates 🎉
 
-### January 2025
-- ✅ **100% API Coverage**: All Mailgun APIs now fully typed and implemented
+### Version 0.1.0 (February 2025)
+- ✅ **All Tests Passing**: Fixed compilation errors across 110+ test files
+- ✅ **Form Encoding Improvements**: Added specialized encoders for Routes and Events APIs
+- ✅ **API Alignment**: Updated types to match actual Mailgun API responses
 - ✅ **Namespace Enum Pattern**: Consistent organization across all modules
-- ✅ **Swift 6.0**: Full language mode support with strict concurrency
-- ✅ **Bug Fixes**: Fixed Lists.Response decoding, Allowlist API paths, optional parameters
-- ✅ **238 Tests Passing**: Complete test coverage in coenttb-mailgun implementation
+- ✅ **Bug Fixes**: 
+  - Fixed array encoding strategies for Routes API
+  - Resolved multipart form boundary issues in tests
+  - Fixed Subaccounts delete endpoint header handling
+  - Corrected Events API date parameter ordering for descending queries
+- ✅ **Swift 6.0 Ready**: Full language mode support with strict concurrency
+- ✅ **100% API Coverage**: All Mailgun APIs fully typed and tested
 
 ## Installation
 
@@ -285,7 +293,7 @@ Install the entire types package:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/coenttb/swift-mailgun-types", branch: "main")
+    .package(url: "https://github.com/coenttb/swift-mailgun-types", from: "0.1.0")
 ],
 targets: [
     .target(
@@ -304,7 +312,7 @@ Import only the specific modules you need:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/coenttb/swift-mailgun-types", branch: "main")
+    .package(url: "https://github.com/coenttb/swift-mailgun-types", from: "0.1.0")
 ],
 targets: [
     .target(

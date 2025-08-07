@@ -66,7 +66,7 @@ struct SubaccountsRouterTests {
 
         let request = try router.request(for: api)
         #expect(request.url?.path == "/v5/accounts/subaccounts")
-        
+
         let result = try router.print(api)
         #expect(result.headers.fields["x-mailgun-on-behalf-of"] != nil)
         #expect(result.headers.fields["x-mailgun-on-behalf-of"]?.contains("test-subaccount-123") == true )

@@ -54,7 +54,7 @@ extension Mailgun.Templates.API {
                         }
                     }
                 }
-                
+
                 // PUT /v3/{domain_name}/templates/{template_name}/versions/{version_name}
                 Route(.case(Mailgun.Templates.API.updateVersion)) {
                     let multipartFormCoding = URLFormCoding.Multipart.Conversion(
@@ -74,7 +74,7 @@ extension Mailgun.Templates.API {
                     Path { Parse(.string) }
                     Body(multipartFormCoding)
                 }
-                
+
                 // DELETE /v3/{domain_name}/templates/{template_name}/versions/{version_name}
                 Route(.case(Mailgun.Templates.API.deleteVersion)) {
                     Method.delete
@@ -85,7 +85,7 @@ extension Mailgun.Templates.API {
                     Path.versions
                     Path { Parse(.string) }
                 }
-                
+
                 // GET /v3/{domain_name}/templates/{template_name}/versions/{version_name}
                 Route(.case(Mailgun.Templates.API.getVersion)) {
                     Method.get
@@ -96,7 +96,7 @@ extension Mailgun.Templates.API {
                     Path.versions
                     Path { Parse(.string) }
                 }
-                
+
                 // POST /v3/{domain_name}/templates/{template_name}/versions
                 Route(.case(Mailgun.Templates.API.createVersion)) {
                     let multipartFormCoding = URLFormCoding.Multipart.Conversion(
@@ -115,7 +115,7 @@ extension Mailgun.Templates.API {
                     Path.versions
                     Body(multipartFormCoding)
                 }
-                
+
                 // GET /v3/{domain_name}/templates/{template_name}/versions
                 Route(.case(Mailgun.Templates.API.versions)) {
                     Method.get
@@ -140,7 +140,7 @@ extension Mailgun.Templates.API {
                         }
                     }
                 }
-                
+
                 // PUT /v3/{domain_name}/templates/{template_name}
                 Route(.case(Mailgun.Templates.API.update)) {
                     let multipartFormCoding = URLFormCoding.Multipart.Conversion(
@@ -158,7 +158,7 @@ extension Mailgun.Templates.API {
                     Path { Parse(.string) }
                     Body(multipartFormCoding)
                 }
-                
+
                 // DELETE /v3/{domain_name}/templates/{template_name}
                 Route(.case(Mailgun.Templates.API.delete)) {
                     Method.delete
@@ -167,7 +167,7 @@ extension Mailgun.Templates.API {
                     Path.templates
                     Path { Parse(.string) }
                 }
-                
+
                 // GET /v3/{domain_name}/templates/{template_name}
                 Route(.case(Mailgun.Templates.API.get)) {
                     Method.get
@@ -185,7 +185,7 @@ extension Mailgun.Templates.API {
                         }
                     }
                 }
-                
+
                 // POST /v3/{domain_name}/templates
                 Route(.case(Mailgun.Templates.API.create)) {
                     let multipartFormCoding = URLFormCoding.Multipart.Conversion(
@@ -202,7 +202,7 @@ extension Mailgun.Templates.API {
                     Path.templates
                     Body(multipartFormCoding)
                 }
-                
+
                 // DELETE /v3/{domain_name}/templates
                 Route(.case(Mailgun.Templates.API.deleteAll)) {
                     Method.delete
@@ -210,7 +210,7 @@ extension Mailgun.Templates.API {
                     Path { Parse(.string.representing(Domain.self)) }
                     Path.templates
                 }
-                
+
                 // GET /v3/{domain_name}/templates
                 Route(.case(Mailgun.Templates.API.list)) {
                     Method.get

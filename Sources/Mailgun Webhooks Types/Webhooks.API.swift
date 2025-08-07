@@ -35,7 +35,7 @@ extension Mailgun.Webhooks.API {
                     Path { Parse(.string.representing(Mailgun.Webhooks.WebhookType.self)) }
                     Body(.form(Mailgun.Webhooks.Update.Request.self, decoder: .mailgun, encoder: .mailgun))
                 }
-                
+
                 // DELETE /v3/domains/{domain}/webhooks/{webhook_name}
                 URLRouting.Route(.case(Mailgun.Webhooks.API.delete)) {
                     Method.delete
@@ -45,7 +45,7 @@ extension Mailgun.Webhooks.API {
                     Path.webhooks
                     Path { Parse(.string.representing(Mailgun.Webhooks.WebhookType.self)) }
                 }
-                
+
                 // GET /v3/domains/{domain}/webhooks/{webhook_name}
                 URLRouting.Route(.case(Mailgun.Webhooks.API.get)) {
                     Method.get
@@ -55,7 +55,7 @@ extension Mailgun.Webhooks.API {
                     Path.webhooks
                     Path { Parse(.string.representing(Mailgun.Webhooks.WebhookType.self)) }
                 }
-                
+
                 // POST /v3/domains/{domain}/webhooks
                 URLRouting.Route(.case(Mailgun.Webhooks.API.create)) {
                     Method.post
@@ -65,7 +65,7 @@ extension Mailgun.Webhooks.API {
                     Path.webhooks
                     Body(.form(Mailgun.Webhooks.Create.Request.self, decoder: .mailgun, encoder: .mailgun))
                 }
-                
+
                 // GET /v3/domains/{domain}/webhooks
                 URLRouting.Route(.case(Mailgun.Webhooks.API.list)) {
                     Method.get

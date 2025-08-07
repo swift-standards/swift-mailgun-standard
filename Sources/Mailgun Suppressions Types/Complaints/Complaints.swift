@@ -43,12 +43,12 @@ extension Mailgun.Suppressions.Complaints {
 extension Mailgun.Suppressions.Complaints.Import {
     public struct Request: Sendable, Codable, Equatable {
         public let file: Foundation.Data
-        
+
         public init(file: Foundation.Data) {
             self.file = file
         }
     }
-    
+
     public struct Response: Sendable, Codable, Equatable {
         public let message: String
 

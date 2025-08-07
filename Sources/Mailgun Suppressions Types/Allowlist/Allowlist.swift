@@ -7,8 +7,8 @@
 
 import Domain
 import EmailAddress
-@_exported import Mailgun_Types_Shared
 import Foundation
+@_exported import Mailgun_Types_Shared
 
 extension Mailgun.Suppressions {
     public enum Allowlist {}
@@ -205,12 +205,12 @@ extension Mailgun.Suppressions.Allowlist {
 extension Mailgun.Suppressions.Allowlist.Import {
     public struct Request: Sendable, Codable, Equatable {
         public let file: Data
-        
+
         public init(file: Data) {
             self.file = file
         }
     }
-    
+
     public struct Response: Sendable, Codable, Equatable {
         public let message: String
 

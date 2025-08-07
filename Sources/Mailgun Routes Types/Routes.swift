@@ -93,7 +93,7 @@ extension Mailgun.Routes.List {
     public struct Request: Sendable, Codable, Equatable {
         public let skip: Int?
         public let limit: Int?
-        
+
         public init(
             skip: Int? = nil,
             limit: Int? = nil
@@ -102,7 +102,7 @@ extension Mailgun.Routes.List {
             self.limit = limit
         }
     }
-    
+
     public struct Response: Sendable, Decodable, Equatable {
         public let totalCount: Int
         public let items: [Mailgun.Routes.Route]
@@ -129,7 +129,7 @@ extension Mailgun.Routes {
 extension Mailgun.Routes.Get {
     public struct Response: Sendable, Decodable, Equatable {
         public let route: Mailgun.Routes.Route
-        
+
         public init(route: Mailgun.Routes.Route) {
             self.route = route
         }
@@ -189,7 +189,7 @@ extension Mailgun.Routes.Update {
             self.createdAt = createdAt
             self.message = message
         }
-        
+
         private enum CodingKeys: String, CodingKey {
             case id
             case priority

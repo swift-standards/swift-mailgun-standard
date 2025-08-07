@@ -13,7 +13,7 @@ extension Mailgun.Suppressions.Unsubscribe {
     public struct Client: Sendable {
         @DependencyEndpoint
         public var importList: @Sendable (_ request: Foundation.Data) async throws -> Mailgun.Suppressions.Unsubscribe.Import.Response
-        
+
         @DependencyEndpoint
         public var get: @Sendable (_ address: EmailAddress) async throws -> Mailgun.Suppressions.Unsubscribe.Get.Response
 
