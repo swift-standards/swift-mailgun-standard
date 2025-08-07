@@ -192,12 +192,30 @@ extension Mailgun.Reporting.Tags {
             }
 
             public struct StatCount: Sendable, Codable, Equatable {
-                public let count: Int
+                public let incoming: Int?
+                public let outgoing: Int?
                 public let total: Int?
+                public let smtp: Int?
+                public let http: Int?
+                public let optimized: Int?
+                public let unique: Int?
 
-                public init(count: Int, total: Int? = nil) {
-                    self.count = count
+                public init(
+                    incoming: Int? = nil,
+                    outgoing: Int? = nil,
+                    total: Int? = nil,
+                    smtp: Int? = nil,
+                    http: Int? = nil,
+                    optimized: Int? = nil,
+                    unique: Int? = nil
+                ) {
+                    self.incoming = incoming
+                    self.outgoing = outgoing
                     self.total = total
+                    self.smtp = smtp
+                    self.http = http
+                    self.optimized = optimized
+                    self.unique = unique
                 }
             }
         }
