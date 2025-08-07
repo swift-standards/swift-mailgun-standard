@@ -8,8 +8,18 @@
 import Domain
 import EmailAddress
 import Mailgun_Types_Shared
+import Foundation
+
 extension Mailgun.Suppressions {
     public enum Allowlist {}
+}
+
+extension Mailgun.Suppressions.Allowlist {
+    public enum Get {}
+}
+
+extension Mailgun.Suppressions.Allowlist.Get {
+    public typealias Response = Mailgun.Suppressions.Allowlist.Record
 }
 
 extension Mailgun.Suppressions.Allowlist {
@@ -193,6 +203,14 @@ extension Mailgun.Suppressions.Allowlist {
 }
 
 extension Mailgun.Suppressions.Allowlist.Import {
+    public struct Request: Sendable, Codable, Equatable {
+        public let file: Data
+        
+        public init(file: Data) {
+            self.file = file
+        }
+    }
+    
     public struct Response: Sendable, Codable, Equatable {
         public let message: String
 

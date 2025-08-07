@@ -13,7 +13,7 @@ extension Mailgun.Suppressions.Allowlist {
     public enum API: Equatable, Sendable {
         case get(domain: Domain, value: String)
         case delete(domain: Domain, value: String)
-        case list(domain: Domain, request: Mailgun.Suppressions.Allowlist.List.Request)
+        case list(domain: Domain, request: Mailgun.Suppressions.Allowlist.List.Request?)
         case create(domain: Domain, request: Mailgun.Suppressions.Allowlist.Create.Request)
         case deleteAll(domain: Domain)
         case importList(domain: Domain, request: Foundation.Data)
@@ -30,7 +30,7 @@ extension Mailgun.Suppressions.Allowlist.API {
                     Method.get
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }
-                    Path.Allowlists
+                    Path.whitelists
                     Path { Parse(.string) }
                 }
 
@@ -38,7 +38,7 @@ extension Mailgun.Suppressions.Allowlist.API {
                     Method.delete
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }
-                    Path.Allowlists
+                    Path.whitelists
                     Path { Parse(.string) }
                 }
 
@@ -46,20 +46,22 @@ extension Mailgun.Suppressions.Allowlist.API {
                     Method.get
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }
-                    Path.Allowlists
-                    Parse(.memberwise(Mailgun.Suppressions.Allowlist.List.Request.init)) {
-                        URLRouting.Query {
-                            Optionally {
-                                Field("address") { Parse(.string.representing(EmailAddress.self)) }
-                            }
-                            Optionally {
-                                Field("term") { Parse(.string) }
-                            }
-                            Optionally {
-                                Field("limit") { Digits() }
-                            }
-                            Optionally {
-                                Field("page") { Parse(.string) }
+                    Path.whitelists
+                    Optionally {
+                        Parse(.memberwise(Mailgun.Suppressions.Allowlist.List.Request.init)) {
+                            URLRouting.Query {
+                                Optionally {
+                                    Field("address") { Parse(.string.representing(EmailAddress.self)) }
+                                }
+                                Optionally {
+                                    Field("term") { Parse(.string) }
+                                }
+                                Optionally {
+                                    Field("limit") { Digits() }
+                                }
+                                Optionally {
+                                    Field("page") { Parse(.string) }
+                                }
                             }
                         }
                     }
@@ -72,7 +74,7 @@ extension Mailgun.Suppressions.Allowlist.API {
                     }
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }
-                    Path.Allowlists
+                    Path.whitelists
                     Body(.form(Mailgun.Suppressions.Allowlist.Create.Request.self, decoder: .mailgun, encoder: .mailgun))
                 }
 
@@ -80,7 +82,7 @@ extension Mailgun.Suppressions.Allowlist.API {
                     Method.delete
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }
-                    Path.Allowlists
+                    Path.whitelists
                 }
 
                 URLRouting.Route(.case(Mailgun.Suppressions.Allowlist.API.importList)) {
@@ -93,7 +95,7 @@ extension Mailgun.Suppressions.Allowlist.API {
                     }
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }
-                    Path.Allowlists
+                    Path.whitelists
                     Path { "import" }
                     Body(multipart)
                 }
@@ -103,7 +105,7 @@ extension Mailgun.Suppressions.Allowlist.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe) public static let Allowlists = Path {
-        "Allowlists"
+    nonisolated(unsafe) public static let whitelists = Path {
+        "whitelists"
     }
 }

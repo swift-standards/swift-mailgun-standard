@@ -18,7 +18,7 @@ extension Mailgun.Suppressions.Allowlist {
         public var delete: @Sendable (_ value: String) async throws -> Mailgun.Suppressions.Allowlist.Delete.Response
 
         @DependencyEndpoint
-        public var list: @Sendable (_ request: Mailgun.Suppressions.Allowlist.List.Request) async throws -> Mailgun.Suppressions.Allowlist.List.Response
+        public var list: @Sendable (_ request: Mailgun.Suppressions.Allowlist.List.Request?) async throws -> Mailgun.Suppressions.Allowlist.List.Response
 
         @DependencyEndpoint
         public var create: @Sendable (_ request: Mailgun.Suppressions.Allowlist.Create.Request) async throws -> Mailgun.Suppressions.Allowlist.Create.Response

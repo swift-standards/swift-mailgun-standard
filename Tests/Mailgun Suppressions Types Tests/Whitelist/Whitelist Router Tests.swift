@@ -24,7 +24,7 @@ struct AllowlistRouterTests {
         let api: Mailgun.Suppressions.Allowlist.API = .importList(domain: try .init("test.domain.com"), request: testData)
 
         let url = router.url(for: api)
-        #expect(url.path == "/v3/test.domain.com/Allowlists/import")
+        #expect(url.path == "/v3/test.domain.com/whitelists/import")
 
         // Note: Import endpoints use multipart form data which doesn't support round-trip testing
         // due to the complex nature of multipart boundary generation and Data encoding
@@ -40,7 +40,7 @@ struct AllowlistRouterTests {
         )
 
         let url = router.url(for: api)
-        #expect(url.path == "/v3/test.domain.com/Allowlists/example.com")
+        #expect(url.path == "/v3/test.domain.com/whitelists/example.com")
 
         let match: Mailgun.Suppressions.Allowlist.API = try router.match(request: try router.request(for: api))
         #expect(match.is(\.get))
