@@ -22,8 +22,8 @@ extension Mailgun.Messages.Send {
         public let subject: String
         public let html: String?
         public let text: String?
-        public let cc: [String]?
-        public let bcc: [String]?
+        public let cc: [EmailAddress]?
+        public let bcc: [EmailAddress]?
         public let ampHtml: String?
         public let template: String?
         public let templateVersion: String?
@@ -93,8 +93,8 @@ extension Mailgun.Messages.Send {
             subject: String,
             html: String? = nil,
             text: String? = nil,
-            cc: [String]? = nil,
-            bcc: [String]? = nil,
+            cc: [EmailAddress]? = nil,
+            bcc: [EmailAddress]? = nil,
             ampHtml: String? = nil,
             template: String? = nil,
             templateVersion: String? = nil,

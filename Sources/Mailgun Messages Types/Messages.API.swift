@@ -148,12 +148,12 @@ extension Mailgun.Messages {
             // Add CC/BCC
             if let cc = request.cc {
                 for ccRecipient in cc {
-                    appendField(name: Mailgun.Messages.Send.Request.CodingKeys.cc.rawValue, value: ccRecipient)
+                    appendField(name: Mailgun.Messages.Send.Request.CodingKeys.cc.rawValue, value: ccRecipient.rawValue)
                 }
             }
             if let bcc = request.bcc {
                 for bccRecipient in bcc {
-                    appendField(name: Mailgun.Messages.Send.Request.CodingKeys.bcc.rawValue, value: bccRecipient)
+                    appendField(name: Mailgun.Messages.Send.Request.CodingKeys.bcc.rawValue, value: bccRecipient.rawValue)
                 }
             }
 

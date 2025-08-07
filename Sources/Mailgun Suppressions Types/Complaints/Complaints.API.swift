@@ -6,10 +6,10 @@ extension Mailgun.Suppressions.Complaints {
     @CasePathable
     @dynamicMemberLookup
     public enum API: Equatable, Sendable {
-        case importList(domain: Domain, request: Foundation.Data)
+        case importList(domain: Domain, request: Mailgun.Suppressions.Complaints.Import.Request)
         case get(domain: Domain, address: EmailAddress)
         case delete(domain: Domain, address: EmailAddress)
-        case list(domain: Domain, request: Mailgun.Suppressions.Complaints.List.Request)
+        case list(domain: Domain, request: Mailgun.Suppressions.Complaints.List.Request?)
         case create(domain: Domain, request: Mailgun.Suppressions.Complaints.Create.Request)
         case deleteAll(domain: Domain)
     }
@@ -27,14 +27,7 @@ extension Mailgun.Suppressions.Complaints.API {
                     Path { Parse(.string.representing(Domain.self)) }
                     Path.complaints
                     Path { "import" }
-
-                    let multipart = URLFormCoding.Multipart.FileUpload.csv()
-
-                    Headers {
-                        Field.contentType { multipart.contentType }
-                    }
-
-                    Body(multipart)
+                    Body(.multipart(Mailgun.Suppressions.Complaints.Import.Request.self))
                 }
 
                 URLRouting.Route(.case(Mailgun.Suppressions.Complaints.API.get)) {
@@ -58,19 +51,21 @@ extension Mailgun.Suppressions.Complaints.API {
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }
                     Path.complaints
-                    Parse(.memberwise(Mailgun.Suppressions.Complaints.List.Request.init)) {
-                        URLRouting.Query {
-                            Optionally {
-                                Field("address") { Parse(.string.representing(EmailAddress.self)) }
-                            }
-                            Optionally {
-                                Field("term") { Parse(.string) }
-                            }
-                            Optionally {
-                                Field("limit") { Digits() }
-                            }
-                            Optionally {
-                                Field("page") { Parse(.string) }
+                    Optionally {
+                        Parse(.memberwise(Mailgun.Suppressions.Complaints.List.Request.init)) {
+                            URLRouting.Query {
+                                Optionally {
+                                    Field("address") { Parse(.string.representing(EmailAddress.self)) }
+                                }
+                                Optionally {
+                                    Field("term") { Parse(.string) }
+                                }
+                                Optionally {
+                                    Field("limit") { Digits() }
+                                }
+                                Optionally {
+                                    Field("page") { Parse(.string) }
+                                }
                             }
                         }
                     }
