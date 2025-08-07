@@ -848,25 +848,6 @@ For detailed implementation patterns and best practices, see [CLAUDE.md](CLAUDE.
 - [swift-url-routing Documentation](https://pointfreeco.github.io/swift-url-routing)
 - [Point-Free Episodes on Dependencies](https://www.pointfree.co/collections/dependencies)
 
-## Requirements
-
-### Version Compatibility
-
-| swift-mailgun-types | Swift | Platforms | Status |
-|---------------------|-------|-----------|--------|
-| main | 5.10+ | macOS 14+, iOS 17+, tvOS 17+, watchOS 10+, Linux | Active Development |
-| 1.0+ | 5.10+ | macOS 14+, iOS 17+, tvOS 17+, watchOS 10+, Linux | Stable |
-
-### Dependencies
-
-| Dependency | Version | Purpose |
-|------------|---------|---------|
-| [swift-dependencies](https://github.com/pointfreeco/swift-dependencies) | 1.0+ | Dependency injection & testing |
-| [swift-types-foundation](https://github.com/coenttb/swift-types-foundation) | main | Email, Domain, URL types |
-| [swift-url-routing](https://github.com/pointfreeco/swift-url-routing) | 0.6+ | Type-safe API routing |
-| [swift-url-form-coding](https://github.com/coenttb/swift-url-form-coding) | main | Form encoding/decoding |
-| [swift-case-paths](https://github.com/pointfreeco/swift-case-paths) | 1.0+ | Enum ergonomics |
-
 ## Example Projects
 
 See swift-mailgun-types in action:
