@@ -30,6 +30,28 @@ extension Form.Decoder {
             arrayParsingStrategy: .brackets
         )
     }
+    
+    public static var mailgunRoutes: Form.Decoder {
+        return Form.Decoder(
+            dataDecodingStrategy: .base64,
+            dateDecodingStrategy: .init { dateString in
+                if let date = rfc2822Formatter.date(from: dateString) {
+                    return date
+                }
+
+                if let timestamp = Double(dateString) {
+                    return Date(timeIntervalSince1970: timestamp)
+                }
+
+                if let date = ISO8601DateFormatter().date(from: dateString) {
+                    return date
+                }
+
+                return nil
+            },
+            arrayParsingStrategy: .accumulateValues
+        )
+    }
 }
 
 extension Form.Encoder {

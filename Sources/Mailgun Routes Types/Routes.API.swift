@@ -30,13 +30,13 @@ extension Mailgun.Routes.API {
                     Method.post
                     Path { "v3" }
                     Path.routes
-                    Body(.form(Mailgun.Routes.Create.Request.self, decoder: .mailgun, encoder: .mailgunRoutes))
+                    Body(.form(Mailgun.Routes.Create.Request.self, decoder: .mailgunRoutes, encoder: .mailgunRoutes))
                 }
 
                 URLRouting.Route(.case(Mailgun.Routes.API.update)) {
                     let multipartFormCoding = URLFormCoding.Multipart.Conversion(
                         Mailgun.Routes.Update.Request.self,
-                        decoder: .mailgun,
+                        decoder: .mailgunRoutes,
                         encoder: .mailgunRoutes  // Use the encoder with accumulateValues for arrays
                     )
                     Headers {

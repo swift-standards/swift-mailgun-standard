@@ -87,9 +87,7 @@ extension Mailgun.Subaccounts.API {
                     Path.accounts
                     Path.subaccounts
                     Headers {
-                        Field("X-Mailgun-On-Behalf-Of") {
-                            Parse(.string)
-                        }
+                        Field("X-Mailgun-On-Behalf-Of", .string)
                     }
                 }
 

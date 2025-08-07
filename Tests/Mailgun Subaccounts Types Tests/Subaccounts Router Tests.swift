@@ -64,10 +64,14 @@ struct SubaccountsRouterTests {
         let subaccountId = "test-subaccount-123"
         let api: Mailgun.Subaccounts.API = .delete(subaccountId: subaccountId)
 
-        let url = router.url(for: api)
-        #expect(url.path == "/v5/accounts/subaccounts/test-subaccount-123")
+        let request = try router.request(for: api)
+        #expect(request.url?.path == "/v5/accounts/subaccounts")
+        
+        let result = try router.print(api)
+        #expect(result.headers.fields["x-mailgun-on-behalf-of"] != nil)
+        #expect(result.headers.fields["x-mailgun-on-behalf-of"]?.contains("test-subaccount-123") == true )
 
-        let match: Mailgun.Subaccounts.API = try router.match(request: try router.request(for: api))
+        let match: Mailgun.Subaccounts.API = try router.match(request: request)
         #expect(match.is(\.delete))
         #expect(match.delete?.description == "test-subaccount-123")
     }

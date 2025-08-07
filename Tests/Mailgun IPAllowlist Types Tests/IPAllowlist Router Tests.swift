@@ -21,7 +21,7 @@ struct IPAllowlistRouterTests {
         let api: Mailgun.IPAllowlist.API = .list
 
         let url = router.url(for: api)
-        #expect(url.path == "/v2/ip_Allowlist")
+        #expect(url.path == "/v2/ip_allowlist")
 
         let match: Mailgun.IPAllowlist.API = try router.match(request: try router.request(for: api))
         #expect(match.is(\.list))
