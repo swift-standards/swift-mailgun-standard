@@ -11,12 +11,12 @@ extension Mailgun.Reporting.Tags {
     @CasePathable
     @dynamicMemberLookup
     public enum API: Equatable, Sendable {
-        case list(domain: Domain, request: Mailgun.Reporting.Tags.Tag.List.Request)
+        case list(domain: Domain, request: Mailgun.Reporting.Tags.List.Request?)
         case get(domain: Domain, tag: String)
-        case update(domain: Domain, tag: String, description: String?)
+        case update(domain: Domain, tag: String, request: Mailgun.Reporting.Tags.Update.Request)
         case delete(domain: Domain, tag: String)
-        case stats(domain: Domain, tag: String, request: Mailgun.Reporting.Tags.Tag.Stats.Request)
-        case aggregates(domain: Domain, tag: String, request: Mailgun.Reporting.Tags.Tag.Aggregates.Request)
+        case stats(domain: Domain, tag: String, request: Mailgun.Reporting.Tags.Stats.Request)
+        case aggregates(domain: Domain, tag: String, request: Mailgun.Reporting.Tags.Aggregates.Request)
         case limits(domain: Domain)
     }
 }
@@ -33,13 +33,15 @@ extension Mailgun.Reporting.Tags.API {
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }
                     Path.tags
-                    Parse(.memberwise(Mailgun.Reporting.Tags.Tag.List.Request.init)) {
-                        Query {
+                    Optionally {
+                        Parse(.memberwise(Mailgun.Reporting.Tags.List.Request.init)) {
+                            Query {
                             Optionally {
                                 Field("page") { Parse(.string) }
                             }
                             Optionally {
                                 Field("limit") { Digits() }
+                            }
                             }
                         }
                     }
@@ -65,7 +67,7 @@ extension Mailgun.Reporting.Tags.API {
                     Query {
                         Field("tag") { Parse(.string) }
                     }
-                    Optionally {
+                    Parse(.memberwise(Mailgun.Reporting.Tags.Update.Request.init)) {
                         Query {
                             Field("description") { Parse(.string) }
                         }
@@ -93,7 +95,7 @@ extension Mailgun.Reporting.Tags.API {
                     Query {
                         Field("tag") { Parse(.string) }
                     }
-                    Parse(.memberwise(Mailgun.Reporting.Tags.Tag.Stats.Request.init)) {
+                    Parse(.memberwise(Mailgun.Reporting.Tags.Stats.Request.init)) {
                         Query {
                             Field("event") {
                                 Many {
@@ -136,7 +138,7 @@ extension Mailgun.Reporting.Tags.API {
                     Query {
                         Field("tag") { Parse(.string) }
                     }
-                    Parse(.memberwise(Mailgun.Reporting.Tags.Tag.Aggregates.Request.init)) {
+                    Parse(.memberwise(Mailgun.Reporting.Tags.Aggregates.Request.init)) {
                         Query {
                             Field("type") { Parse(.string) }
                         }

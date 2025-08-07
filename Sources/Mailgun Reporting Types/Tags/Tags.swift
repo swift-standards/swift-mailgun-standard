@@ -11,6 +11,30 @@ extension Mailgun.Reporting {
 }
 
 extension Mailgun.Reporting.Tags {
+    public enum Get {}
+}
+
+extension Mailgun.Reporting.Tags.Get {
+    public typealias Response = Mailgun.Reporting.Tags.Tag
+}
+
+extension Mailgun.Reporting.Tags {
+    public enum Update {}
+}
+
+extension Mailgun.Reporting.Tags.Update {
+    public struct Request: Sendable, Codable, Equatable {
+        public let description: String
+        
+        public init(description: String) {
+            self.description = description
+        }
+    }
+    
+    public typealias Response = Mailgun.Reporting.Tags.Tag
+}
+
+extension Mailgun.Reporting.Tags {
     public struct Tag: Sendable, Codable, Equatable {
         public let tag: String
         public let description: String
@@ -38,7 +62,7 @@ extension Mailgun.Reporting.Tags {
     }
 }
 
-extension Mailgun.Reporting.Tags.Tag {
+extension Mailgun.Reporting.Tags {
     public enum List {
         public struct Request: Sendable, Codable, Equatable {
             public let page: String?
@@ -76,7 +100,7 @@ extension Mailgun.Reporting.Tags.Tag {
     }
 }
 
-extension Mailgun.Reporting.Tags.Tag {
+extension Mailgun.Reporting.Tags {
     public enum Stats {
         public struct Request: Sendable, Codable, Equatable {
             public let event: [String]
@@ -180,7 +204,7 @@ extension Mailgun.Reporting.Tags.Tag {
     }
 }
 
-extension Mailgun.Reporting.Tags.Tag {
+extension Mailgun.Reporting.Tags {
     public enum Aggregates {
         public struct Request: Sendable, Codable, Equatable {
             public let type: String
@@ -269,17 +293,21 @@ extension Mailgun.Reporting.Tags.Tag {
     }
 }
 
-extension Mailgun.Reporting.Tags.Tag {
+extension Mailgun.Reporting.Tags {
     public enum Delete {}
 }
 
-extension Mailgun.Reporting.Tags.Tag.Delete {
-    public struct Response: Decodable {
+extension Mailgun.Reporting.Tags.Delete {
+    public struct Response: Sendable, Decodable, Equatable {
         public let message: String
+        
+        public init(message: String) {
+            self.message = message
+        }
     }
 }
 
-extension Mailgun.Reporting.Tags.Tag {
+extension Mailgun.Reporting.Tags {
     public enum Limits {
         public struct Response: Sendable, Codable, Equatable {
             public let limit: Int
