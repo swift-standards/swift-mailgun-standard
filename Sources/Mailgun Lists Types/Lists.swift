@@ -178,6 +178,11 @@ extension Mailgun.Lists.List {
             self.totalCount = totalCount
             self.items = items
         }
+        
+        enum CodingKeys: String, CodingKey {
+            case totalCount = "total_count"
+            case items
+        }
     }
 
     public enum Update {
