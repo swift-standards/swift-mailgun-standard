@@ -20,7 +20,7 @@ extension Mailgun.Users {
         public let activated: Bool?
         public let name: String?
         public let isDisabled: Bool?
-        public let email: String
+        public let email: EmailAddress
         public let emailDetails: EmailDetails?
         public let role: String?
         public let accountId: String?
@@ -42,7 +42,7 @@ extension Mailgun.Users {
             activated: Bool? = nil,
             name: String? = nil,
             isDisabled: Bool? = nil,
-            email: String,
+            email: EmailAddress,
             emailDetails: EmailDetails? = nil,
             role: String? = nil,
             accountId: String? = nil,

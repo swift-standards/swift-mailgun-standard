@@ -27,7 +27,7 @@ extension Mailgun.AccountManagement {
         public var addSandboxAuthRecipient: @Sendable (_ request: Mailgun.AccountManagement.Sandbox.Auth.Recipients.Add.Request) async throws -> Mailgun.AccountManagement.Sandbox.Auth.Recipients.Add.Response
 
         @DependencyEndpoint
-        public var deleteSandboxAuthRecipient: @Sendable (_ email: String) async throws -> Mailgun.AccountManagement.Sandbox.Auth.Recipients.Delete.Response
+        public var deleteSandboxAuthRecipient: @Sendable (_ email: EmailAddress) async throws -> Mailgun.AccountManagement.Sandbox.Auth.Recipients.Delete.Response
 
         @DependencyEndpoint
         public var resendActivationEmail: @Sendable () async throws -> Mailgun.AccountManagement.ResendActivationEmail.Response

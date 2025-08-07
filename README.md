@@ -649,7 +649,7 @@ import Mailgun_Types
 struct EmailService {
     @Dependency(Mailgun.Client.self) var mailgun
     
-    func sendWelcomeEmail(to email: String, name: String) async throws {
+    func sendWelcomeEmail(to email: EmailAddress, name: String) async throws {
         let request = Mailgun.Messages.Send.Request(
             from: .init("welcome@company.com"),
             to: [.init(email)],

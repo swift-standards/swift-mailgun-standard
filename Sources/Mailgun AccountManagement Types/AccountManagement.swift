@@ -114,10 +114,10 @@ extension Mailgun.AccountManagement.Sandbox.Auth {
 
 extension Mailgun.AccountManagement.Sandbox.Auth.Recipients {
     public struct Recipient: Sendable, Decodable, Equatable {
-        public let email: String
+        public let email: EmailAddress
         public let activated: Bool
 
-        public init(email: String, activated: Bool) {
+        public init(email: EmailAddress, activated: Bool) {
             self.email = email
             self.activated = activated
         }
@@ -140,9 +140,9 @@ extension Mailgun.AccountManagement.Sandbox.Auth.Recipients.List {
 
 extension Mailgun.AccountManagement.Sandbox.Auth.Recipients.Add {
     public struct Request: Sendable, Codable, Equatable {
-        public let email: String
+        public let email: EmailAddress
 
-        public init(email: String) {
+        public init(email: EmailAddress) {
             self.email = email
         }
     }

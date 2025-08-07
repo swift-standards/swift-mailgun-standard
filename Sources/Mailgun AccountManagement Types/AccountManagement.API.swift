@@ -16,7 +16,7 @@ extension Mailgun.AccountManagement {
         case regenerateHttpSigningKey
         case getSandboxAuthRecipients
         case addSandboxAuthRecipient(request: Mailgun.AccountManagement.Sandbox.Auth.Recipients.Add.Request)
-        case deleteSandboxAuthRecipient(email: String)
+        case deleteSandboxAuthRecipient(email: EmailAddress)
         case resendActivationEmail
         case getSAMLOrganization
         case addSAMLOrganization(request: Mailgun.AccountManagement.SAML.Organization.Add.Request)
@@ -71,7 +71,7 @@ extension Mailgun.AccountManagement.API {
                     Path.authRecipients
                     Parse(.memberwise(Mailgun.AccountManagement.Sandbox.Auth.Recipients.Add.Request.init)) {
                         URLRouting.Query {
-                            Field("email") { Parse(.string) }
+                            Field("email") { Parse(.string.representing(EmailAddress.self)) }
                         }
                     }
                 }
@@ -81,7 +81,7 @@ extension Mailgun.AccountManagement.API {
                     Path { "v5" }
                     Path.sandbox
                     Path.authRecipients
-                    Path { Parse(.string) }
+                    Path { Parse(.string.representing(EmailAddress.self)) }
                 }
 
                 URLRouting.Route(.case(Mailgun.AccountManagement.API.resendActivationEmail)) {
