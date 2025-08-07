@@ -38,6 +38,8 @@ extension Mailgun.Reporting.Events {
         public let storage: Storage?
         public let primaryDkim: String?
         public let campaigns: [String]?
+        public let originatingIp: String?
+        public let apiKeyId: String?
 
         public init(
             method: String? = nil,
@@ -64,7 +66,9 @@ extension Mailgun.Reporting.Events {
             severity: Mailgun.Reporting.Events.List.Query.Severity? = nil,
             storage: Storage? = nil,
             primaryDkim: String? = nil,
-            campaigns: [String]? = nil
+            campaigns: [String]? = nil,
+            originatingIp: String? = nil,
+            apiKeyId: String? = nil
         ) {
             self.method = method
             self.event = event
@@ -91,6 +95,8 @@ extension Mailgun.Reporting.Events {
             self.storage = storage
             self.primaryDkim = primaryDkim
             self.campaigns = campaigns
+            self.originatingIp = originatingIp
+            self.apiKeyId = apiKeyId
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -119,6 +125,8 @@ extension Mailgun.Reporting.Events {
             case storage
             case primaryDkim = "primary-dkim"
             case campaigns
+            case originatingIp = "originating-ip"
+            case apiKeyId = "api-key-id"
         }
     }
 }
@@ -193,7 +201,7 @@ extension Mailgun.Reporting.Events.Event {
         public let headers: Headers
         public let attachments: [Attachment]?
         public let size: Int?
-        public let scheduledFor: String?
+        public let scheduledFor: TimeInterval?
         public let storage: Mailgun.Reporting.Events.Event.Storage?
 
         private enum CodingKeys: String, CodingKey {
@@ -208,7 +216,7 @@ extension Mailgun.Reporting.Events.Event {
             headers: Headers,
             attachments: [Attachment]?,
             size: Int?,
-            scheduledFor: String? = nil,
+            scheduledFor: TimeInterval? = nil,
             storage: Mailgun.Reporting.Events.Event.Storage? = nil
         ) {
             self.headers = headers
@@ -219,8 +227,8 @@ extension Mailgun.Reporting.Events.Event {
         }
 
         public struct Headers: Sendable, Decodable, Equatable {
-            public let messageId: String
-            public let from: String
+            public let messageId: String?
+            public let from: String?
             public let to: String?
             public let subject: String?
 
@@ -232,8 +240,8 @@ extension Mailgun.Reporting.Events.Event {
             }
 
             public init(
-                messageId: String,
-                from: String,
+                messageId: String? = nil,
+                from: String? = nil,
                 to: String? = nil,
                 subject: String? = nil
             ) {
@@ -248,6 +256,12 @@ extension Mailgun.Reporting.Events.Event {
             public let filename: String
             public let contentType: String
             public let size: Int
+
+            private enum CodingKeys: String, CodingKey {
+                case filename
+                case contentType = "content-type"
+                case size
+            }
 
             public init(filename: String, contentType: String, size: Int) {
                 self.filename = filename
