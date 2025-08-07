@@ -5,7 +5,8 @@
 //  Created by Claude on 31/12/2024.
 //
 
-import Mailgun_Types_Shared
+@_exported import Mailgun_Types_Shared
+
 extension Mailgun.Reporting {
     public enum Tags {}
 }

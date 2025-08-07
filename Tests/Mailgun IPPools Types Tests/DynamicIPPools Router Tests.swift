@@ -16,7 +16,7 @@ struct DynamicIPPoolsRouterTests {
     func testListHistoryURL() throws {
         let router: Mailgun.DynamicIPPools.API.Router = .init()
 
-        let request = Mailgun.DynamicIPPools.HistoryListRequest(
+        let request = Mailgun.DynamicIPPools.HistoryList.Request(
             limit: 10,
             includeSubaccounts: true,
             domain: "test.com",
@@ -50,7 +50,7 @@ struct DynamicIPPoolsRouterTests {
             listHistory: { request in
                 #expect(request.limit == 20)
                 #expect(request.includeSubaccounts == true)
-                return Mailgun.DynamicIPPools.HistoryListResponse(
+                return Mailgun.DynamicIPPools.HistoryList.Response(
                     items: [
                         Mailgun.DynamicIPPools.HistoryRecord(
                             domain: "test.com",
@@ -68,7 +68,7 @@ struct DynamicIPPoolsRouterTests {
                             reason: "Initial assignment"
                         )
                     ],
-                    paging: Mailgun.DynamicIPPools.HistoryListResponse.PagingInfo(
+                    paging: Mailgun.DynamicIPPools.HistoryList.Response.PagingInfo(
                         next: "/v1/dynamic_pools/history?page=2",
                         previous: nil,
                         first: "/v1/dynamic_pools/history?page=1",
@@ -78,14 +78,14 @@ struct DynamicIPPoolsRouterTests {
             },
             removeOverride: { domain in
                 #expect(domain == "test.com")
-                return Mailgun.DynamicIPPools.RemoveOverrideResponse(
+                return Mailgun.DynamicIPPools.RemoveOverride.Response(
                     message: "Override removed successfully"
                 )
             }
         )
 
         let historyResponse = try await client.listHistory(
-            Mailgun.DynamicIPPools.HistoryListRequest(
+            Mailgun.DynamicIPPools.HistoryList.Request(
                 limit: 20,
                 includeSubaccounts: true
             )
@@ -129,7 +129,7 @@ struct DynamicIPPoolsRouterTests {
 
     @Test("Test history list request with all parameters")
     func testHistoryListRequestAllParameters() throws {
-        let request = Mailgun.DynamicIPPools.HistoryListRequest(
+        let request = Mailgun.DynamicIPPools.HistoryList.Request(
             limit: 50,
             includeSubaccounts: false,
             domain: "specific.com",

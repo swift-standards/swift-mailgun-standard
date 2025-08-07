@@ -21,7 +21,8 @@ struct ComplaintsRouterTests {
         let router: Mailgun.Suppressions.Complaints.API.Router = .init()
 
         let testData = Data("test".utf8)
-        let api: Mailgun.Suppressions.Complaints.API = .importList(domain: try .init("test.domain.com"), request: testData)
+        let request = Mailgun.Suppressions.Complaints.Import.Request(file: testData)
+        let api: Mailgun.Suppressions.Complaints.API = .importList(domain: try .init("test.domain.com"), request: request)
 
         let url = router.url(for: api)
         #expect(url.path == "/v3/test.domain.com/complaints/import")

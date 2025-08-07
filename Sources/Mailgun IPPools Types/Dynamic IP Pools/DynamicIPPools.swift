@@ -5,7 +5,7 @@
 //  Created by Assistant on 05/08/2025.
 //
 
-import Mailgun_Types_Shared
+@_exported import Mailgun_Types_Shared
 extension Mailgun {
     public enum DynamicIPPools {}
 }

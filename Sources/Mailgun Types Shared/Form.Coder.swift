@@ -48,6 +48,17 @@ extension Form.Encoder {
             arrayEncodingStrategy: .accumulateValues
         )
     }
+    
+    public static var mailgunEvents: Form.Encoder {
+        return Form.Encoder(
+            dataEncodingStrategy: .base64,
+            dateEncodingStrategy: .init { date in
+                // Convert to Unix timestamp (epoch time) for Mailgun Events API
+                String(Int(date.timeIntervalSince1970))
+            },
+            arrayEncodingStrategy: .accumulateValues
+        )
+    }
 }
 
 private let rfc2822Formatter: DateFormatter = {

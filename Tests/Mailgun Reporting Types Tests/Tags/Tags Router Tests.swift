@@ -18,7 +18,7 @@ struct TagsRouterTests {
     func testListTagsURL() throws {
         let router: Mailgun.Reporting.Tags.API.Router = .init()
 
-        let request = Mailgun.Reporting.Tags.Tag.List.Request(
+        let request = Mailgun.Reporting.Tags.List.Request(
             page: "first",
             limit: 100
         )

@@ -7,6 +7,9 @@
 
 import Mailgun_Types_Shared
 import RFC_2822
+import UnixEpochParsing
+import Foundation
+
 extension Mailgun.Reporting.Events {
     @CasePathable
     @dynamicMemberLookup
@@ -46,12 +49,12 @@ extension Mailgun.Reporting.Events.List.Query {
                 Parse(.memberwise(Mailgun.Reporting.Events.List.Query.init)) {
                     Optionally {
                         Field("begin") {
-                            RFC_2822.Date.Parser()
+                            Date.UnixEpoch.Parser()
                         }
                     }
                     Optionally {
                         Field("end") {
-                            RFC_2822.Date.Parser()
+                            Date.UnixEpoch.Parser()
                         }
                     }
                     Optionally {

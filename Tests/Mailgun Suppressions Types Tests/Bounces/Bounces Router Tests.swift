@@ -91,9 +91,9 @@ struct BouncesRouterTests {
         let match: Mailgun.Suppressions.Bounces.API = try router.match(request: try router.request(for: api))
         #expect(match.is(\.list))
         #expect(match.list?.domain == (try .init("test.domain.com")))
-        #expect(match.list?.request.limit == 25)
-        #expect(match.list?.request.page == "next")
-        #expect(match.list?.request.term == "test")
+        #expect(match.list?.request?.limit == 25)
+        #expect(match.list?.request?.page == "next")
+        #expect(match.list?.request?.term == "test")
     }
 
     @Test("Creates correct URL for creating bounce")

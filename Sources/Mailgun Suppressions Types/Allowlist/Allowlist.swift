@@ -7,7 +7,7 @@
 
 import Domain
 import EmailAddress
-import Mailgun_Types_Shared
+@_exported import Mailgun_Types_Shared
 import Foundation
 
 extension Mailgun.Suppressions {

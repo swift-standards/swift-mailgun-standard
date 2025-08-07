@@ -22,8 +22,8 @@ struct MessagesRouterTests {
             subject: "Test Subject",
             html: "<p>Test content</p>",
             text: "Test content",
-            cc: ["cc@test.com"],
-            bcc: ["bcc@test.com"],
+            cc: [try .init("cc@test.com")],
+            bcc: [try .init("bcc@test.com")],
             tags: ["test-tag"],
             testMode: true
         )
@@ -41,8 +41,8 @@ struct MessagesRouterTests {
         #expect(match.send?.request.subject == "Test Subject")
         #expect(match.send?.request.html == "<p>Test content</p>")
         #expect(match.send?.request.text == "Test content")
-        #expect(match.send?.request.cc == ["cc@test.com"])
-        #expect(match.send?.request.bcc == ["bcc@test.com"])
+        #expect(match.send?.request.cc?.map(\.rawValue) == ["cc@test.com"])
+        #expect(match.send?.request.bcc?.map(\.rawValue) == ["bcc@test.com"])
         #expect(match.send?.request.tags == ["test-tag"])
         #expect(match.send?.request.testMode == true)
     }

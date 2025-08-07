@@ -18,9 +18,11 @@ struct TemplatesRouterTests {
 
         let api: Mailgun.Templates.API = .list(
             domainId: try .init("test.domain.com"),
-            page: .first,
-            limit: 100,
-            p: nil
+            request: Mailgun.Templates.List.Request(
+                page: .first,
+                limit: 100,
+                p: nil
+            )
         )
 
         let url = router.url(for: api)
@@ -36,20 +38,19 @@ struct TemplatesRouterTests {
         let match: Mailgun.Templates.API = try router.match(request: try router.request(for: api))
         #expect(match.is(\.list))
         #expect(match.list?.domainId == (try .init("test.domain.com")))
-        #expect(match.list?.page == .first)
-        #expect(match.list?.limit == 100)
-        #expect(match.list?.p == nil)
+        #expect(match.list?.request?.page == .first)
+        #expect(match.list?.request?.limit == 100)
+        #expect(match.list?.request?.p == nil)
     }
 
     @Test("Creates correct URL for creating template")
     func testCreateTemplateURL() throws {
         let router: Mailgun.Templates.API.Router = .init()
 
-        let request = Mailgun.Templates.Template.Create.Request(
+        let request = Mailgun.Templates.Create.Request(
             name: "Test Template",
             description: "Test Description",
             template: "<html>Hello {{name}}</html>",
-            engine: "handlebars",
             tag: "v1",
             comment: "Initial version"
         )
@@ -70,7 +71,7 @@ struct TemplatesRouterTests {
 
         let domain = try Domain("test.domain.com")
         let templateId = "template123"
-        let api: Mailgun.Templates.API = .get(domainId: domain, templateId: templateId, active: "active")
+        let api: Mailgun.Templates.API = .get(domainId: domain, templateName: templateId, request: Mailgun.Templates.Get.Request(active: "active"))
 
         let url = router.url(for: api)
         #expect(url.path == "/v3/test.domain.com/templates/template123")
@@ -78,8 +79,8 @@ struct TemplatesRouterTests {
         let match: Mailgun.Templates.API = try router.match(request: try router.request(for: api))
         #expect(match.is(\.get))
         #expect(match.get?.domainId == (try .init("test.domain.com")))
-        #expect(match.get?.templateId == "template123")
-        #expect(match.get?.active == "active")
+        #expect(match.get?.templateName == "template123")
+        #expect(match.get?.request?.active == "active")
     }
 
     @Test("Creates correct URL for updating template")
@@ -88,11 +89,10 @@ struct TemplatesRouterTests {
 
         let domain = try Domain("test.domain.com")
         let templateId = "template123"
-        let request = Mailgun.Templates.Template.Update.Request(
-            name: "Updated Template",
+        let request = Mailgun.Templates.Update.Request(
             description: "Updated Description"
         )
-        let api: Mailgun.Templates.API = .update(domainId: domain, templateId: templateId, request: request)
+        let api: Mailgun.Templates.API = .update(domainId: domain, templateName: templateId, request: request)
 
         let url = router.url(for: api)
         #expect(url.path == "/v3/test.domain.com/templates/template123")
@@ -107,7 +107,7 @@ struct TemplatesRouterTests {
 
         let domain = try Domain("test.domain.com")
         let templateId = "template123"
-        let api: Mailgun.Templates.API = .delete(domainId: domain, templateId: templateId)
+        let api: Mailgun.Templates.API = .delete(domainId: domain, templateName: templateId)
 
         let url = router.url(for: api)
         #expect(url.path == "/v3/test.domain.com/templates/template123")
@@ -115,7 +115,7 @@ struct TemplatesRouterTests {
         let match: Mailgun.Templates.API = try router.match(request: try router.request(for: api))
         #expect(match.is(\.delete))
         #expect(match.delete?.domainId == (try .init("test.domain.com")))
-        #expect(match.delete?.templateId == "template123")
+        #expect(match.delete?.templateName == "template123")
     }
 
     @Test("Creates correct URL for listing template versions")
@@ -124,7 +124,7 @@ struct TemplatesRouterTests {
 
         let domain = try Domain("test.domain.com")
         let templateId = "template123"
-        let api: Mailgun.Templates.API = .versions(domainId: domain, templateName: templateId, page: .next, limit: 50, p: nil)
+        let api: Mailgun.Templates.API = .versions(domainId: domain, templateName: templateId, request: Mailgun.Templates.Versions.Request(page: .next, limit: 50, p: nil))
 
         let url = router.url(for: api)
         #expect(url.path == "/v3/test.domain.com/templates/template123/versions")
@@ -140,9 +140,9 @@ struct TemplatesRouterTests {
         #expect(match.is(\.versions))
         #expect(match.versions?.domainId == (try .init("test.domain.com")))
         #expect(match.versions?.templateName == "template123")
-        #expect(match.versions?.page == .next)
-        #expect(match.versions?.limit == 50)
-        #expect(match.versions?.p == nil)
+        #expect(match.versions?.request?.page == .next)
+        #expect(match.versions?.request?.limit == 50)
+        #expect(match.versions?.request?.p == nil)
     }
 
     @Test("Creates correct URL for creating template version")
@@ -154,10 +154,9 @@ struct TemplatesRouterTests {
         let request = Mailgun.Templates.Version.Create.Request(
             template: "<html>Hello {{name}}</html>",
             tag: "v2",
-            comment: "Second version",
-            engine: "handlebars"
+            comment: "Second version"
         )
-        let api: Mailgun.Templates.API = .createVersion(domainId: domain, templateId: templateId, request: request)
+        let api: Mailgun.Templates.API = .createVersion(domainId: domain, templateName: templateId, request: request)
 
         let url = router.url(for: api)
         #expect(url.path == "/v3/test.domain.com/templates/template123/versions")
@@ -173,7 +172,7 @@ struct TemplatesRouterTests {
         let domain = try Domain("test.domain.com")
         let templateId = "template123"
         let versionId = "version456"
-        let api: Mailgun.Templates.API = .getVersion(domainId: domain, templateId: templateId, versionId: versionId)
+        let api: Mailgun.Templates.API = .getVersion(domainId: domain, templateName: templateId, versionName: versionId)
 
         let url = router.url(for: api)
         #expect(url.path == "/v3/test.domain.com/templates/template123/versions/version456")
@@ -181,8 +180,8 @@ struct TemplatesRouterTests {
         let match: Mailgun.Templates.API = try router.match(request: try router.request(for: api))
         #expect(match.is(\.getVersion))
         #expect(match.getVersion?.domainId == (try .init("test.domain.com")))
-        #expect(match.getVersion?.templateId == "template123")
-        #expect(match.getVersion?.versionId == "version456")
+        #expect(match.getVersion?.templateName == "template123")
+        #expect(match.getVersion?.versionName == "version456")
     }
 
     @Test("Creates correct URL for updating template version")
@@ -194,12 +193,10 @@ struct TemplatesRouterTests {
         let versionId = "version456"
         let request = Mailgun.Templates.Version.Update.Request(
             template: "<html>Updated {{name}}</html>",
-            tag: "v2-updated",
-            active: true,
-            engine: "handlebars",
-            comment: "Updated version"
+            comment: "Updated version",
+            active: "yes"
         )
-        let api: Mailgun.Templates.API = .updateVersion(domainId: domain, templateId: templateId, versionId: versionId, request: request)
+        let api: Mailgun.Templates.API = .updateVersion(domainId: domain, templateName: templateId, versionName: versionId, request: request)
 
         let url = router.url(for: api)
         #expect(url.path == "/v3/test.domain.com/templates/template123/versions/version456")
@@ -215,7 +212,7 @@ struct TemplatesRouterTests {
         let domain = try Domain("test.domain.com")
         let templateId = "template123"
         let versionId = "version456"
-        let api: Mailgun.Templates.API = .deleteVersion(domainId: domain, templateId: templateId, versionId: versionId)
+        let api: Mailgun.Templates.API = .deleteVersion(domainId: domain, templateName: templateId, versionName: versionId)
 
         let url = router.url(for: api)
         #expect(url.path == "/v3/test.domain.com/templates/template123/versions/version456")
@@ -223,8 +220,8 @@ struct TemplatesRouterTests {
         let match: Mailgun.Templates.API = try router.match(request: try router.request(for: api))
         #expect(match.is(\.deleteVersion))
         #expect(match.deleteVersion?.domainId == (try .init("test.domain.com")))
-        #expect(match.deleteVersion?.templateId == "template123")
-        #expect(match.deleteVersion?.versionId == "version456")
+        #expect(match.deleteVersion?.templateName == "template123")
+        #expect(match.deleteVersion?.versionName == "version456")
     }
 
     @Test("Creates correct URL for copying template version")
@@ -236,7 +233,7 @@ struct TemplatesRouterTests {
         let versionName = "version456"
         let newVersionName = "v3"
         let comment = "Copied version"
-        let api: Mailgun.Templates.API = .copyVersion(domainId: domain, templateName: templateName, versionName: versionName, newVersionName: newVersionName, comment: comment)
+        let api: Mailgun.Templates.API = .copyVersion(domainId: domain, templateName: templateName, versionName: versionName, newVersionName: newVersionName, request: Mailgun.Templates.Version.Copy.Request(comment: comment))
 
         let url = router.url(for: api)
         #expect(url.path == "/v3/test.domain.com/templates/template123/versions/version456/copy/v3")
@@ -253,6 +250,6 @@ struct TemplatesRouterTests {
         #expect(match.copyVersion?.templateName == "template123")
         #expect(match.copyVersion?.versionName == "version456")
         #expect(match.copyVersion?.newVersionName == "v3")
-        #expect(match.copyVersion?.comment == "Copied version")
+        #expect(match.copyVersion?.request?.comment == "Copied version")
     }
 }

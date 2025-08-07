@@ -44,7 +44,7 @@ struct RoutesRouterTests {
             .get(id: "test"),
             .update(id: "test", request: .init()),
             .delete(id: "test"),
-            .match(recipient: "test@example.com")
+            .match(address: "test@example.com")
         ]
 
         for api in apis {

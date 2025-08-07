@@ -18,7 +18,7 @@ struct UsersRouterTests {
     func testListUsersURL() throws {
         let router: Mailgun.Users.API.Router = .init()
 
-        let api: Mailgun.Users.API = .list
+        let api: Mailgun.Users.API = .list(request: nil)
 
         let url = router.url(for: api)
         #expect(url.path == "/v5/users")
@@ -62,8 +62,7 @@ struct UsersRouterTests {
 
         let userId = "user-123"
         let orgId = "org-456"
-        let request = Mailgun.Users.Organization.UpdateRequest(role: "admin")
-        let api: Mailgun.Users.API = .addToOrganization(userId: userId, orgId: orgId, request: request)
+        let api: Mailgun.Users.API = .addToOrganization(userId: userId, orgId: orgId)
 
         let url = router.url(for: api)
         #expect(url.path == "/v5/users/user-123/org/org-456")
@@ -72,7 +71,6 @@ struct UsersRouterTests {
         #expect(match.is(\.addToOrganization))
         #expect(match.addToOrganization?.userId == userId)
         #expect(match.addToOrganization?.orgId == orgId)
-        #expect(match.addToOrganization?.request.role == "admin")
     }
 
     @Test("Creates correct URL for removing user from organization")
@@ -96,10 +94,10 @@ struct UsersRouterTests {
     func testAllEndpointsUseV5() throws {
         let router: Mailgun.Users.API.Router = .init()
 
-        let listUrl = router.url(for: .list)
+        let listUrl = router.url(for: .list(request: nil))
         let getUrl = router.url(for: .get(userId: "123"))
         let meUrl = router.url(for: .me)
-        let addToOrgUrl = router.url(for: .addToOrganization(userId: "123", orgId: "456", request: .init()))
+        let addToOrgUrl = router.url(for: .addToOrganization(userId: "123", orgId: "456"))
         let removeFromOrgUrl = router.url(for: .removeFromOrganization(userId: "123", orgId: "456"))
 
         #expect(listUrl.path.hasPrefix("/v5/"))

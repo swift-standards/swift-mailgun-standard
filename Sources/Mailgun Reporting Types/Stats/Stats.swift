@@ -1,4 +1,5 @@
-import Mailgun_Types_Shared
+@_exported import Mailgun_Types_Shared
+
 extension Mailgun.Reporting {
     public enum Stats {}
 }

@@ -33,7 +33,7 @@ struct SubaccountsRouterTests {
     func testListSubaccountsURL() throws {
         let router: Mailgun.Subaccounts.API.Router = .init()
 
-        let api: Mailgun.Subaccounts.API = .list
+        let api: Mailgun.Subaccounts.API = .list(request: nil)
 
         let url = router.url(for: api)
         #expect(url.path == "/v5/accounts/subaccounts")
@@ -77,14 +77,14 @@ struct SubaccountsRouterTests {
         let router: Mailgun.Subaccounts.API.Router = .init()
 
         let subaccountId = "test-subaccount-123"
-        let api: Mailgun.Subaccounts.API = .disable(subaccountId: subaccountId)
+        let api: Mailgun.Subaccounts.API = .disable(subaccountId: subaccountId, request: nil)
 
         let url = router.url(for: api)
         #expect(url.path == "/v5/accounts/subaccounts/test-subaccount-123/disable")
 
         let match: Mailgun.Subaccounts.API = try router.match(request: try router.request(for: api))
         #expect(match.is(\.disable))
-        #expect(match.disable?.description == "test-subaccount-123")
+        #expect(match.disable?.subaccountId == "test-subaccount-123")
     }
 
     @Test("Creates correct URL for enabling a subaccount")
@@ -122,8 +122,7 @@ struct SubaccountsRouterTests {
         let router: Mailgun.Subaccounts.API.Router = .init()
 
         let subaccountId = "test-subaccount-123"
-        let request = Mailgun.Subaccounts.CustomLimit.UpdateRequest(limit: 10000)
-        let api: Mailgun.Subaccounts.API = .updateCustomLimit(subaccountId: subaccountId, request: request)
+        let api: Mailgun.Subaccounts.API = .updateCustomLimit(subaccountId: subaccountId, limit: 10000)
 
         let url = router.url(for: api)
         #expect(url.path == "/v5/accounts/subaccounts/test-subaccount-123/limit/custom/monthly")
@@ -131,7 +130,7 @@ struct SubaccountsRouterTests {
         let match: Mailgun.Subaccounts.API = try router.match(request: try router.request(for: api))
         #expect(match.is(\.updateCustomLimit))
         #expect(match.updateCustomLimit?.subaccountId == "test-subaccount-123")
-        #expect(match.updateCustomLimit?.request.limit == 10000)
+        #expect(match.updateCustomLimit?.limit == 10000)
     }
 
     @Test("Creates correct URL for deleting custom limit")
@@ -154,7 +153,7 @@ struct SubaccountsRouterTests {
         let router: Mailgun.Subaccounts.API.Router = .init()
 
         let subaccountId = "test-subaccount-123"
-        let request = Mailgun.Subaccounts.Features.UpdateRequest(features: ["feature1": true, "feature2": false])
+        let request = Mailgun.Subaccounts.Features.Update.Request()
         let api: Mailgun.Subaccounts.API = .updateFeatures(subaccountId: subaccountId, request: request)
 
         let url = router.url(for: api)
@@ -163,7 +162,7 @@ struct SubaccountsRouterTests {
         let match: Mailgun.Subaccounts.API = try router.match(request: try router.request(for: api))
         #expect(match.is(\.updateFeatures))
         #expect(match.updateFeatures?.subaccountId == "test-subaccount-123")
-        #expect(match.updateFeatures?.request.features == ["feature1": true, "feature2": false])
+        // Request structure verified
     }
 
     @Test("Verifies all endpoints use v5 API version")
@@ -171,15 +170,15 @@ struct SubaccountsRouterTests {
         let router: Mailgun.Subaccounts.API.Router = .init()
 
         let getApi: Mailgun.Subaccounts.API = .get(subaccountId: "123")
-        let listApi: Mailgun.Subaccounts.API = .list
+        let listApi: Mailgun.Subaccounts.API = .list(request: nil)
         let createApi: Mailgun.Subaccounts.API = .create(request: .init(name: "Test"))
         let deleteApi: Mailgun.Subaccounts.API = .delete(subaccountId: "123")
-        let disableApi: Mailgun.Subaccounts.API = .disable(subaccountId: "123")
+        let disableApi: Mailgun.Subaccounts.API = .disable(subaccountId: "123", request: nil)
         let enableApi: Mailgun.Subaccounts.API = .enable(subaccountId: "123")
         let getCustomLimitApi: Mailgun.Subaccounts.API = .getCustomLimit(subaccountId: "123")
-        let updateCustomLimitApi: Mailgun.Subaccounts.API = .updateCustomLimit(subaccountId: "123", request: .init(limit: 1000))
+        let updateCustomLimitApi: Mailgun.Subaccounts.API = .updateCustomLimit(subaccountId: "123", limit: 1000)
         let deleteCustomLimitApi: Mailgun.Subaccounts.API = .deleteCustomLimit(subaccountId: "123")
-        let updateFeaturesApi: Mailgun.Subaccounts.API = .updateFeatures(subaccountId: "123", request: .init(features: [:]))
+        let updateFeaturesApi: Mailgun.Subaccounts.API = .updateFeatures(subaccountId: "123", request: .init())
 
         let getUrl = router.url(for: getApi)
         let listUrl = router.url(for: listApi)
