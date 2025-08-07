@@ -154,39 +154,39 @@ extension Mailgun.Reporting.Stats {
 extension Mailgun.Reporting.Stats {
     public struct TimeStats: Sendable, Codable, Equatable {
         public let time: String
-        public let delivered: Delivered
-        public let accepted: Accepted
-        public let stored: Stored
-        public let failed: Failed
-        public let unsubscribed: Unsubscribed
-        public let opened: Opened
-        public let campaign: Campaign
-        public let clicked: Clicked
-        public let complained: Complained
-        public let seedTest: SeedTest
-        public let emailValidation: EmailValidation
-        public let linkValidationFailed: LinkValidationFailed
-        public let linkValidation: LinkValidation
-        public let emailPreview: EmailPreview
-        public let emailPreviewFailed: EmailPreviewFailed
+        public let delivered: Delivered?
+        public let accepted: Accepted?
+        public let stored: Stored?
+        public let failed: Failed?
+        public let unsubscribed: Unsubscribed?
+        public let opened: Opened?
+        public let campaign: Campaign?
+        public let clicked: Clicked?
+        public let complained: Complained?
+        public let seedTest: SeedTest?
+        public let emailValidation: EmailValidation?
+        public let linkValidationFailed: LinkValidationFailed?
+        public let linkValidation: LinkValidation?
+        public let emailPreview: EmailPreview?
+        public let emailPreviewFailed: EmailPreviewFailed?
 
         public init(
             time: String,
-            delivered: Delivered,
-            accepted: Accepted,
-            stored: Stored,
-            failed: Failed,
-            unsubscribed: Unsubscribed,
-            opened: Opened,
-            campaign: Campaign,
-            clicked: Clicked,
-            complained: Complained,
-            seedTest: SeedTest,
-            emailValidation: EmailValidation,
-            linkValidationFailed: LinkValidationFailed,
-            linkValidation: LinkValidation,
-            emailPreview: EmailPreview,
-            emailPreviewFailed: EmailPreviewFailed
+            delivered: Delivered? = nil,
+            accepted: Accepted? = nil,
+            stored: Stored? = nil,
+            failed: Failed? = nil,
+            unsubscribed: Unsubscribed? = nil,
+            opened: Opened? = nil,
+            campaign: Campaign? = nil,
+            clicked: Clicked? = nil,
+            complained: Complained? = nil,
+            seedTest: SeedTest? = nil,
+            emailValidation: EmailValidation? = nil,
+            linkValidationFailed: LinkValidationFailed? = nil,
+            linkValidation: LinkValidation? = nil,
+            emailPreview: EmailPreview? = nil,
+            emailPreviewFailed: EmailPreviewFailed? = nil
         ) {
             self.time = time
             self.delivered = delivered

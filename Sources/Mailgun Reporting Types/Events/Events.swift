@@ -27,12 +27,17 @@ extension Mailgun.Reporting.Events {
         public let clientInfo: ClientInfo?
         public let deliveryStatus: DeliveryStatus?
         public let batch: Batch?
+        public let recipient: String?
+        public let recipientPat: String?
         public let recipientDomain: String?
         public let recipientProvider: String?
         public let template: Template?
         public let envelope: Envelope?
         public let sendingIp: String?
         public let severity: Mailgun.Reporting.Events.List.Query.Severity?
+        public let storage: Storage?
+        public let primaryDkim: String?
+        public let campaigns: [String]?
 
         public init(
             method: String? = nil,
@@ -49,12 +54,17 @@ extension Mailgun.Reporting.Events {
             clientInfo: ClientInfo? = nil,
             deliveryStatus: DeliveryStatus? = nil,
             batch: Batch? = nil,
+            recipient: String? = nil,
+            recipientPat: String? = nil,
             recipientDomain: String? = nil,
             recipientProvider: String? = nil,
             template: Template? = nil,
             envelope: Envelope? = nil,
             sendingIp: String? = nil,
-            severity: Mailgun.Reporting.Events.List.Query.Severity? = nil
+            severity: Mailgun.Reporting.Events.List.Query.Severity? = nil,
+            storage: Storage? = nil,
+            primaryDkim: String? = nil,
+            campaigns: [String]? = nil
         ) {
             self.method = method
             self.event = event
@@ -70,12 +80,17 @@ extension Mailgun.Reporting.Events {
             self.clientInfo = clientInfo
             self.deliveryStatus = deliveryStatus
             self.batch = batch
+            self.recipient = recipient
+            self.recipientPat = recipientPat
             self.recipientDomain = recipientDomain
             self.recipientProvider = recipientProvider
             self.template = template
             self.envelope = envelope
             self.sendingIp = sendingIp
             self.severity = severity
+            self.storage = storage
+            self.primaryDkim = primaryDkim
+            self.campaigns = campaigns
         }
 
         private enum CodingKeys: String, CodingKey {
@@ -93,12 +108,17 @@ extension Mailgun.Reporting.Events {
             case clientInfo = "client-info"
             case deliveryStatus = "delivery-status"
             case batch
+            case recipient
+            case recipientPat = "recipient_pat"
             case recipientDomain = "recipient-domain"
             case recipientProvider = "recipient-provider"
             case template
             case envelope
             case sendingIp = "sending-ip"
             case severity
+            case storage
+            case primaryDkim = "primary-dkim"
+            case campaigns
         }
     }
 }
@@ -174,7 +194,7 @@ extension Mailgun.Reporting.Events.Event {
         public let attachments: [Attachment]?
         public let size: Int?
         public let scheduledFor: String?
-        public let storage: Storage?
+        public let storage: Mailgun.Reporting.Events.Event.Storage?
 
         private enum CodingKeys: String, CodingKey {
             case headers
@@ -189,7 +209,7 @@ extension Mailgun.Reporting.Events.Event {
             attachments: [Attachment]?,
             size: Int?,
             scheduledFor: String? = nil,
-            storage: Storage? = nil
+            storage: Mailgun.Reporting.Events.Event.Storage? = nil
         ) {
             self.headers = headers
             self.attachments = attachments
@@ -235,17 +255,21 @@ extension Mailgun.Reporting.Events.Event {
                 self.size = size
             }
         }
+    }
+}
 
-        public struct Storage: Sendable, Decodable, Equatable {
-            public let key: String
-            public let url: String
-            public let region: String
+extension Mailgun.Reporting.Events.Event {
+    public struct Storage: Sendable, Decodable, Equatable {
+        public let key: String?
+        public let url: String?
+        public let region: String?
+        public let env: String?
 
-            public init(key: String, url: String, region: String) {
-                self.key = key
-                self.url = url
-                self.region = region
-            }
+        public init(key: String? = nil, url: String? = nil, region: String? = nil, env: String? = nil) {
+            self.key = key
+            self.url = url
+            self.region = region
+            self.env = env
         }
     }
 }
