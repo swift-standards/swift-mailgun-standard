@@ -87,7 +87,8 @@ let package = Package(
         .target(
             name: .shared,
             dependencies: [
-                .TypesFoundation
+                .TypesFoundation,
+                .dependenciesMacros
             ]
         ),
         .target(
