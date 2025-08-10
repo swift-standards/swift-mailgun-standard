@@ -47,7 +47,7 @@ extension Target.Dependency {
 }
 
 extension Target.Dependency {
-    static var TypesFoundation: Self { .product(name: "TypesFoundation", package: "swift-types-foundation") }
+    static var typesFoundation: Self { .product(name: "TypesFoundation", package: "swift-types-foundation") }
     static var dependenciesMacros: Self { .product(name: "DependenciesMacros", package: "swift-dependencies") }
     static var dependenciesTestSupport: Self { .product(name: "DependenciesTestSupport", package: "swift-dependencies") }
 }
@@ -87,16 +87,16 @@ let package = Package(
         .target(
             name: .shared,
             dependencies: [
-                .TypesFoundation,
+                .typesFoundation,
                 .dependenciesMacros
+                
             ]
         ),
         .target(
             name: .mailgun,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros,
+                .typesFoundation,
                 .accountManagement,
                 .credentials,
                 .customMessageLimit,
@@ -127,8 +127,8 @@ let package = Package(
             name: .accountManagement,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -139,8 +139,8 @@ let package = Package(
             name: .credentials,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -151,8 +151,8 @@ let package = Package(
             name: .customMessageLimit,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -163,8 +163,8 @@ let package = Package(
             name: .domains,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -175,8 +175,8 @@ let package = Package(
             name: .iPAllowlist,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -187,8 +187,8 @@ let package = Package(
             name: .ipPools,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -199,8 +199,8 @@ let package = Package(
             name: .ips,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -211,8 +211,8 @@ let package = Package(
             name: .keys,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -223,8 +223,8 @@ let package = Package(
             name: .lists,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -235,8 +235,8 @@ let package = Package(
             name: .messages,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -247,8 +247,8 @@ let package = Package(
             name: .reporting,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -259,8 +259,8 @@ let package = Package(
             name: .routes,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -271,8 +271,8 @@ let package = Package(
             name: .subaccounts,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -283,8 +283,8 @@ let package = Package(
             name: .suppressions,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -295,8 +295,8 @@ let package = Package(
             name: .templates,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -307,8 +307,8 @@ let package = Package(
             name: .users,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
@@ -319,8 +319,8 @@ let package = Package(
             name: .webhooks,
             dependencies: [
                 .shared,
-                .TypesFoundation,
-                .dependenciesMacros
+                .typesFoundation,
+                
             ]
         ),
         .testTarget(
