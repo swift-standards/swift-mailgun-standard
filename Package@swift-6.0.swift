@@ -8,7 +8,7 @@ extension String {
     static let credentials: Self = "Mailgun Credentials".types
     static let customMessageLimit: Self = "Mailgun CustomMessageLimit".types
     static let domains: Self = "Mailgun Domains".types
-    static let iPAllowlist: Self = "Mailgun IPAllowlist".types
+    static let ipAllowlist: Self = "Mailgun IPAllowlist".types
     static let ipPools: Self = "Mailgun IPPools".types
     static let ips: Self = "Mailgun IPs".types
     static let keys: Self = "Mailgun Keys".types
@@ -30,7 +30,7 @@ extension Target.Dependency {
     static var credentials: Self { .target(name: .credentials) }
     static var customMessageLimit: Self { .target(name: .customMessageLimit) }
     static var domains: Self { .target(name: .domains) }
-    static var iPAllowlist: Self { .target(name: .iPAllowlist) }
+    static var ipAllowlist: Self { .target(name: .ipAllowlist) }
     static var ipPools: Self { .target(name: .ipPools) }
     static var ips: Self { .target(name: .ips) }
     static var keys: Self { .target(name: .keys) }
@@ -64,7 +64,7 @@ let package = Package(
         .library(name: .credentials, targets: [.credentials]),
         .library(name: .customMessageLimit, targets: [.customMessageLimit]),
         .library(name: .domains, targets: [.domains]),
-        .library(name: .iPAllowlist, targets: [.iPAllowlist]),
+        .library(name: .ipAllowlist, targets: [.ipAllowlist]),
         .library(name: .ipPools, targets: [.ipPools]),
         .library(name: .ips, targets: [.ips]),
         .library(name: .keys, targets: [.keys]),
@@ -101,7 +101,7 @@ let package = Package(
                 .credentials,
                 .customMessageLimit,
                 .domains,
-                .iPAllowlist,
+                .ipAllowlist,
                 .ipPools,
                 .ips,
                 .keys,
@@ -172,7 +172,7 @@ let package = Package(
             dependencies: [.domains, .shared, .dependenciesTestSupport]
         ),
         .target(
-            name: .iPAllowlist,
+            name: .ipAllowlist,
             dependencies: [
                 .shared,
                 .typesFoundation,
@@ -180,8 +180,8 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: .iPAllowlist.tests,
-            dependencies: [.iPAllowlist, .shared, .dependenciesTestSupport]
+            name: .ipAllowlist.tests,
+            dependencies: [.ipAllowlist, .shared, .dependenciesTestSupport]
         ),
         .target(
             name: .ipPools,

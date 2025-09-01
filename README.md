@@ -8,7 +8,7 @@
   <img src="https://img.shields.io/badge/Type%20Safe-100%25-brightgreen.svg" alt="Type Safety">
   <img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License">
   <img src="https://img.shields.io/badge/Status-Production%20Ready-green.svg" alt="Status">
-  <img src="https://img.shields.io/badge/Version-0.1.0-brightgreen.svg" alt="Version">
+  <img src="https://img.shields.io/badge/Version-0.2.0-brightgreen.svg" alt="Version">
 </p>
 
 <p align="center">
@@ -38,7 +38,7 @@
 
 **swift-mailgun-types** provides the foundational building blocks for type-safe Mailgun integrations in Swift. It defines comprehensive domain models, API routes, and client interfaces with compile-time validation and modern Swift concurrency support.
 
-> **⚠️ Important**: This package provides **types and interfaces only**. For a complete SDK with implementations, use **[coenttb-mailgun](https://github.com/coenttb/coenttb-mailgun)**.
+> **⚠️ Important**: This package provides **types and interfaces only**. For a complete SDK with implementations, use **[swift-mailgun](https://github.com/coenttb/swift-mailgun)**.
 
 ```swift
 import Mailgun_Types
@@ -58,7 +58,7 @@ let request = Mailgun.Messages.Send.Request(
 
 ```mermaid
 graph TD
-    A[Do you need a ready-to-use Mailgun SDK?] -->|Yes| B[Use coenttb-mailgun]
+    A[Do you need a ready-to-use Mailgun SDK?] -->|Yes| B[Use swift-mailgun]
     A -->|No| C[Are you building a custom implementation?]
     C -->|Yes| D[Use swift-mailgun-types]
     C -->|No| E[Do you only need type definitions?]
@@ -66,7 +66,7 @@ graph TD
     E -->|No| B
 ```
 
-**Use [coenttb-mailgun](https://github.com/coenttb/coenttb-mailgun) if you want:**
+**Use [swift-mailgun](https://github.com/coenttb/swift-mailgun) if you want:**
 - ✅ Ready-to-use Mailgun integration
 - ✅ URLSession networking included
 - ✅ Authentication handling built-in
@@ -82,14 +82,14 @@ graph TD
 
 ## Architecture
 
-### Two-Package Design
+### Three-Package Architecture
 
-**swift-mailgun-types** follows a clean, modular architecture that separates types from implementation:
+**swift-mailgun-types** is part of a modular three-package ecosystem that provides flexibility and clean separation of concerns:
 
 ```
 ┌─────────────────────────────────────────┐
 │          swift-mailgun-types            │
-│         (This Package - Types)          │
+│    (This Package - Types & Interfaces)  │
 ├─────────────────────────────────────────┤
 │ • Domain Models & Types                 │
 │ • API Routes (swift-url-routing)        │
@@ -98,17 +98,31 @@ graph TD
 │ • Form Encoding Support                 │
 └─────────────────────────────────────────┘
                      ↑
-              implements
+            types imported by
                      ↓
 ┌─────────────────────────────────────────┐
-│           coenttb-mailgun               │
-│    (Implementation Package - Live)      │
+│          swift-mailgun-live             │
+│    (Core Implementation Package)        │
 ├─────────────────────────────────────────┤
 │ • URLSession Networking                 │
 │ • Authentication (swift-authenticating) │
 │ • Live Client Implementations           │
 │ • Environment Configuration             │
-│ • Production Features                   │
+│ • Core Mailgun Functionality            │
+└─────────────────────────────────────────┘
+                     ↑
+              re-exported by
+                     ↓
+┌─────────────────────────────────────────┐
+│           swift-mailgun                 │
+│    (Developer Entry Point Package)      │
+├─────────────────────────────────────────┤
+│ • Re-exports swift-mailgun-live         │
+│ • Additional Integrations:              │
+│   - swift-html support                  │
+│   - swift-identities integration        │
+│   - Convenience APIs                    │
+│ • Higher-level abstractions             │
 └─────────────────────────────────────────┘
 ```
 
@@ -171,13 +185,14 @@ swift-mailgun-types/
 
 ### Benefits of This Architecture
 
-1. **🎯 Smaller Binary Size**: Import only the modules you need
-2. **🧩 Clean Separation**: Types separate from implementation details
-3. **🔄 Multiple Implementations**: Use URLSession, Alamofire, or any networking library
+1. **🎯 Flexible Package Selection**: Choose the right level of abstraction for your needs
+2. **🧩 Clean Separation**: Types, implementation, and integrations are cleanly separated
+3. **🔄 Multiple Implementations**: Use URLSession via swift-mailgun-live, or build custom with swift-mailgun-types
 4. **🧪 Superior Testing**: Mock clients without network dependencies
 5. **📦 Code Sharing**: Use the same types on client and server
 6. **🚀 Type Safety**: Compile-time validation of all API interactions
 7. **🔌 Dependency Injection**: Built-in support via @DependencyClient
+8. **🎨 Progressive Enhancement**: Start with swift-mailgun for convenience, drop down to lower levels when needed
 
 ## Features
 
@@ -255,6 +270,16 @@ All Mailgun API features are fully typed and organized by domain:
 
 ## Recent Updates 🎉
 
+### Version 0.2.0 (September 2025)
+- 🏗️ **Architectural Restructuring**: Split into three-package ecosystem for maximum flexibility
+  - `swift-mailgun-types`: Core types and interfaces (this package)
+  - `swift-mailgun-live`: URLSession-based implementation
+  - `swift-mailgun`: Developer-friendly entry point with additional integrations
+- 🔄 **Package Renaming**: Migrated from `coenttb-mailgun` to `swift-mailgun` ecosystem
+- 📦 **Improved Modularity**: Better separation of concerns between types, implementation, and integrations
+- 🎯 **Flexible Integration**: Choose the right package for your use case
+- ✅ **Backward Compatible**: Types remain unchanged, only package structure improved
+
 ### Version 0.1.0 (February 2025)
 - ✅ **All Tests Passing**: Fixed compilation errors across 110+ test files
 - ✅ **Form Encoding Improvements**: Added specialized encoders for Routes and Events APIs
@@ -270,30 +295,59 @@ All Mailgun API features are fully typed and organized by domain:
 
 ## Installation
 
-### Option 1: Complete SDK (Recommended for Most Users)
+### Option 1: Complete SDK with Integrations (Recommended for Most Users)
 
 ```swift
 // Package.swift
 dependencies: [
-    .package(url: "https://github.com/coenttb/coenttb-mailgun", branch: "main")
+    .package(url: "https://github.com/coenttb/swift-mailgun", from: "0.2.0")
 ],
 targets: [
     .target(
         name: "YourApp",
         dependencies: [
-            .product(name: "Mailgun", package: "coenttb-mailgun")
+            .product(name: "Mailgun", package: "swift-mailgun")
         ]
     )
 ]
 ```
 
-### Option 2: Types Only (For Custom Implementations)
+This gives you:
+- ✅ Full Mailgun functionality via URLSession
+- ✅ HTML email support via swift-html
+- ✅ Identity integration support
+- ✅ All convenience APIs and helpers
+
+### Option 2: Core Implementation Only (Without Extra Integrations)
+
+```swift
+// Package.swift
+dependencies: [
+    .package(url: "https://github.com/coenttb/swift-mailgun-live", from: "0.2.0")
+],
+targets: [
+    .target(
+        name: "YourApp",
+        dependencies: [
+            .product(name: "MailgunLive", package: "swift-mailgun-live")
+        ]
+    )
+]
+```
+
+This gives you:
+- ✅ Full Mailgun functionality via URLSession
+- ✅ Authentication and environment configuration
+- ❌ No HTML integration
+- ❌ No identity system integration
+
+### Option 3: Types Only (For Custom Implementations)
 
 Install the entire types package:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/coenttb/swift-mailgun-types", from: "0.1.0")
+    .package(url: "https://github.com/coenttb/swift-mailgun-types", from: "0.2.0")
 ],
 targets: [
     .target(
@@ -306,13 +360,13 @@ targets: [
 ]
 ```
 
-### Option 3: Individual Modules (Minimal Binary Size)
+### Option 4: Individual Modules (Minimal Binary Size)
 
 Import only the specific modules you need:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/coenttb/swift-mailgun-types", from: "0.1.0")
+    .package(url: "https://github.com/coenttb/swift-mailgun-types", from: "0.2.0")
 ],
 targets: [
     .target(
@@ -852,8 +906,8 @@ For detailed implementation patterns and best practices, see [CLAUDE.md](CLAUDE.
 
 See swift-mailgun-types in action:
 
-- [coenttb-mailgun](https://github.com/coenttb/coenttb-mailgun) - Full implementation with URLSession
-- [coenttb.com](https://github.com/coenttb/coenttb-com-server) - Production website using `coenttb-mailgun`
+- [swift-mailgun](https://github.com/coenttb/swift-mailgun) - Full implementation with URLSession
+- [coenttb.com](https://github.com/coenttb/coenttb-com-server) - Production website using `swift-mailgun`
 - [coenttb-newsletter](https://github.com/coenttb/coenttb-newsletter) - Newsletter system with Mailgun integration
 
 ## Contributing
