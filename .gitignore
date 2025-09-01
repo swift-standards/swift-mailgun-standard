@@ -34,6 +34,7 @@ Thumbs.db
 
 # AI
 .claude
+CLAUDE.md
 
 # Temporary files
 *.tmp
