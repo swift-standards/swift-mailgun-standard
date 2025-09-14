@@ -130,7 +130,6 @@ extension Mailgun.Reporting.Events.List.Query {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe)
     public static let events: Path<PathBuilder.Component<String>> = Path {
         "events"
     }

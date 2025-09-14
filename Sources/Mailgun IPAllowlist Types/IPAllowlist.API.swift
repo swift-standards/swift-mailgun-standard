@@ -56,12 +56,10 @@ extension Mailgun.IPAllowlist.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe)
     public static let v2: Path<PathBuilder.Component<String>> = Path {
         "v2"
     }
 
-    nonisolated(unsafe)
     public static let ipAllowlist: Path<PathBuilder.Component<String>> = Path {
         "ip_allowlist"
     }

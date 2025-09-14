@@ -68,15 +68,15 @@ extension Mailgun.DynamicIPPools.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe) public static let dynamicPools = Path {
+    public static let dynamicPools = Path {
         "dynamic_pools"
     }
 
-    nonisolated(unsafe) public static let history = Path {
+    public static let history = Path {
         "history"
     }
 
-    nonisolated(unsafe) public static let override = Path {
+    public static let override = Path {
         "override"
     }
 }

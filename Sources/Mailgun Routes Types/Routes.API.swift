@@ -81,7 +81,7 @@ extension Mailgun.Routes.API {
                     Method.get
                     Path { "v3" }
                     Path.routes
-                    Path.match
+                    Path { "match" }
                     Query {
                         Field("address") { Parse(.string) }
                     }
@@ -92,12 +92,10 @@ extension Mailgun.Routes.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe)
     public static let routes: Path<PathBuilder.Component<String>> = Path {
         "routes"
     }
 
-    nonisolated(unsafe)
     public static let match: Path<PathBuilder.Component<String>> = Path {
         "match"
     }

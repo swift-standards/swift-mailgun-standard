@@ -53,7 +53,7 @@ extension Mailgun.Reporting.Stats.API {
                     Method.get
                     Path { "v3" }
                     Path.stats
-                    Path.filter
+                    Path { "filter" }
                     Parse(.memberwise(Mailgun.Reporting.Stats.Filter.Request.init)) {
                         URLRouting.Query {
                             Field("event") { Parse(.string) }
@@ -108,31 +108,31 @@ extension Mailgun.Reporting.Stats.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe) public static let stats = Path {
+    public static let stats = Path {
         "stats"
     }
 
-    nonisolated(unsafe) public static let total = Path {
+    public static let total = Path {
         "total"
     }
 
-    nonisolated(unsafe) public static let filter = Path {
+    public static let filter = Path {
         "filter"
     }
 
-    nonisolated(unsafe) public static let aggregates = Path {
+    public static let aggregates = Path {
         "aggregates"
     }
 
-    nonisolated(unsafe) public static let providers = Path {
+    public static let providers = Path {
         "providers"
     }
 
-    nonisolated(unsafe) public static let devices = Path {
+    public static let devices = Path {
         "devices"
     }
 
-    nonisolated(unsafe) public static let countries = Path {
+    public static let countries = Path {
         "countries"
     }
 }

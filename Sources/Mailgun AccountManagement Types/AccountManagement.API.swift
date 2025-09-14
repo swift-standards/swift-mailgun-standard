@@ -116,32 +116,26 @@ extension Mailgun.AccountManagement.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe)
     public static let accounts: Path<PathBuilder.Component<String>> = Path {
         "accounts"
     }
 
-    nonisolated(unsafe)
     public static let httpSigningKey: Path<PathBuilder.Component<String>> = Path {
         "http_signing_key"
     }
 
-    nonisolated(unsafe)
     public static let sandbox: Path<PathBuilder.Component<String>> = Path {
         "sandbox"
     }
 
-    nonisolated(unsafe)
     public static let authRecipients: Path<PathBuilder.Component<String>> = Path {
         "auth_recipients"
     }
 
-    nonisolated(unsafe)
     public static let resendActivationEmail: Path<PathBuilder.Component<String>> = Path {
         "resend_activation_email"
     }
 
-    nonisolated(unsafe)
     public static let samlOrg: Path<PathBuilder.Component<String>> = Path {
         "saml_org"
     }

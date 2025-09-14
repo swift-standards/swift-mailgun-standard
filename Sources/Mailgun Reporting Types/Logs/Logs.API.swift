@@ -37,7 +37,6 @@ extension Mailgun.Reporting.Logs.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe)
     public static let logs: Path<PathBuilder.Component<String>> = Path {
         "logs"
     }

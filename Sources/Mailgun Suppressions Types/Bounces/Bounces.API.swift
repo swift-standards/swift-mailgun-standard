@@ -93,7 +93,7 @@ extension Mailgun.Suppressions.Bounces.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe) public static let bounces = Path {
+    public static let bounces = Path {
         "bounces"
     }
 }

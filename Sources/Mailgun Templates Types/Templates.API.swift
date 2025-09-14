@@ -239,6 +239,6 @@ extension Mailgun.Templates.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe) static let templates = Path { "templates" }
-    nonisolated(unsafe) static let versions = Path { "versions" }
+    static let templates = Path { "templates" }
+    static let versions = Path { "versions" }
 }

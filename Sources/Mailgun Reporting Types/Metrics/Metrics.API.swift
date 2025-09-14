@@ -44,15 +44,15 @@ extension Mailgun.Reporting.Metrics.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe) public static let analytics = Path {
+    public static let analytics = Path {
         "analytics"
     }
 
-    nonisolated(unsafe) public static let metrics = Path {
+    public static let metrics = Path {
         "metrics"
     }
 
-    nonisolated(unsafe) public static let usage = Path {
+    public static let usage = Path {
         "usage"
     }
 }

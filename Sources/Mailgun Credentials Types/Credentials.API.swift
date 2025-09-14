@@ -96,17 +96,14 @@ extension Mailgun.Credentials.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe)
     public static let credentials: Path<PathBuilder.Component<String>> = Path {
         "credentials"
     }
 
-    nonisolated(unsafe)
     public static let mailboxes: Path<PathBuilder.Component<String>> = Path {
         "mailboxes"
     }
 
-    nonisolated(unsafe)
     public static let domains: Path<PathBuilder.Component<String>> = Path {
         "domains"
     }

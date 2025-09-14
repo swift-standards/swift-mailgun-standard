@@ -82,11 +82,11 @@ extension Mailgun.Messages.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe) public static let messages = Path {
+    public static let messages = Path {
         "messages"
     }
 
-    nonisolated(unsafe) public static let domains = Path {
+    public static let domains = Path {
         "domains"
     }
 }
