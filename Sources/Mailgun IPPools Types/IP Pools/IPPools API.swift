@@ -86,11 +86,11 @@ extension Mailgun.IPPools.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe) public static let ipPools = Path {
+    public static let ipPools = Path {
         "ip_pools"
     }
 
-    nonisolated(unsafe) public static let domains = Path {
+    public static let domains = Path {
         "domains"
     }
 }

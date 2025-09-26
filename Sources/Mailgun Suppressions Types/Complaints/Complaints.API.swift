@@ -91,7 +91,7 @@ extension Mailgun.Suppressions.Complaints.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe) public static let complaints = Path {
+    public static let complaints = Path {
         "complaints"
     }
 }

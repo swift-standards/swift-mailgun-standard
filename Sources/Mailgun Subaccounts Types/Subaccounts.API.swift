@@ -172,42 +172,34 @@ extension Mailgun.Subaccounts.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe)
     public static let accounts: Path<PathBuilder.Component<String>> = Path {
         "accounts"
     }
 
-    nonisolated(unsafe)
     public static let subaccounts: Path<PathBuilder.Component<String>> = Path {
         "subaccounts"
     }
 
-    nonisolated(unsafe)
     public static let disable: Path<PathBuilder.Component<String>> = Path {
         "disable"
     }
 
-    nonisolated(unsafe)
     public static let enable: Path<PathBuilder.Component<String>> = Path {
         "enable"
     }
 
-    nonisolated(unsafe)
     public static let limit: Path<PathBuilder.Component<String>> = Path {
         "limit"
     }
 
-    nonisolated(unsafe)
     public static let custom: Path<PathBuilder.Component<String>> = Path {
         "custom"
     }
 
-    nonisolated(unsafe)
     public static let monthly: Path<PathBuilder.Component<String>> = Path {
         "monthly"
     }
 
-    nonisolated(unsafe)
     public static let features: Path<PathBuilder.Component<String>> = Path {
         "features"
     }

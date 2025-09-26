@@ -57,12 +57,10 @@ extension Mailgun.Keys.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe)
     public static let keys: Path<PathBuilder.Component<String>> = Path {
         "keys"
     }
 
-    nonisolated(unsafe)
     public static let `public`: Path<PathBuilder.Component<String>> = Path {
         "public"
     }

@@ -88,17 +88,14 @@ extension Mailgun.Users.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe)
     public static let users: Path<PathBuilder.Component<String>> = Path {
         "users"
     }
 
-    nonisolated(unsafe)
     public static let me: Path<PathBuilder.Component<String>> = Path {
         "me"
     }
 
-    nonisolated(unsafe)
     public static let org: Path<PathBuilder.Component<String>> = Path {
         "org"
     }

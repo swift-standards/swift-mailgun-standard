@@ -118,11 +118,11 @@ extension Mailgun.IPs.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe) public static let ips = Path {
+    public static let ips = Path {
         "ips"
     }
 
-    nonisolated(unsafe) public static let ipBand = Path {
+    public static let ipBand = Path {
         "ip_band"
     }
 }

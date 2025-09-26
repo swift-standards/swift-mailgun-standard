@@ -57,7 +57,7 @@ extension Mailgun.IPAddressWarmup.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe) public static let ipWarmups = Path {
+    public static let ipWarmups = Path {
         "ip_warmups"
     }
 }

@@ -235,13 +235,13 @@ extension Mailgun.Lists.API {
 
 extension Path<PathBuilder.Component<String>> {
 
-    nonisolated(unsafe) public static let lists = Path {
+    public static let lists = Path {
         "lists"
     }
 
-    nonisolated(unsafe) public static let members = Path {
+    public static let members = Path {
         "members"
     }
 
-    nonisolated(unsafe) package static let pages = Path { "pages" }
+    package static let pages = Path { "pages" }
 }

@@ -80,11 +80,11 @@ extension Mailgun.Webhooks.API {
 }
 
 extension Path<PathBuilder.Component<String>> {
-    nonisolated(unsafe) public static let webhooks = Path {
+    public static let webhooks = Path {
         "webhooks"
     }
 
-    nonisolated(unsafe) public static let domains = Path {
+    public static let domains = Path {
         "domains"
     }
 }
