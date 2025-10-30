@@ -20,6 +20,8 @@ extension Mailgun.Reporting.Events.List {
     public struct Paging: Sendable, Decodable, Equatable {
       public let next: URL?
       public let previous: URL?
+      public let first: URL?
+      public let last: URL?
     }
   }
 }
