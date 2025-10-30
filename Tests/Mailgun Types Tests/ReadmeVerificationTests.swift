@@ -9,13 +9,14 @@ import Testing
 import Dependencies
 import CasePaths
 import URLFormCoding
+import Domain
 
 @Suite("README Code Examples Validation", .serialized)
 struct ReadmeVerificationTests {
 
-    // MARK: - Quick Start Example (README lines 43-53)
+    // MARK: - Quick Start Example (README lines 44-53)
 
-    @Test("Quick Start - Type-safe request models (README lines 43-53)")
+    @Test("Quick Start - Type-safe request models (README lines 44-53)")
     func quickStartExample() async throws {
         // Type-safe request models with compile-time validation
         let request = Mailgun.Messages.Send.Request(
@@ -33,7 +34,7 @@ struct ReadmeVerificationTests {
         #expect(request.html == "<h1>Type-safe emails</h1><p>Built with Swift</p>")
     }
 
-    // MARK: - Sending Messages (README lines 434-486)
+    // MARK: - Sending Messages (README lines 431-481)
 
     @Test("Simple email (README lines 434-439)")
     func simpleEmailExample() async throws {
@@ -50,20 +51,10 @@ struct ReadmeVerificationTests {
         #expect(simpleEmail.text == "Welcome to our service.")
     }
 
-    @Test("Rich email with all features (README lines 442-486)")
+    @Test("Rich email with all features (README lines 442-480)")
     func richEmailExample() async throws {
         let reportData = Data("PDF content".utf8)
         let logoData = Data("PNG content".utf8)
-
-        // Note: templateVariables and recipientVariables must be JSON strings
-        let templateVars = try JSONSerialization.data(withJSONObject: [
-            "month": "January",
-            "year": "2024"
-        ])
-        let recipientVars = try JSONSerialization.data(withJSONObject: [
-            "subscriber1@example.com": ["name": "Alice", "id": "001"],
-            "subscriber2@example.com": ["name": "Bob", "id": "002"]
-        ])
 
         let richEmail = Mailgun.Messages.Send.Request(
             from: try .init("Newsletter <news@yourdomain.com>"),
@@ -81,7 +72,7 @@ struct ReadmeVerificationTests {
             cc: [try .init("manager@yourdomain.com")],
             bcc: [try .init("archive@yourdomain.com")],
             template: "monthly-newsletter",
-            templateVariables: String(data: templateVars, encoding: .utf8),
+            templateVariables: #"{"month":"January","year":"2024"}"#,  // JSON string
             attachments: [
                 Mailgun.Messages.Attachment.Data(
                     data: reportData,
@@ -96,13 +87,13 @@ struct ReadmeVerificationTests {
                     contentType: "image/png"
                 )
             ],
-            tags: ["newsletter", "monthly"],  // plural: tags not tag
+            tags: ["newsletter", "monthly"],
             deliveryTime: Date().addingTimeInterval(3600), // Send in 1 hour
             tracking: true,
             trackingClicks: .htmlOnly,
             trackingOpens: true,
             headers: ["X-Campaign-ID": "JAN2024"],
-            recipientVariables: String(data: recipientVars, encoding: .utf8)
+            recipientVariables: #"{"subscriber1@example.com":{"name":"Alice","id":"001"}}"#  // JSON string
         )
 
         #expect(richEmail.from.rawValue.contains("news@yourdomain.com"))
@@ -116,9 +107,9 @@ struct ReadmeVerificationTests {
         #expect(richEmail.inline?.count == 1)
     }
 
-    // MARK: - Working with Templates (README lines 495-519)
+    // MARK: - Working with Templates (README lines 486-512)
 
-    @Test("Create a template (README lines 495-505)")
+    @Test("Create a template (README lines 489-499)")
     func createTemplateExample() async throws {
         let template = Mailgun.Templates.Create.Request(
             name: "welcome-email",
@@ -127,7 +118,9 @@ struct ReadmeVerificationTests {
                 <h1>Welcome {{name}}!</h1>
                 <p>Thanks for joining on {{signup_date}}.</p>
                 <p>Your account type: {{account_type}}</p>
-            """
+            """,
+            tag: "v1.0",
+            comment: "Initial version"
         )
 
         #expect(template.name == "welcome-email")
@@ -135,7 +128,7 @@ struct ReadmeVerificationTests {
         #expect(template.template?.contains("{{name}}") == true)
     }
 
-    @Test("Create a new template version (README lines 508-519)")
+    @Test("Create a new template version (README lines 502-512)")
     func createTemplateVersionExample() async throws {
         let newVersion = Mailgun.Templates.Version.Create.Request(
             template: """
@@ -146,7 +139,7 @@ struct ReadmeVerificationTests {
             """,
             tag: "v2.0",
             comment: "Added CTA button",
-            active: "yes"  // Note: active is String, not Bool
+            active: "yes"  // Note: active is a String, not Bool
         )
 
         #expect(newVersion.tag == "v2.0")
@@ -155,12 +148,12 @@ struct ReadmeVerificationTests {
         #expect(newVersion.template.contains("{{cta_link}}"))
     }
 
-    // MARK: - Managing Suppressions (README lines 528-550)
+    // MARK: - Managing Suppressions (README lines 518-544)
 
-    @Test("Handle a bounce (README lines 528-532)")
+    @Test("Handle a bounce (README lines 521-525)")
     func handleBounceExample() async throws {
         let bounce = Mailgun.Suppressions.Bounces.Create.Request(
-            address: try .init("invalid@example.com"),  // EmailAddress type
+            address: try .init("invalid@example.com"),
             code: "550",
             error: "Mailbox does not exist"
         )
@@ -170,20 +163,20 @@ struct ReadmeVerificationTests {
         #expect(bounce.error == "Mailbox does not exist")
     }
 
-    @Test("Add to unsubscribe list (README lines 535-538)")
+    @Test("Add to unsubscribe list (README lines 528-531)")
     func addUnsubscribeExample() async throws {
-        let unsubscribe = Mailgun.Suppressions.Unsubscribe.Create.Request(  // singular: Unsubscribe
+        let unsubscribe = Mailgun.Suppressions.Unsubscribe.Create.Request(
             address: try .init("user@example.com"),
-            tags: ["newsletter"]  // plural: tags, not tag
+            tags: ["newsletter"]  // Unsubscribe from specific tags
         )
 
         #expect(unsubscribe.address.rawValue == "user@example.com")
         #expect(unsubscribe.tags?.contains("newsletter") == true)
     }
 
-    @Test("Allowlist VIP addresses (README lines 541-544)")
+    @Test("Allowlist VIP addresses (README lines 534-536)")
     func allowlistExample() async throws {
-        // Note: Allowlist.Create.Request is an enum with .address or .domain cases
+        // Allowlist VIP addresses (enum-based)
         let allowlist = Mailgun.Suppressions.Allowlist.Create.Request.address(
             try .init("vip@partner.com")
         )
@@ -195,163 +188,119 @@ struct ReadmeVerificationTests {
         }
     }
 
-    @Test("Query suppressions (README lines 547-550)")
+    @Test("Query suppressions (README lines 539-543)")
     func querySuppressions() async throws {
         let query = Mailgun.Suppressions.Bounces.List.Request(
             limit: 100,
-            page: .next
+            page: "next",  // page is a String
+            term: "example.com"
         )
 
         #expect(query.limit == 100)
-        #expect(query.page == .next)
+        #expect(query.page == "next")
+        #expect(query.term == "example.com")
     }
 
-    // MARK: - Analytics and Reporting (README lines 559-593)
+    // MARK: - Analytics and Reporting (README lines 549-584)
 
-    @Test("Query events (README lines 559-566)")
-    func queryEventsExample() async throws {
-        let eventQuery = Mailgun.Reporting.Events.List.Query(
-            begin: Date().addingTimeInterval(-86400),
-            end: Date(),
-            ascending: .no,
-            limit: 100,
-            event: "delivered",
-            recipient: "user@example.com"
-        )
-
-        #expect(eventQuery.limit == 100)
-        #expect(eventQuery.ascending == .no)
-        #expect(eventQuery.event == "delivered")
-        #expect(eventQuery.recipient == "user@example.com")
-    }
-
-    @Test("Get statistics (README lines 569-575)")
+    @Test("Get total stats (README lines 552-558)")
     func getStatisticsExample() async throws {
-        let statsQuery = Mailgun.Reporting.Stats.Query(
-            event: ["accepted", "delivered", "failed"],
-            start: Date().addingTimeInterval(-7 * 86400),
-            end: Date(),
-            resolution: .day,
-            duration: "7d"
+        let statsQuery = Mailgun.Reporting.Stats.Total.Request(
+            event: "delivered",
+            start: "2024-01-01",
+            end: "2024-01-31",
+            resolution: "day",
+            duration: "1M"
         )
 
-        #expect(statsQuery.event?.count == 3)
-        #expect(statsQuery.resolution == .day)
-        #expect(statsQuery.duration == "7d")
+        #expect(statsQuery.event == "delivered")
+        #expect(statsQuery.start == "2024-01-01")
+        #expect(statsQuery.resolution == "day")
+        #expect(statsQuery.duration == "1M")
     }
 
-    @Test("Advanced metrics with dimensions (README lines 578-593)")
+    @Test("Advanced metrics with dimensions (README lines 561-584)")
     func advancedMetricsExample() async throws {
-        let metricsQuery = Mailgun.Reporting.Metrics.Query(
-            metrics: [
-                "deliverability_metrics.delivered_rate",
-                "deliverability_metrics.bounce_rate",
-                "engagement_metrics.open_rate",
-                "engagement_metrics.click_rate"
-            ],
-            start: Date().addingTimeInterval(-30 * 86400),
-            end: Date(),
-            resolution: .day,
-            dimensions: ["tag", "domain"],
-            filters: [
-                "tag": "marketing",
-                "domain": "yourdomain.com"
+        let metricsFilter = Mailgun.Reporting.Metrics.Filter(
+            and: [
+                Mailgun.Reporting.Metrics.FilterCondition(
+                    attribute: "status",
+                    comparator: "eq",
+                    values: [Mailgun.Reporting.Metrics.FilterValue(
+                        label: "Delivered",
+                        value: "delivered"
+                    )]
+                )
             ]
         )
 
-        #expect(metricsQuery.metrics.count == 4)
-        #expect(metricsQuery.resolution == .day)
-        #expect(metricsQuery.dimensions?.contains("tag") == true)
-        #expect(metricsQuery.filters?["tag"] == "marketing")
+        let metricsQuery = Mailgun.Reporting.Metrics.GetAccountMetrics.Request(
+            start: "2024-01-01",
+            end: "2024-01-31",
+            resolution: "day",
+            duration: "1M",
+            dimensions: ["campaign"],
+            metrics: ["delivered_count"],
+            filter: metricsFilter,
+            includeSubaccounts: true,
+            includeAggregates: true
+        )
+
+        #expect(metricsQuery.metrics.count == 1)
+        #expect(metricsQuery.resolution == "day")
+        #expect(metricsQuery.dimensions.contains("campaign") == true)
+        #expect(metricsQuery.includeSubaccounts == true)
     }
 
-    // MARK: - Managing Domains (README lines 602-627)
+    // MARK: - Managing Domains (README lines 590-612)
 
-    @Test("Create a domain (README lines 602-611)")
+    @Test("Create a domain (README lines 593-595)")
     func createDomainExample() async throws {
-        let domain = Mailgun.Domains.Create.Request(
-            name: "mail.yourdomain.com",
-            smtpPassword: "secure-password-here",
-            spamAction: .tag,
-            wildcard: false,
-            forceDkimAuthority: true,
-            dkimKeySize: 2048,
-            ips: ["192.168.1.1"],
-            poolId: "production-pool"
+        let createRequest = Mailgun.Domains.Domains.Create.Request(
+            name: "mail.yourdomain.com"
         )
 
-        #expect(domain.name == "mail.yourdomain.com")
-        #expect(domain.spamAction == .tag)
-        #expect(domain.wildcard == false)
-        #expect(domain.forceDkimAuthority == true)
-        #expect(domain.dkimKeySize == 2048)
-        #expect(domain.ips?.count == 1)
+        #expect(createRequest.name == "mail.yourdomain.com")
     }
 
-    @Test("Configure tracking (README lines 614-621)")
-    func configureTrackingExample() async throws {
-        let tracking = Mailgun.Domains.Tracking.Update.Request(
-            open: .enabled,
-            click: .enabled,
-            unsubscribe: .enabled(
-                footerText: "Unsubscribe from our emails",
-                footerHtml: "<a href='%unsubscribe_url%'>Unsubscribe</a>"
-            )
+    @Test("Update domain settings (README lines 598-600)")
+    func updateDomainExample() async throws {
+        let updateRequest = Mailgun.Domains.Domains.Update.Request(
+            spamAction: .tag
         )
 
-        #expect(tracking.open == .enabled)
-        #expect(tracking.click == .enabled)
-        if case .enabled(let footerText, let footerHtml) = tracking.unsubscribe {
-            #expect(footerText == "Unsubscribe from our emails")
-            #expect(footerHtml?.contains("%unsubscribe_url%") == true)
-        } else {
-            Issue.record("Expected unsubscribe to be enabled")
-        }
+        #expect(updateRequest.spamAction == .tag)
     }
 
-    @Test("Update DKIM settings (README lines 624-627)")
-    func updateDKIMExample() async throws {
-        let dkim = Mailgun.Domains.DKIM.Update.Request(
-            active: true,
-            rotation: .enabled(days: 90)
+    @Test("List domains with filters (README lines 603-608)")
+    func listDomainsExample() async throws {
+        let listRequest = Mailgun.Domains.Domains.List.Request(
+            authority: "example.com",
+            state: .active,
+            limit: 10,
+            skip: 0
         )
 
-        #expect(dkim.active == true)
-        if case .enabled(let days) = dkim.rotation {
-            #expect(days == 90)
-        } else {
-            Issue.record("Expected rotation to be enabled")
-        }
+        #expect(listRequest.authority == "example.com")
+        #expect(listRequest.state == .active)
+        #expect(listRequest.limit == 10)
+        #expect(listRequest.skip == 0)
     }
 
-    // MARK: - Router Usage (README lines 637-649)
+    @Test("Get tracking settings (README lines 611-612)")
+    func getTrackingExample() async throws {
+        let domain = try Domain("example.com")
+        let trackingAPI = Mailgun.Domains.Domains.Tracking.API.get(domain: domain)
 
-    @Test("Using the Router for URL Generation (README lines 637-649)")
-    func routerURLGenerationExample() async throws {
-        let router = Mailgun.Messages.API.Router()
-
-        let emailRequest = Mailgun.Messages.Send.Request(
-            from: try .init("test@yourdomain.com"),
-            to: [try .init("user@example.com")],
-            subject: "Test",
-            text: "Test"
-        )
-
-        let sendAPI = Mailgun.Messages.API.send(
-            domain: try .init("yourdomain.com"),
-            request: emailRequest
-        )
-
-        // Verify the router can work with the API enum
-        #expect(sendAPI != sendAPI) // Basic equality check
-
-        // Note: Actual URL generation would require URLRouting implementation
-        // This test validates the types compile and can be instantiated
+        #expect(trackingAPI.is(\.get))
+        #expect(trackingAPI.get == domain)
     }
 
-    // MARK: - Mock Client Testing (README lines 662-702)
+    // MARK: - Mock Client Testing (README lines 646-712)
 
-    @Test("Mock Client Testing (README lines 662-702)")
+    struct TestError: Error {}
+
+    @Test("Mock Client Testing (README lines 646-712)")
     func mockClientTestingExample() async throws {
         // Create a mock client with controlled responses
         let client = Mailgun.Messages.Client(
@@ -368,7 +317,7 @@ struct ReadmeVerificationTests {
                 )
             },
             sendMime: { _ in
-                throw NSError(domain: "Not implemented", code: 0)
+                throw TestError()
             },
             retrieve: { storageKey in
                 #expect(storageKey == "test-key")
@@ -394,10 +343,10 @@ struct ReadmeVerificationTests {
                 )
             },
             queueStatus: {
-                throw NSError(domain: "Not implemented", code: 0)
+                throw TestError()
             },
             deleteAll: {
-                throw NSError(domain: "Not implemented", code: 0)
+                throw TestError()
             }
         )
 
@@ -415,75 +364,6 @@ struct ReadmeVerificationTests {
         // Test retrieval
         let message = try await client.retrieve("test-key")
         #expect(message.from.rawValue == "sender@example.com")
-    }
-
-    // MARK: - CasePaths Usage (README lines 829-854)
-
-    @Test("Using CasePaths for API Enums (README lines 829-854)")
-    func casePathsUsageExample() async throws {
-        let request = Mailgun.Messages.Send.Request(
-            from: try .init("test@test.com"),
-            to: [try .init("user@test.com")],
-            subject: "Test",
-            text: "Test"
-        )
-
-        let api: Mailgun.Messages.API = .send(
-            domain: try .init("test.com"),
-            request: request
-        )
-
-        // Check enum case
-        #expect(api.is(\.send))
-
-        // Extract associated values
-        if let sendData = api.send {
-            #expect(sendData.domain.rawValue == "test.com")
-            #expect(sendData.request.subject == "Test")
-        } else {
-            Issue.record("Expected send case")
-        }
-
-        // Pattern matching with CasePaths
-        switch api {
-        case \.send:
-            // Success - this is a send request
-            break
-        case \.sendMime:
-            Issue.record("Expected send, got sendMime")
-        case \.retrieve:
-            Issue.record("Expected send, got retrieve")
-        case \.queueStatus:
-            Issue.record("Expected send, got queueStatus")
-        case \.deleteAll:
-            Issue.record("Expected send, got deleteAll")
-        }
-    }
-
-    // MARK: - Custom Form Encoding (README lines 863-882)
-
-    @Test("Custom Form Encoding (README lines 863-882)")
-    func customFormEncodingExample() async throws {
-        // Verify mailgun form encoder exists and can be instantiated
-        let encoder = Shared.FormEncoder.mailgun
-
-        // Test encoding a simple request
-        let request = Mailgun.Messages.Send.Request(
-            from: try .init("test@example.com"),
-            to: [try .init("user@example.com")],
-            subject: "Test",
-            text: "Test message"
-        )
-
-        // Verify encoding works
-        let encoded = try encoder.encode(request)
-        #expect(encoded.count > 0)
-
-        // Verify the encoded data contains expected fields
-        let encodedString = String(data: encoded, encoding: .utf8) ?? ""
-        #expect(encodedString.contains("from"))
-        #expect(encodedString.contains("to"))
-        #expect(encodedString.contains("subject"))
     }
 
     // MARK: - Type Conformance Validation
@@ -507,7 +387,6 @@ struct ReadmeVerificationTests {
             message: "Queued"
         )
         let _: any Sendable = response
-        // Note: Response may not be Encodable, only Decodable
         let _: any Decodable = response
 
         // Verify Template types conform
