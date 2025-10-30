@@ -25,6 +25,7 @@ struct WebhooksRouterTests {
 
     let match: Mailgun.Webhooks.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.list))
-    #expect(match.list == (try .init("test.domain.com")))
+    let expected1 = try Domain("test.domain.com")
+    #expect(match.list == expected1)
   }
 }

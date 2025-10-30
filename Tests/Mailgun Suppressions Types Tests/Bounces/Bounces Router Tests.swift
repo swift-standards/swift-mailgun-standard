@@ -50,8 +50,10 @@ struct BouncesRouterTests {
       request: try router.request(for: api)
     )
     #expect(match.is(\.get))
-    #expect(match.get?.domain == (try .init("test.domain.com")))
-    #expect(match.get?.address == (try .init("test@example.com")))
+    let expected1 = try Domain("test.domain.com")
+    #expect(match.get?.domain == expected1)
+    let expected2 = try EmailAddress("test@example.com")
+    #expect(match.get?.address == expected2)
   }
 
   @Test("Creates correct URL for deleting specific bounce")
@@ -70,8 +72,10 @@ struct BouncesRouterTests {
       request: try router.request(for: api)
     )
     #expect(match.is(\.delete))
-    #expect(match.delete?.domain == (try .init("test.domain.com")))
-    #expect(match.delete?.address == (try .init("test@example.com")))
+    let expected3 = try Domain("test.domain.com")
+    #expect(match.delete?.domain == expected3)
+    let expected4 = try EmailAddress("test@example.com")
+    #expect(match.delete?.address == expected4)
   }
 
   @Test("Creates correct URL for listing bounces with query parameters")
@@ -105,7 +109,8 @@ struct BouncesRouterTests {
       request: try router.request(for: api)
     )
     #expect(match.is(\.list))
-    #expect(match.list?.domain == (try .init("test.domain.com")))
+    let expected5 = try Domain("test.domain.com")
+    #expect(match.list?.domain == expected5)
     #expect(match.list?.request?.limit == 25)
     #expect(match.list?.request?.page == "next")
     #expect(match.list?.request?.term == "test")
@@ -134,8 +139,10 @@ struct BouncesRouterTests {
       request: try router.request(for: api)
     )
     #expect(match.is(\.create))
-    #expect(match.create?.domain == (try .init("test.domain.com")))
-    #expect(match.create?.request.address == (try .init("test@example.com")))
+    let expected6 = try Domain("test.domain.com")
+    #expect(match.create?.domain == expected6)
+    let expected7 = try EmailAddress("test@example.com")
+    #expect(match.create?.request.address == expected7)
     #expect(match.create?.request.code == "550")
     #expect(match.create?.request.error == "Test error")
     #expect(match.create?.request.createdAt == "2024-12-27")
@@ -154,6 +161,7 @@ struct BouncesRouterTests {
       request: try router.request(for: api)
     )
     #expect(match.is(\.deleteAll))
-    #expect(match.deleteAll == (try .init("test.domain.com")))
+    let expected8 = try Domain("test.domain.com")
+    #expect(match.deleteAll == expected8)
   }
 }

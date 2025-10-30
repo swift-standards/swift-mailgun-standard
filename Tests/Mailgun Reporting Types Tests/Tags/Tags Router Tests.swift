@@ -31,6 +31,7 @@ struct TagsRouterTests {
 
     let match: Mailgun.Reporting.Tags.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.list))
-    #expect(match.list?.domain == (try .init("test.com")))
+    let expected1 = try Domain("test.com")
+    #expect(match.list?.domain == expected1)
   }
 }

@@ -50,6 +50,7 @@ struct AllowlistRouterTests {
       request: try router.request(for: api)
     )
     #expect(match.is(\.get))
-    #expect(match.get?.domain == (try .init("test.domain.com")))
+    let expected1 = try Domain("test.domain.com")
+    #expect(match.get?.domain == expected1)
   }
 }

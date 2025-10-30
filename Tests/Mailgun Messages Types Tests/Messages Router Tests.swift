@@ -78,7 +78,8 @@ struct MessagesRouterTests {
 
     let match: Mailgun.Messages.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.retrieve))
-    #expect(match.retrieve?.domain == (try .init("test.domain.com")))
+    let expected1 = try Domain("test.domain.com")
+    #expect(match.retrieve?.domain == expected1)
     #expect(match.retrieve?.storageKey == "message123")
   }
 
@@ -93,7 +94,8 @@ struct MessagesRouterTests {
 
     let match: Mailgun.Messages.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.queueStatus))
-    #expect(match.queueStatus == (try .init("test.domain.com")))
+    let expected2 = try Domain("test.domain.com")
+    #expect(match.queueStatus == expected2)
   }
 
   @Test("Creates correct URL for deleting scheduled messages")
@@ -107,6 +109,7 @@ struct MessagesRouterTests {
 
     let match: Mailgun.Messages.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.deleteScheduled))
-    #expect(match.deleteScheduled == (try .init("test.domain.com")))
+    let expected3 = try Domain("test.domain.com")
+    #expect(match.deleteScheduled == expected3)
   }
 }

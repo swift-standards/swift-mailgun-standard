@@ -38,7 +38,8 @@ struct TemplatesRouterTests {
 
     let match: Mailgun.Templates.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.list))
-    #expect(match.list?.domainId == (try .init("test.domain.com")))
+    let expected1 = try Domain("test.domain.com")
+    #expect(match.list?.domainId == expected1)
     #expect(match.list?.request?.page == .first)
     #expect(match.list?.request?.limit == 100)
     #expect(match.list?.request?.p == nil)
@@ -83,7 +84,8 @@ struct TemplatesRouterTests {
 
     let match: Mailgun.Templates.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.get))
-    #expect(match.get?.domainId == (try .init("test.domain.com")))
+    let expected2 = try Domain("test.domain.com")
+    #expect(match.get?.domainId == expected2)
     #expect(match.get?.templateName == "template123")
     #expect(match.get?.request?.active == "active")
   }
@@ -123,7 +125,8 @@ struct TemplatesRouterTests {
 
     let match: Mailgun.Templates.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.delete))
-    #expect(match.delete?.domainId == (try .init("test.domain.com")))
+    let expected3 = try Domain("test.domain.com")
+    #expect(match.delete?.domainId == expected3)
     #expect(match.delete?.templateName == "template123")
   }
 
@@ -151,7 +154,8 @@ struct TemplatesRouterTests {
 
     let match: Mailgun.Templates.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.versions))
-    #expect(match.versions?.domainId == (try .init("test.domain.com")))
+    let expected4 = try Domain("test.domain.com")
+    #expect(match.versions?.domainId == expected4)
     #expect(match.versions?.templateName == "template123")
     #expect(match.versions?.request?.page == .next)
     #expect(match.versions?.request?.limit == 50)
@@ -200,7 +204,8 @@ struct TemplatesRouterTests {
 
     let match: Mailgun.Templates.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.getVersion))
-    #expect(match.getVersion?.domainId == (try .init("test.domain.com")))
+    let expected5 = try Domain("test.domain.com")
+    #expect(match.getVersion?.domainId == expected5)
     #expect(match.getVersion?.templateName == "template123")
     #expect(match.getVersion?.versionName == "version456")
   }
@@ -249,7 +254,8 @@ struct TemplatesRouterTests {
 
     let match: Mailgun.Templates.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.deleteVersion))
-    #expect(match.deleteVersion?.domainId == (try .init("test.domain.com")))
+    let expected6 = try Domain("test.domain.com")
+    #expect(match.deleteVersion?.domainId == expected6)
     #expect(match.deleteVersion?.templateName == "template123")
     #expect(match.deleteVersion?.versionName == "version456")
   }
@@ -282,7 +288,8 @@ struct TemplatesRouterTests {
 
     let match: Mailgun.Templates.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.copyVersion))
-    #expect(match.copyVersion?.domainId == (try .init("test.domain.com")))
+    let expected7 = try Domain("test.domain.com")
+    #expect(match.copyVersion?.domainId == expected7)
     #expect(match.copyVersion?.templateName == "template123")
     #expect(match.copyVersion?.versionName == "version456")
     #expect(match.copyVersion?.newVersionName == "v3")

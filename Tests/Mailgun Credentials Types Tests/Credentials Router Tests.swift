@@ -30,7 +30,8 @@ struct CredentialsRouterTests {
 
     let match: Mailgun.Credentials.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.list))
-    #expect(match.list?.domain == (try .init("test.domain.com")))
+    let expected1 = try Domain("test.domain.com")
+    #expect(match.list?.domain == expected1)
     // Request without parameters creates an empty request object
     #expect(match.list?.request?.skip == nil)
     #expect(match.list?.request?.limit == nil)
@@ -53,7 +54,8 @@ struct CredentialsRouterTests {
 
     let match: Mailgun.Credentials.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.list))
-    #expect(match.list?.domain == (try .init("test.domain.com")))
+    let expected2 = try Domain("test.domain.com")
+    #expect(match.list?.domain == expected2)
     #expect(match.list?.request?.skip == 10)
     #expect(match.list?.request?.limit == 50)
   }
@@ -77,7 +79,8 @@ struct CredentialsRouterTests {
 
     let match: Mailgun.Credentials.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.create))
-    #expect(match.create?.domain == (try .init("test.domain.com")))
+    let expected3 = try Domain("test.domain.com")
+    #expect(match.create?.domain == expected3)
     #expect(match.create?.request.login == "user@test.domain.com")
     #expect(match.create?.request.password == "securePassword123")
   }
@@ -95,7 +98,8 @@ struct CredentialsRouterTests {
 
     let match: Mailgun.Credentials.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.deleteAll))
-    #expect(match.deleteAll == (try .init("test.domain.com")))
+    let expected4 = try Domain("test.domain.com")
+    #expect(match.deleteAll == expected4)
   }
 
   @Test("Creates correct URL for updating credentials")
@@ -117,7 +121,8 @@ struct CredentialsRouterTests {
 
     let match: Mailgun.Credentials.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.update))
-    #expect(match.update?.domain == (try .init("test.domain.com")))
+    let expected5 = try Domain("test.domain.com")
+    #expect(match.update?.domain == expected5)
     #expect(match.update?.login == "user@test.domain.com")
     #expect(match.update?.request.password == "newSecurePassword456")
   }
@@ -136,7 +141,8 @@ struct CredentialsRouterTests {
 
     let match: Mailgun.Credentials.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.delete))
-    #expect(match.delete?.domain == (try .init("test.domain.com")))
+    let expected6 = try Domain("test.domain.com")
+    #expect(match.delete?.domain == expected6)
     #expect(match.delete?.login == "user@test.domain.com")
   }
 
@@ -159,7 +165,8 @@ struct CredentialsRouterTests {
 
     let match: Mailgun.Credentials.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.updateMailbox))
-    #expect(match.updateMailbox?.domain == (try .init("test.domain.com")))
+    let expected7 = try Domain("test.domain.com")
+    #expect(match.updateMailbox?.domain == expected7)
     #expect(match.updateMailbox?.login == "user@test.domain.com")
     #expect(match.updateMailbox?.request.password == "newMailboxPassword789")
   }
@@ -180,7 +187,8 @@ struct CredentialsRouterTests {
 
     let match: Mailgun.Credentials.API = try router.match(request: try router.request(for: api))
     #expect(match.is(\.delete))
-    #expect(match.delete?.domain == (try .init("test.domain.com")))
+    let expected8 = try Domain("test.domain.com")
+    #expect(match.delete?.domain == expected8)
     #expect(match.delete?.login == "user+test@test.domain.com")
   }
 }
