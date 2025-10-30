@@ -81,7 +81,7 @@ struct AccountManagementRouterTests {
     func testAddSandboxAuthRecipientURL() throws {
         let router: Mailgun.AccountManagement.API.Router = .init()
 
-        let request = Mailgun.AccountManagement.Sandbox.Auth.Recipients.Add.Request(email: "test@example.com")
+        let request = Mailgun.AccountManagement.Sandbox.Auth.Recipients.Add.Request(email: try .init("test@example.com"))
         let api: Mailgun.AccountManagement.API = .addSandboxAuthRecipient(request: request)
 
         let url = router.url(for: api)
@@ -94,14 +94,14 @@ struct AccountManagementRouterTests {
 
         let match: Mailgun.AccountManagement.API = try router.match(request: try router.request(for: api))
         #expect(match.is(\.addSandboxAuthRecipient))
-        #expect(match.addSandboxAuthRecipient?.email == "test@example.com")
+        #expect(match.addSandboxAuthRecipient?.email.rawValue == "test@example.com")
     }
 
     @Test("Creates correct URL for deleting sandbox auth recipient")
     func testDeleteSandboxAuthRecipientURL() throws {
         let router: Mailgun.AccountManagement.API.Router = .init()
 
-        let email = "test@example.com"
+        let email = try EmailAddress("test@example.com")
         let api: Mailgun.AccountManagement.API = .deleteSandboxAuthRecipient(email: email)
 
         let url = router.url(for: api)
@@ -177,8 +177,8 @@ struct AccountManagementRouterTests {
         let httpKeyUrl = router.url(for: .getHttpSigningKey)
         let regenerateUrl = router.url(for: .regenerateHttpSigningKey)
         let sandboxListUrl = router.url(for: .getSandboxAuthRecipients)
-        let sandboxAddUrl = router.url(for: .addSandboxAuthRecipient(request: .init(email: "test@example.com")))
-        let sandboxDeleteUrl = router.url(for: .deleteSandboxAuthRecipient(email: "test@example.com"))
+        let sandboxAddUrl = router.url(for: .addSandboxAuthRecipient(request: .init(email: try .init("test@example.com"))))
+        let sandboxDeleteUrl = router.url(for: .deleteSandboxAuthRecipient(email: try .init("test@example.com")))
         let resendUrl = router.url(for: .resendActivationEmail)
         let samlGetUrl = router.url(for: .getSAMLOrganization)
         let samlCreateUrl = router.url(for: .addSAMLOrganization(request: .init(userId: "test")))

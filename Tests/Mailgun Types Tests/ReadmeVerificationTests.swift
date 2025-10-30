@@ -19,8 +19,8 @@ struct ReadmeVerificationTests {
     func quickStartExample() async throws {
         // Type-safe request models with compile-time validation
         let request = Mailgun.Messages.Send.Request(
-            from: .init("hello@yourdomain.com"),
-            to: [.init("user@example.com")],
+            from: try .init("hello@yourdomain.com"),
+            to: [try .init("user@example.com")],
             subject: "Welcome to swift-mailgun-types!",
             html: "<h1>Type-safe emails</h1><p>Built with Swift</p>"
         )
@@ -38,8 +38,8 @@ struct ReadmeVerificationTests {
     @Test("Simple email (README lines 434-439)")
     func simpleEmailExample() async throws {
         let simpleEmail = Mailgun.Messages.Send.Request(
-            from: .init("noreply@yourdomain.com"),
-            to: [.init("user@example.com")],
+            from: try .init("noreply@yourdomain.com"),
+            to: [try .init("user@example.com")],
             subject: "Hello!",
             text: "Welcome to our service."
         )
@@ -56,13 +56,13 @@ struct ReadmeVerificationTests {
         let logoData = Data("PNG content".utf8)
 
         let richEmail = Mailgun.Messages.Send.Request(
-            from: .init("Newsletter <news@yourdomain.com>"),
+            from: try .init("Newsletter <news@yourdomain.com>"),
             to: [
-                .init("subscriber1@example.com"),
-                .init("subscriber2@example.com")
+                try .init("subscriber1@example.com"),
+                try .init("subscriber2@example.com")
             ],
-            cc: [.init("manager@yourdomain.com")],
-            bcc: [.init("archive@yourdomain.com")],
+            cc: [try .init("manager@yourdomain.com")],
+            bcc: [try .init("archive@yourdomain.com")],
             subject: "Monthly Newsletter",
             html: """
                 <h1>Your Monthly Update</h1>
@@ -329,8 +329,8 @@ struct ReadmeVerificationTests {
         let router = Mailgun.Messages.API.Router()
 
         let emailRequest = Mailgun.Messages.Send.Request(
-            from: .init("test@yourdomain.com"),
-            to: [.init("user@example.com")],
+            from: try .init("test@yourdomain.com"),
+            to: [try .init("user@example.com")],
             subject: "Test",
             text: "Test"
         )
@@ -387,8 +387,8 @@ struct ReadmeVerificationTests {
 
         // Test sending
         let request = Mailgun.Messages.Send.Request(
-            from: .init("test@example.com"),
-            to: [.init("recipient@example.com")],
+            from: try .init("test@example.com"),
+            to: [try .init("recipient@example.com")],
             subject: "Test Email",
             text: "This is a test"
         )
@@ -406,8 +406,8 @@ struct ReadmeVerificationTests {
     @Test("Using CasePaths for API Enums (README lines 829-854)")
     func casePathsUsageExample() async throws {
         let request = Mailgun.Messages.Send.Request(
-            from: .init("test@test.com"),
-            to: [.init("user@test.com")],
+            from: try .init("test@test.com"),
+            to: [try .init("user@test.com")],
             subject: "Test",
             text: "Test"
         )
@@ -449,12 +449,12 @@ struct ReadmeVerificationTests {
     @Test("Custom Form Encoding (README lines 863-882)")
     func customFormEncodingExample() async throws {
         // Verify mailgun form encoder exists and can be instantiated
-        let encoder = FormEncoder.mailgun
+        let encoder = Shared.FormEncoder.mailgun
 
         // Test encoding a simple request
         let request = Mailgun.Messages.Send.Request(
-            from: .init("test@example.com"),
-            to: [.init("user@example.com")],
+            from: try .init("test@example.com"),
+            to: [try .init("user@example.com")],
             subject: "Test",
             text: "Test message"
         )
@@ -476,8 +476,8 @@ struct ReadmeVerificationTests {
     func typeConformanceValidation() async throws {
         // Verify Send.Request conforms to required protocols
         let request = Mailgun.Messages.Send.Request(
-            from: .init("test@test.com"),
-            to: [.init("user@test.com")],
+            from: try .init("test@test.com"),
+            to: [try .init("user@test.com")],
             subject: "Test",
             text: "Test"
         )
@@ -491,7 +491,8 @@ struct ReadmeVerificationTests {
             message: "Queued"
         )
         let _: any Sendable = response
-        let _: any Codable = response
+        // Note: Response may not be Encodable, only Decodable
+        let _: any Decodable = response
 
         // Verify Template types conform
         let template = Mailgun.Templates.Template.Create.Request(
