@@ -41,12 +41,12 @@
 > **⚠️ Important**: This package provides **types and interfaces only**. For a complete SDK with implementations, use **[swift-mailgun](https://github.com/coenttb/swift-mailgun)**.
 
 ```swift
-import Mailgun_Types
+import Mailgun_Messages_Types
 
 // Type-safe request models with compile-time validation
 let request = Mailgun.Messages.Send.Request(
-    from: .init("hello@yourdomain.com"),
-    to: [.init("user@example.com")],
+    from: try .init("hello@yourdomain.com"),
+    to: [try .init("user@example.com")],
     subject: "Welcome to swift-mailgun-types!",
     html: "<h1>Type-safe emails</h1><p>Built with Swift</p>"
 )
@@ -432,57 +432,51 @@ import Mailgun_Messages_Types
 
 // Simple email
 let simpleEmail = Mailgun.Messages.Send.Request(
-    from: .init("noreply@yourdomain.com"),
-    to: [.init("user@example.com")],
+    from: try .init("noreply@yourdomain.com"),
+    to: [try .init("user@example.com")],
     subject: "Hello!",
     text: "Welcome to our service."
 )
 
 // Rich email with all features
 let richEmail = Mailgun.Messages.Send.Request(
-    from: .init("Newsletter <news@yourdomain.com>"),
+    from: try .init("Newsletter <news@yourdomain.com>"),
     to: [
-        .init("subscriber1@example.com"),
-        .init("subscriber2@example.com")
+        try .init("subscriber1@example.com"),
+        try .init("subscriber2@example.com")
     ],
-    cc: [.init("manager@yourdomain.com")],
-    bcc: [.init("archive@yourdomain.com")],
-    subject: "Monthly Newsletter",
+    subject: "Monthly Newsletter",  // subject must come before cc/bcc
     html: """
         <h1>Your Monthly Update</h1>
         <p>Check out our latest features!</p>
         <img src="cid:logo.png">
     """,
     text: "Your Monthly Update - Check out our latest features!",
-    attachment: [
-        Mailgun.Messages.Attachment(
-            filename: "report.pdf",
+    cc: [try .init("manager@yourdomain.com")],
+    bcc: [try .init("archive@yourdomain.com")],
+    template: "monthly-newsletter",
+    templateVariables: #"{"month":"January","year":"2024"}"#,  // JSON string
+    attachments: [
+        Mailgun.Messages.Attachment.Data(
             data: reportData,
+            filename: "report.pdf",
             contentType: "application/pdf"
         )
     ],
     inline: [
-        Mailgun.Messages.Attachment(
-            filename: "logo.png",
+        Mailgun.Messages.Attachment.Data(
             data: logoData,
+            filename: "logo.png",
             contentType: "image/png"
         )
     ],
-    template: "monthly-newsletter",
-    templateVariables: [
-        "month": "January",
-        "year": "2024"
-    ],
-    tag: ["newsletter", "monthly"],
+    tags: ["newsletter", "monthly"],
     deliveryTime: Date().addingTimeInterval(3600), // Send in 1 hour
     tracking: true,
     trackingClicks: .htmlOnly,
     trackingOpens: true,
     headers: ["X-Campaign-ID": "JAN2024"],
-    recipientVariables: [
-        "subscriber1@example.com": ["name": "Alice", "id": "001"],
-        "subscriber2@example.com": ["name": "Bob", "id": "002"]
-    ]
+    recipientVariables: #"{"subscriber1@example.com":{"name":"Alice","id":"001"}}"#  // JSON string
 )
 ```
 
@@ -492,7 +486,7 @@ let richEmail = Mailgun.Messages.Send.Request(
 import Mailgun_Templates_Types
 
 // Create a template
-let template = Mailgun.Templates.Template.Create.Request(
+let template = Mailgun.Templates.Create.Request(
     name: "welcome-email",
     description: "Welcome email for new users",
     template: """
@@ -500,22 +494,21 @@ let template = Mailgun.Templates.Template.Create.Request(
         <p>Thanks for joining on {{signup_date}}.</p>
         <p>Your account type: {{account_type}}</p>
     """,
-    engine: "handlebars",
-    tag: "v1.0"
+    tag: "v1.0",
+    comment: "Initial version"
 )
 
-// Create a new version
+// Create a new template version
 let newVersion = Mailgun.Templates.Version.Create.Request(
-    tag: "v2.0",
     template: """
         <h1>Welcome aboard, {{name}}!</h1>
         <p>We're excited to have you join us on {{signup_date}}.</p>
         <p>Your {{account_type}} account is ready!</p>
         <a href="{{cta_link}}">Get Started</a>
     """,
-    engine: "handlebars",
+    tag: "v2.0",
     comment: "Added CTA button",
-    active: true
+    active: "yes"  // Note: active is a String, not Bool
 )
 ```
 
@@ -526,27 +519,27 @@ import Mailgun_Suppressions_Types
 
 // Handle a bounce
 let bounce = Mailgun.Suppressions.Bounces.Create.Request(
-    address: "invalid@example.com",
+    address: try .init("invalid@example.com"),
     code: "550",
     error: "Mailbox does not exist"
 )
 
 // Add to unsubscribe list
-let unsubscribe = Mailgun.Suppressions.Unsubscribes.Create.Request(
-    address: "user@example.com",
-    tag: "newsletter"  // Unsubscribe from newsletter only
+let unsubscribe = Mailgun.Suppressions.Unsubscribe.Create.Request(
+    address: try .init("user@example.com"),
+    tags: ["newsletter"]  // Unsubscribe from specific tags
 )
 
-// Allowlist VIP addresses
-let Allowlist = Mailgun.Suppressions.Allowlist.Create.Request(
-    address: "vip@partner.com",
-    reason: "Strategic partner"
+// Allowlist VIP addresses (enum-based)
+let allowlist = Mailgun.Suppressions.Allowlist.Create.Request.address(
+    try .init("vip@partner.com")
 )
 
 // Query suppressions
 let query = Mailgun.Suppressions.Bounces.List.Request(
     limit: 100,
-    page: .next
+    page: "next",  // page is a String
+    term: "example.com"
 )
 ```
 
@@ -555,41 +548,39 @@ let query = Mailgun.Suppressions.Bounces.List.Request(
 ```swift
 import Mailgun_Reporting_Types
 
-// Query events
-let eventQuery = Mailgun.Reporting.Events.List.Query(
-    begin: Date().addingTimeInterval(-86400), // Last 24 hours
-    end: Date(),
-    ascending: .no,
-    limit: 100,
+// Get total stats
+let statsQuery = Mailgun.Reporting.Stats.Total.Request(
     event: "delivered",
-    recipient: "user@example.com"
+    start: "2024-01-01",
+    end: "2024-01-31",
+    resolution: "day",
+    duration: "1M"
 )
 
-// Get statistics
-let statsQuery = Mailgun.Reporting.Stats.Query(
-    event: ["accepted", "delivered", "failed"],
-    start: Date().addingTimeInterval(-7 * 86400), // Last week
-    end: Date(),
-    resolution: .day,
-    duration: "7d"
-)
-
-// Advanced metrics with dimensions
-let metricsQuery = Mailgun.Reporting.Metrics.Query(
-    metrics: [
-        "deliverability_metrics.delivered_rate",
-        "deliverability_metrics.bounce_rate",
-        "engagement_metrics.open_rate",
-        "engagement_metrics.click_rate"
-    ],
-    start: Date().addingTimeInterval(-30 * 86400),
-    end: Date(),
-    resolution: .day,
-    dimensions: ["tag", "domain"],
-    filters: [
-        "tag": "marketing",
-        "domain": "yourdomain.com"
+// Get account metrics with filter
+let metricsFilter = Mailgun.Reporting.Metrics.Filter(
+    and: [
+        Mailgun.Reporting.Metrics.FilterCondition(
+            attribute: "status",
+            comparator: "eq",
+            values: [Mailgun.Reporting.Metrics.FilterValue(
+                label: "Delivered",
+                value: "delivered"
+            )]
+        )
     ]
+)
+
+let metricsQuery = Mailgun.Reporting.Metrics.GetAccountMetrics.Request(
+    start: "2024-01-01",
+    end: "2024-01-31",
+    resolution: "day",
+    duration: "1M",
+    dimensions: ["campaign"],
+    metrics: ["delivered_count"],
+    filter: metricsFilter,
+    includeSubaccounts: true,
+    includeAggregates: true
 )
 ```
 
@@ -599,32 +590,26 @@ let metricsQuery = Mailgun.Reporting.Metrics.Query(
 import Mailgun_Domains_Types
 
 // Create a domain
-let domain = Mailgun.Domains.Create.Request(
-    name: "mail.yourdomain.com",
-    smtpPassword: "secure-password-here",
-    spamAction: .tag,
-    wildcard: false,
-    forceDkimAuthority: true,
-    dkimKeySize: 2048,
-    ips: ["192.168.1.1"],
-    poolId: "production-pool"
+let createRequest = Mailgun.Domains.Domains.Create.Request(
+    name: "mail.yourdomain.com"
 )
 
-// Configure tracking
-let tracking = Mailgun.Domains.Tracking.Update.Request(
-    open: .enabled,
-    click: .enabled,
-    unsubscribe: .enabled(
-        footerText: "Unsubscribe from our emails",
-        footerHtml: "<a href='%unsubscribe_url%'>Unsubscribe</a>"
-    )
+// Update domain settings
+let updateRequest = Mailgun.Domains.Domains.Update.Request(
+    spamAction: .tag
 )
 
-// Update DKIM settings
-let dkim = Mailgun.Domains.DKIM.Update.Request(
-    active: true,
-    rotation: .enabled(days: 90)
+// List domains with filters
+let listRequest = Mailgun.Domains.Domains.List.Request(
+    authority: "example.com",
+    state: .active,
+    limit: 10,
+    skip: 0
 )
+
+// Get tracking settings
+let domain = try Domain("example.com")
+let trackingAPI = Mailgun.Domains.Domains.Tracking.API.get(domain: domain)
 ```
 
 ### 🔌 Using the Router for URL Generation
@@ -658,6 +643,8 @@ The `@DependencyClient` macro makes testing straightforward:
 import Testing
 import Mailgun_Messages_Types
 
+struct TestError: Error {}
+
 @Test
 func testEmailWorkflow() async throws {
     // Create a mock client with controlled responses
@@ -674,31 +661,54 @@ func testEmailWorkflow() async throws {
                 message: "Queued. Thank you."
             )
         },
+        sendMime: { _ in
+            throw TestError()
+        },
         retrieve: { storageKey in
             #expect(storageKey == "test-key")
             return Mailgun.Messages.StoredMessage(
-                from: "sender@example.com",
+                contentTransferEncoding: "7bit",
+                contentType: "text/plain",
+                from: try .init("sender@example.com"),
+                messageId: "<test-id>",
+                mimeVersion: "1.0",
                 subject: "Test",
+                to: try .init("recipient@example.com"),
+                tags: [],
+                sender: try .init("sender@example.com"),
+                recipients: [try .init("recipient@example.com")],
+                bodyHtml: nil,
                 bodyPlain: "Test message",
-                messageHeaders: []
+                strippedHtml: nil,
+                strippedText: "Test message",
+                strippedSignature: nil,
+                messageHeaders: [],
+                templateName: nil,
+                templateVariables: nil
             )
+        },
+        queueStatus: {
+            throw TestError()
+        },
+        deleteAll: {
+            throw TestError()
         }
     )
     
     // Test sending
     let request = Mailgun.Messages.Send.Request(
-        from: .init("test@example.com"),
-        to: [.init("recipient@example.com")],
+        from: try .init("test@example.com"),
+        to: [try .init("recipient@example.com")],
         subject: "Test Email",
         text: "This is a test"
     )
-    
+
     let response = try await client.send(request)
     #expect(response.id == "<test-message-id@mailgun.org>")
-    
+
     // Test retrieval
     let message = try await client.retrieve("test-key")
-    #expect(message.from == "sender@example.com")
+    #expect(message.from.rawValue == "sender@example.com")
 }
 ```
 
