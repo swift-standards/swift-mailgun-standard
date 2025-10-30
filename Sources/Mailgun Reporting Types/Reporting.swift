@@ -8,5 +8,5 @@
 @_exported import Mailgun_Types_Shared
 
 extension Mailgun {
-    public enum Reporting {}
+  public enum Reporting {}
 }

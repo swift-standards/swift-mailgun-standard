@@ -7,21 +7,24 @@
 
 import DependenciesTestSupport
 import Domain
-@testable import Mailgun_Domains_Types
 import Testing
+
+@testable import Mailgun_Domains_Types
 
 @Suite("Domain Keys Router Tests")
 struct DomainKeysRouterTests {
-    @Test("Creates correct URL for listing keys")
-    func testListKeysURL() throws {
-        let router: Mailgun.Domains.DomainKeys.API.Router = .init()
+  @Test("Creates correct URL for listing keys")
+  func testListKeysURL() throws {
+    let router: Mailgun.Domains.DomainKeys.API.Router = .init()
 
-        let api: Mailgun.Domains.DomainKeys.API = .list(request: nil)
+    let api: Mailgun.Domains.DomainKeys.API = .list(request: nil)
 
-        let url = router.url(for: api)
-        #expect(url.path == "/v1/dkim/keys")
+    let url = router.url(for: api)
+    #expect(url.path == "/v1/dkim/keys")
 
-        let match: Mailgun.Domains.DomainKeys.API = try router.match(request: try router.request(for: api))
-        #expect(match.is(\.list))
-    }
+    let match: Mailgun.Domains.DomainKeys.API = try router.match(
+      request: try router.request(for: api)
+    )
+    #expect(match.is(\.list))
+  }
 }

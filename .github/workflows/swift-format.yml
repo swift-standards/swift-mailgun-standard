@@ -1,53 +1,47 @@
-name: Swift Format
+name: Format
 
 on:
-  pull_request:
-    paths:
-      - '**.swift'
-  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: format-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  swift-format:
-    name: Swift Format
+  swift_format:
+    name: swift-format
     runs-on: macos-15
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_16.0.app
 
+      - name: Cache swift-format
+        id: cache-swift-format
+        uses: actions/cache@v4
+        with:
+          path: /usr/local/bin/swift-format
+          key: ${{ runner.os }}-swift-format-${{ hashFiles('.github/workflows/swift-format.yml') }}
+
       - name: Install swift-format
+        if: steps.cache-swift-format.outputs.cache-hit != 'true'
         run: |
-          git clone https://github.com/apple/swift-format.git
+          git clone --depth 1 --branch main https://github.com/apple/swift-format.git
           cd swift-format
           swift build -c release
           sudo cp .build/release/swift-format /usr/local/bin/
-        continue-on-error: true
+          cd ..
+          rm -rf swift-format
 
-      - name: Run swift-format (lint mode)
-        run: |
-          if command -v swift-format &> /dev/null; then
-            swift-format lint --recursive \
-              --ignore-unparsable-files \
-              --strict \
-              Sources Tests
-          else
-            echo "swift-format not available, skipping"
-          fi
-        continue-on-error: true
+      - name: Format
+        run: swift-format format --recursive --in-place Sources Tests
 
-      - name: Check for formatting issues
-        run: |
-          if command -v swift-format &> /dev/null; then
-            OUTPUT=$(swift-format lint --recursive --ignore-unparsable-files Sources Tests 2>&1)
-            if [ -n "$OUTPUT" ]; then
-              echo "⚠️ Swift formatting issues found:"
-              echo "$OUTPUT"
-              echo ""
-              echo "To fix these issues locally, run:"
-              echo "swift-format format --recursive --in-place Sources Tests"
-            else
-              echo "✅ No formatting issues found"
-            fi
-          fi
-        continue-on-error: true
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Run swift-format
+          branch: 'main'

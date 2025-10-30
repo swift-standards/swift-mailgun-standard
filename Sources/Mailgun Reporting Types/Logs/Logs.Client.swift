@@ -11,9 +11,10 @@ import Foundation
 import Mailgun_Types_Shared
 
 extension Mailgun.Reporting.Logs {
-    @DependencyClient
-    public struct Client: Sendable {
-        @DependencyEndpoint
-        public var analytics: @Sendable (_ request: Analytics.Request) async throws -> Analytics.Response
-    }
+  @DependencyClient
+  public struct Client: Sendable {
+    @DependencyEndpoint
+    public var analytics:
+      @Sendable (_ request: Analytics.Request) async throws -> Analytics.Response
+  }
 }

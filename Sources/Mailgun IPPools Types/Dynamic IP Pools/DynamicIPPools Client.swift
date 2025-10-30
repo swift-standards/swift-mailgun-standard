@@ -9,12 +9,15 @@ import DependenciesMacros
 @_exported import Mailgun_Types_Shared
 
 extension Mailgun.DynamicIPPools {
-    @DependencyClient
-    public struct Client: Sendable {
-        @DependencyEndpoint
-        public var listHistory: @Sendable (_ request: Mailgun.DynamicIPPools.HistoryList.Request) async throws -> Mailgun.DynamicIPPools.HistoryList.Response
+  @DependencyClient
+  public struct Client: Sendable {
+    @DependencyEndpoint
+    public var listHistory:
+      @Sendable (_ request: Mailgun.DynamicIPPools.HistoryList.Request) async throws ->
+        Mailgun.DynamicIPPools.HistoryList.Response
 
-        @DependencyEndpoint
-        public var removeOverride: @Sendable (_ domain: String) async throws -> Mailgun.DynamicIPPools.RemoveOverride.Response
-    }
+    @DependencyEndpoint
+    public var removeOverride:
+      @Sendable (_ domain: String) async throws -> Mailgun.DynamicIPPools.RemoveOverride.Response
+  }
 }

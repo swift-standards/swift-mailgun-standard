@@ -8,85 +8,85 @@
 import Mailgun_Types_Shared
 
 extension Mailgun.CustomMessageLimit {
-    @CasePathable
-    @dynamicMemberLookup
-    public enum API: Equatable, Sendable {
-        case getMonthly
-        case setMonthly(request: Mailgun.CustomMessageLimit.Monthly.Set.Request)
-        case deleteMonthly
-        case enableAccount
-    }
+  @CasePathable
+  @dynamicMemberLookup
+  public enum API: Equatable, Sendable {
+    case getMonthly
+    case setMonthly(request: Mailgun.CustomMessageLimit.Monthly.Set.Request)
+    case deleteMonthly
+    case enableAccount
+  }
 }
 
 extension Mailgun.CustomMessageLimit.API {
-    public struct Router: ParserPrinter, Sendable {
-        public init() {}
+  public struct Router: ParserPrinter, Sendable {
+    public init() {}
 
-        public var body: some URLRouting.Router<Mailgun.CustomMessageLimit.API> {
-            OneOf {
-                URLRouting.Route(.case(Mailgun.CustomMessageLimit.API.getMonthly)) {
-                    Method.get
-                    Path { "v5" }
-                    Path.accounts
-                    Path.limit
-                    Path.custom
-                    Path.monthly
-                }
-
-                URLRouting.Route(.case(Mailgun.CustomMessageLimit.API.setMonthly)) {
-                    Method.put
-                    Path { "v5" }
-                    Path.accounts
-                    Path.limit
-                    Path.custom
-                    Path.monthly
-                    Parse(.memberwise(Mailgun.CustomMessageLimit.Monthly.Set.Request.init)) {
-                        URLRouting.Query {
-                            Field("limit") { Digits() }
-                        }
-                    }
-                }
-
-                URLRouting.Route(.case(Mailgun.CustomMessageLimit.API.deleteMonthly)) {
-                    Method.delete
-                    Path { "v5" }
-                    Path.accounts
-                    Path.limit
-                    Path.custom
-                    Path.monthly
-                }
-
-                URLRouting.Route(.case(Mailgun.CustomMessageLimit.API.enableAccount)) {
-                    Method.put
-                    Path { "v5" }
-                    Path.accounts
-                    Path.limit
-                    Path.custom
-                    Path.enable
-                }
-            }
+    public var body: some URLRouting.Router<Mailgun.CustomMessageLimit.API> {
+      OneOf {
+        URLRouting.Route(.case(Mailgun.CustomMessageLimit.API.getMonthly)) {
+          Method.get
+          Path { "v5" }
+          Path.accounts
+          Path.limit
+          Path.custom
+          Path.monthly
         }
+
+        URLRouting.Route(.case(Mailgun.CustomMessageLimit.API.setMonthly)) {
+          Method.put
+          Path { "v5" }
+          Path.accounts
+          Path.limit
+          Path.custom
+          Path.monthly
+          Parse(.memberwise(Mailgun.CustomMessageLimit.Monthly.Set.Request.init)) {
+            URLRouting.Query {
+              Field("limit") { Digits() }
+            }
+          }
+        }
+
+        URLRouting.Route(.case(Mailgun.CustomMessageLimit.API.deleteMonthly)) {
+          Method.delete
+          Path { "v5" }
+          Path.accounts
+          Path.limit
+          Path.custom
+          Path.monthly
+        }
+
+        URLRouting.Route(.case(Mailgun.CustomMessageLimit.API.enableAccount)) {
+          Method.put
+          Path { "v5" }
+          Path.accounts
+          Path.limit
+          Path.custom
+          Path.enable
+        }
+      }
     }
+  }
 }
 
 extension Path<PathBuilder.Component<String>> {
-    public static let accounts: Path<PathBuilder.Component<String>> = Path {
-        "accounts"
-    }
+  public static let accounts: Path<PathBuilder.Component<String>> = Path {
+    "accounts"
+  }
 
-    public static let limit: Path<PathBuilder.Component<String>> = Path {
-        "limit"
-    }
+  public static let limit: Path<PathBuilder.Component<String>> = Path {
+    "limit"
+  }
 
-    public static let custom: Path<PathBuilder.Component<String>> = Path {
-        "custom"
-    }
+  public static let custom: Path<PathBuilder.Component<String>> = Path {
+    "custom"
+  }
 
-    public static let monthly: Path<PathBuilder.Component<String>> = Path {
-        "monthly"
-    }
+  public static let monthly: Path<PathBuilder.Component<String>> = Path {
+    "monthly"
+  }
 
-    public static let enable: Path<PathBuilder.Component<String>> = Path {
-        "enable"
-    }
+  public static let enable: Path<PathBuilder.Component<String>> = Path {
+    "enable"
+  }
 }

@@ -6,25 +6,26 @@
 //
 
 import DependenciesTestSupport
-@testable import Mailgun_IPAllowlist_Types
 import Testing
 
+@testable import Mailgun_IPAllowlist_Types
+
 @Suite(
-    "IPAllowlist Router Tests"
+  "IPAllowlist Router Tests"
 )
 struct IPAllowlistRouterTests {
 
-    @Test("Creates correct URL for listing IP allowlist")
-    func testListIPAllowlistURL() throws {
-        let router: Mailgun.IPAllowlist.API.Router = .init()
+  @Test("Creates correct URL for listing IP allowlist")
+  func testListIPAllowlistURL() throws {
+    let router: Mailgun.IPAllowlist.API.Router = .init()
 
-        let api: Mailgun.IPAllowlist.API = .list
+    let api: Mailgun.IPAllowlist.API = .list
 
-        let url = router.url(for: api)
-        #expect(url.path == "/v2/ip_allowlist")
+    let url = router.url(for: api)
+    #expect(url.path == "/v2/ip_allowlist")
 
-        let match: Mailgun.IPAllowlist.API = try router.match(request: try router.request(for: api))
-        #expect(match.is(\.list))
-        // Success - case matches
-    }
+    let match: Mailgun.IPAllowlist.API = try router.match(request: try router.request(for: api))
+    #expect(match.is(\.list))
+    // Success - case matches
+  }
 }
