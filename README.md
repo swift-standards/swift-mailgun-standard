@@ -1,20 +1,11 @@
 # swift-mailgun-types
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Swift-6.0-orange.svg" alt="Swift 6.0">
-  <img src="https://img.shields.io/badge/Swift-5.10-orange.svg" alt="Swift 5.10">
-  <img src="https://img.shields.io/badge/Platforms-macOS%2014%2B%20|%20iOS%2017%2B%20|%20Linux-lightgray.svg" alt="Platforms">
-  <img src="https://img.shields.io/badge/API%20Coverage-100%25-brightgreen.svg" alt="API Coverage">
-  <img src="https://img.shields.io/badge/Type%20Safe-100%25-brightgreen.svg" alt="Type Safety">
-  <img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License">
-  <img src="https://img.shields.io/badge/Status-Production%20Ready-green.svg" alt="Status">
-  <img src="https://img.shields.io/badge/Version-0.2.0-brightgreen.svg" alt="Version">
-</p>
+[![Swift](https://img.shields.io/badge/Swift-6.0-orange.svg)](https://swift.org)
+[![Platforms](https://img.shields.io/badge/Platforms-macOS%2014%2B%20|%20iOS%2017%2B%20|%20Linux-lightgray.svg)]()
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![CI](https://github.com/coenttb/swift-mailgun-types/workflows/CI/badge.svg)](https://github.com/coenttb/swift-mailgun-types/actions/workflows/ci.yml)
 
-<p align="center">
-  <strong>Type-safe foundation for Mailgun Swift SDKs</strong><br>
-  Core types, models, and client interfaces for building Mailgun integrations
-</p>
+Type-safe foundation for Mailgun Swift SDKs with comprehensive API coverage.
 
 ## Table of Contents
 
