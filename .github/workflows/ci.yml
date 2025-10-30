@@ -93,3 +93,26 @@ jobs:
       - name: Validate README examples compile
         run: |
           echo "✅ All README code examples are verified to compile and work"
+
+  windows:
+    name: Windows (Swift 6.0)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: compnerd/gha-setup-swift@main
+        with:
+          branch: swift-6.0-release
+          tag: 6.0-RELEASE
+
+      - name: Print Swift version
+        run: swift --version
+
+      - name: Resolve dependencies
+        run: swift package resolve
+
+      - name: Build
+        run: swift build
+
+      - name: Run tests
+        run: swift test
