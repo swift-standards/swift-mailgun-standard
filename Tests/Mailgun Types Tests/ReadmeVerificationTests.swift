@@ -55,50 +55,54 @@ struct ReadmeVerificationTests {
         let reportData = Data("PDF content".utf8)
         let logoData = Data("PNG content".utf8)
 
+        // Note: templateVariables and recipientVariables must be JSON strings
+        let templateVars = try JSONSerialization.data(withJSONObject: [
+            "month": "January",
+            "year": "2024"
+        ])
+        let recipientVars = try JSONSerialization.data(withJSONObject: [
+            "subscriber1@example.com": ["name": "Alice", "id": "001"],
+            "subscriber2@example.com": ["name": "Bob", "id": "002"]
+        ])
+
         let richEmail = Mailgun.Messages.Send.Request(
             from: try .init("Newsletter <news@yourdomain.com>"),
             to: [
                 try .init("subscriber1@example.com"),
                 try .init("subscriber2@example.com")
             ],
-            cc: [try .init("manager@yourdomain.com")],
-            bcc: [try .init("archive@yourdomain.com")],
-            subject: "Monthly Newsletter",
+            subject: "Monthly Newsletter",  // subject must come before cc/bcc
             html: """
                 <h1>Your Monthly Update</h1>
                 <p>Check out our latest features!</p>
                 <img src="cid:logo.png">
             """,
             text: "Your Monthly Update - Check out our latest features!",
-            attachment: [
-                Mailgun.Messages.Attachment(
-                    filename: "report.pdf",
+            cc: [try .init("manager@yourdomain.com")],
+            bcc: [try .init("archive@yourdomain.com")],
+            template: "monthly-newsletter",
+            templateVariables: String(data: templateVars, encoding: .utf8),
+            attachments: [
+                Mailgun.Messages.Attachment.Data(
                     data: reportData,
+                    filename: "report.pdf",
                     contentType: "application/pdf"
                 )
             ],
             inline: [
-                Mailgun.Messages.Attachment(
-                    filename: "logo.png",
+                Mailgun.Messages.Attachment.Data(
                     data: logoData,
+                    filename: "logo.png",
                     contentType: "image/png"
                 )
             ],
-            template: "monthly-newsletter",
-            templateVariables: [
-                "month": "January",
-                "year": "2024"
-            ],
-            tag: ["newsletter", "monthly"],
+            tags: ["newsletter", "monthly"],  // plural: tags not tag
             deliveryTime: Date().addingTimeInterval(3600), // Send in 1 hour
             tracking: true,
             trackingClicks: .htmlOnly,
             trackingOpens: true,
             headers: ["X-Campaign-ID": "JAN2024"],
-            recipientVariables: [
-                "subscriber1@example.com": ["name": "Alice", "id": "001"],
-                "subscriber2@example.com": ["name": "Bob", "id": "002"]
-            ]
+            recipientVariables: String(data: recipientVars, encoding: .utf8)
         )
 
         #expect(richEmail.from.rawValue.contains("news@yourdomain.com"))
@@ -106,9 +110,9 @@ struct ReadmeVerificationTests {
         #expect(richEmail.cc?.count == 1)
         #expect(richEmail.bcc?.count == 1)
         #expect(richEmail.template == "monthly-newsletter")
-        #expect(richEmail.tag?.contains("newsletter") == true)
+        #expect(richEmail.tags?.contains("newsletter") == true)
         #expect(richEmail.tracking == true)
-        #expect(richEmail.attachment?.count == 1)
+        #expect(richEmail.attachments?.count == 1)
         #expect(richEmail.inline?.count == 1)
     }
 
@@ -116,43 +120,38 @@ struct ReadmeVerificationTests {
 
     @Test("Create a template (README lines 495-505)")
     func createTemplateExample() async throws {
-        let template = Mailgun.Templates.Template.Create.Request(
+        let template = Mailgun.Templates.Create.Request(
             name: "welcome-email",
             description: "Welcome email for new users",
             template: """
                 <h1>Welcome {{name}}!</h1>
                 <p>Thanks for joining on {{signup_date}}.</p>
                 <p>Your account type: {{account_type}}</p>
-            """,
-            engine: "handlebars",
-            tag: "v1.0"
+            """
         )
 
         #expect(template.name == "welcome-email")
         #expect(template.description == "Welcome email for new users")
-        #expect(template.engine == "handlebars")
-        #expect(template.tag == "v1.0")
-        #expect(template.template.contains("{{name}}"))
+        #expect(template.template?.contains("{{name}}") == true)
     }
 
     @Test("Create a new template version (README lines 508-519)")
     func createTemplateVersionExample() async throws {
         let newVersion = Mailgun.Templates.Version.Create.Request(
-            tag: "v2.0",
             template: """
                 <h1>Welcome aboard, {{name}}!</h1>
                 <p>We're excited to have you join us on {{signup_date}}.</p>
                 <p>Your {{account_type}} account is ready!</p>
                 <a href="{{cta_link}}">Get Started</a>
             """,
-            engine: "handlebars",
+            tag: "v2.0",
             comment: "Added CTA button",
-            active: true
+            active: "yes"  // Note: active is String, not Bool
         )
 
         #expect(newVersion.tag == "v2.0")
         #expect(newVersion.comment == "Added CTA button")
-        #expect(newVersion.active == true)
+        #expect(newVersion.active == "yes")
         #expect(newVersion.template.contains("{{cta_link}}"))
     }
 
@@ -161,36 +160,39 @@ struct ReadmeVerificationTests {
     @Test("Handle a bounce (README lines 528-532)")
     func handleBounceExample() async throws {
         let bounce = Mailgun.Suppressions.Bounces.Create.Request(
-            address: "invalid@example.com",
+            address: try .init("invalid@example.com"),  // EmailAddress type
             code: "550",
             error: "Mailbox does not exist"
         )
 
-        #expect(bounce.address == "invalid@example.com")
+        #expect(bounce.address.rawValue == "invalid@example.com")
         #expect(bounce.code == "550")
         #expect(bounce.error == "Mailbox does not exist")
     }
 
     @Test("Add to unsubscribe list (README lines 535-538)")
     func addUnsubscribeExample() async throws {
-        let unsubscribe = Mailgun.Suppressions.Unsubscribes.Create.Request(
-            address: "user@example.com",
-            tag: "newsletter"
+        let unsubscribe = Mailgun.Suppressions.Unsubscribe.Create.Request(  // singular: Unsubscribe
+            address: try .init("user@example.com"),
+            tags: ["newsletter"]  // plural: tags, not tag
         )
 
-        #expect(unsubscribe.address == "user@example.com")
-        #expect(unsubscribe.tag == "newsletter")
+        #expect(unsubscribe.address.rawValue == "user@example.com")
+        #expect(unsubscribe.tags?.contains("newsletter") == true)
     }
 
     @Test("Allowlist VIP addresses (README lines 541-544)")
     func allowlistExample() async throws {
-        let allowlist = Mailgun.Suppressions.Allowlist.Create.Request(
-            address: "vip@partner.com",
-            reason: "Strategic partner"
+        // Note: Allowlist.Create.Request is an enum with .address or .domain cases
+        let allowlist = Mailgun.Suppressions.Allowlist.Create.Request.address(
+            try .init("vip@partner.com")
         )
 
-        #expect(allowlist.address == "vip@partner.com")
-        #expect(allowlist.reason == "Strategic partner")
+        if case .address(let email) = allowlist {
+            #expect(email.rawValue == "vip@partner.com")
+        } else {
+            Issue.record("Expected address case")
+        }
     }
 
     @Test("Query suppressions (README lines 547-550)")
@@ -371,10 +373,24 @@ struct ReadmeVerificationTests {
             retrieve: { storageKey in
                 #expect(storageKey == "test-key")
                 return Mailgun.Messages.StoredMessage(
-                    from: "sender@example.com",
+                    contentTransferEncoding: "7bit",
+                    contentType: "text/plain",
+                    from: try .init("sender@example.com"),
+                    messageId: "<test-id>",
+                    mimeVersion: "1.0",
                     subject: "Test",
+                    to: try .init("recipient@example.com"),
+                    tags: [],
+                    sender: try .init("sender@example.com"),
+                    recipients: [try .init("recipient@example.com")],
+                    bodyHtml: nil,
                     bodyPlain: "Test message",
-                    messageHeaders: []
+                    strippedHtml: nil,
+                    strippedText: "Test message",
+                    strippedSignature: nil,
+                    messageHeaders: [],
+                    templateName: nil,
+                    templateVariables: nil
                 )
             },
             queueStatus: {
@@ -398,7 +414,7 @@ struct ReadmeVerificationTests {
 
         // Test retrieval
         let message = try await client.retrieve("test-key")
-        #expect(message.from == "sender@example.com")
+        #expect(message.from.rawValue == "sender@example.com")
     }
 
     // MARK: - CasePaths Usage (README lines 829-854)
@@ -495,7 +511,7 @@ struct ReadmeVerificationTests {
         let _: any Decodable = response
 
         // Verify Template types conform
-        let template = Mailgun.Templates.Template.Create.Request(
+        let template = Mailgun.Templates.Create.Request(
             name: "test",
             template: "<h1>Test</h1>"
         )
