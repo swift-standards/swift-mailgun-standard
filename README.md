@@ -58,18 +58,18 @@ graph TD
 ```
 
 **Use [swift-mailgun](https://github.com/coenttb/swift-mailgun) if you want:**
-- ✅ Ready-to-use Mailgun integration
-- ✅ URLSession networking included
-- ✅ Authentication handling built-in
-- ✅ Production-ready features
-- ✅ Quick setup with minimal configuration
+- Ready-to-use Mailgun integration
+- URLSession networking included
+- Authentication handling built-in
+- Production-ready features
+- Quick setup with minimal configuration
 
 **Use swift-mailgun-types if you need:**
-- 🎯 Type definitions only (smaller binary size)
-- 🔧 Custom networking implementation (Alamofire, AsyncHTTPClient, etc.)
-- 🧪 Mock clients for testing
-- 📦 Shared types between client and server
-- 🏗️ Building your own Mailgun SDK
+- Type definitions only (smaller binary size)
+- Custom networking implementation (Alamofire, AsyncHTTPClient, etc.)
+- Mock clients for testing
+- Shared types between client and server
+- Building your own Mailgun SDK
 
 ## Architecture
 
@@ -176,80 +176,80 @@ swift-mailgun-types/
 
 ### Benefits of This Architecture
 
-1. **🎯 Flexible Package Selection**: Choose the right level of abstraction for your needs
-2. **🧩 Clean Separation**: Types, implementation, and integrations are cleanly separated
-3. **🔄 Multiple Implementations**: Use URLSession via swift-mailgun-live, or build custom with swift-mailgun-types
-4. **🧪 Superior Testing**: Mock clients without network dependencies
-5. **📦 Code Sharing**: Use the same types on client and server
-6. **🚀 Type Safety**: Compile-time validation of all API interactions
-7. **🔌 Dependency Injection**: Built-in support via @DependencyClient
-8. **🎨 Progressive Enhancement**: Start with swift-mailgun for convenience, drop down to lower levels when needed
+1. **Flexible Package Selection**: Choose the right level of abstraction for your needs
+2. **Clean Separation**: Types, implementation, and integrations are cleanly separated
+3. **Multiple Implementations**: Use URLSession via swift-mailgun-live, or build custom with swift-mailgun-types
+4. **Superior Testing**: Mock clients without network dependencies
+5. **Code Sharing**: Use the same types on client and server
+6. **Type Safety**: Compile-time validation of all API interactions
+7. **Dependency Injection**: Built-in support via @DependencyClient
+8. **Progressive Enhancement**: Start with swift-mailgun for convenience, drop down to lower levels when needed
 
 ## Features
 
-### 📋 Comprehensive API Coverage
+### Comprehensive API Coverage
 
 All Mailgun API features are fully typed and organized by domain:
 
 #### Core Communication
 | Feature | Description | Status |
 |---------|-------------|:------:|
-| **Messages** | Send emails, MIME messages, manage queues | ✅ |
-| **Templates** | Create and manage email templates | ✅ |
-| **Lists** | Mailing list management | ✅ |
+| **Messages** | Send emails, MIME messages, manage queues | Implemented |
+| **Templates** | Create and manage email templates | Implemented |
+| **Lists** | Mailing list management | Implemented |
 
 #### Domain Management
 | Feature | Description | Status |
 |---------|-------------|:------:|
-| **Domains** | Create and manage sending domains | ✅ |
-| **Domain Keys** | Domain-specific API keys | ✅ |
-| **DKIM Security** | DKIM configuration and rotation | ✅ |
-| **Domain Connection** | SMTP and API connection settings | ✅ |
-| **Domain Tracking** | Click, open, and unsubscribe tracking | ✅ |
+| **Domains** | Create and manage sending domains | Implemented |
+| **Domain Keys** | Domain-specific API keys | Implemented |
+| **DKIM Security** | DKIM configuration and rotation | Implemented |
+| **Domain Connection** | SMTP and API connection settings | Implemented |
+| **Domain Tracking** | Click, open, and unsubscribe tracking | Implemented |
 
 #### Suppressions & Compliance
 | Feature | Description | Status |
 |---------|-------------|:------:|
-| **Bounces** | Manage bounced emails | ✅ |
-| **Complaints** | Handle spam complaints | ✅ |
-| **Unsubscribes** | Manage unsubscribe lists | ✅ |
-| **Allowlist** | Never suppress these addresses | ✅ |
+| **Bounces** | Manage bounced emails | Implemented |
+| **Complaints** | Handle spam complaints | Implemented |
+| **Unsubscribes** | Manage unsubscribe lists | Implemented |
+| **Allowlist** | Never suppress these addresses | Implemented |
 
 #### Analytics & Reporting
 | Feature | Description | Status |
 |---------|-------------|:------:|
-| **Events** | Query email events | ✅ |
-| **Stats** | Aggregated statistics | ✅ |
-| **Metrics** | Advanced metrics and dimensions | ✅ |
-| **Tags** | Tag-based analytics | ✅ |
-| **Logs** | Raw event logs | ✅ |
+| **Events** | Query email events | Implemented |
+| **Stats** | Aggregated statistics | Implemented |
+| **Metrics** | Advanced metrics and dimensions | Implemented |
+| **Tags** | Tag-based analytics | Implemented |
+| **Logs** | Raw event logs | Implemented |
 
 #### Infrastructure
 | Feature | Description | Status |
 |---------|-------------|:------:|
-| **IPs** | Dedicated IP management | ✅ |
-| **IP Address Warmup** | Automated warmup scheduling | ✅ |
-| **Static IP Pools** | Manual IP pool assignment | ✅ |
-| **Dynamic IP Pools** | Automatic assignment with health checks | ✅ |
-| **IP Allowlist** | IP access control | ✅ |
+| **IPs** | Dedicated IP management | Implemented |
+| **IP Address Warmup** | Automated warmup scheduling | Implemented |
+| **Static IP Pools** | Manual IP pool assignment | Implemented |
+| **Dynamic IP Pools** | Automatic assignment with health checks | Implemented |
+| **IP Allowlist** | IP access control | Implemented |
 
 #### Account & Access Control
 | Feature | Description | Status |
 |---------|-------------|:------:|
-| **Users** | User account management | ✅ |
-| **Subaccounts** | Subaccount creation and management | ✅ |
-| **API Keys** | API key management | ✅ |
-| **SMTP Credentials** | SMTP credential management | ✅ |
-| **Message Limits** | Custom rate limiting | ✅ |
-| **Account Management** | Account settings and info | ✅ |
+| **Users** | User account management | Implemented |
+| **Subaccounts** | Subaccount creation and management | Implemented |
+| **API Keys** | API key management | Implemented |
+| **SMTP Credentials** | SMTP credential management | Implemented |
+| **Message Limits** | Custom rate limiting | Implemented |
+| **Account Management** | Account settings and info | Implemented |
 
 #### Advanced Features
 | Feature | Description | Status |
 |---------|-------------|:------:|
-| **Routes** | Email routing rules | ✅ |
-| **Webhooks** | Webhook configuration | ✅ |
+| **Routes** | Email routing rules | Implemented |
+| **Webhooks** | Webhook configuration | Implemented |
 
-### 🛡️ Type Safety & Modern Swift
+### Type Safety & Modern Swift
 
 - **Swift 5.10+** with Swift 6 readiness
 - **@DependencyClient** for testable interfaces
@@ -259,30 +259,30 @@ All Mailgun API features are fully typed and organized by domain:
 - **Comprehensive Codable** models
 - **Progressive disclosure** with sensible defaults
 
-## Recent Updates 🎉
+## Recent Updates
 
 ### Version 0.2.0 (September 2025)
-- 🏗️ **Architectural Restructuring**: Split into three-package ecosystem for maximum flexibility
+- **Architectural Restructuring**: Split into three-package ecosystem for maximum flexibility
   - `swift-mailgun-types`: Core types and interfaces (this package)
   - `swift-mailgun-live`: URLSession-based implementation
   - `swift-mailgun`: Developer-friendly entry point with additional integrations
-- 🔄 **Package Renaming**: Migrated from `coenttb-mailgun` to `swift-mailgun` ecosystem
-- 📦 **Improved Modularity**: Better separation of concerns between types, implementation, and integrations
-- 🎯 **Flexible Integration**: Choose the right package for your use case
-- ✅ **Backward Compatible**: Types remain unchanged, only package structure improved
+- **Package Renaming**: Migrated from `coenttb-mailgun` to `swift-mailgun` ecosystem
+- **Improved Modularity**: Better separation of concerns between types, implementation, and integrations
+- **Flexible Integration**: Choose the right package for your use case
+- **Backward Compatible**: Types remain unchanged, only package structure improved
 
 ### Version 0.1.0 (February 2025)
-- ✅ **All Tests Passing**: Fixed compilation errors across 110+ test files
-- ✅ **Form Encoding Improvements**: Added specialized encoders for Routes and Events APIs
-- ✅ **API Alignment**: Updated types to match actual Mailgun API responses
-- ✅ **Namespace Enum Pattern**: Consistent organization across all modules
-- ✅ **Bug Fixes**: 
+- **All Tests Passing**: Fixed compilation errors across 110+ test files
+- **Form Encoding Improvements**: Added specialized encoders for Routes and Events APIs
+- **API Alignment**: Updated types to match actual Mailgun API responses
+- **Namespace Enum Pattern**: Consistent organization across all modules
+- **Bug Fixes**:
   - Fixed array encoding strategies for Routes API
   - Resolved multipart form boundary issues in tests
   - Fixed Subaccounts delete endpoint header handling
   - Corrected Events API date parameter ordering for descending queries
-- ✅ **Swift 6.0 Ready**: Full language mode support with strict concurrency
-- ✅ **100% API Coverage**: All Mailgun APIs fully typed and tested
+- **Swift 6.0 Ready**: Full language mode support with strict concurrency
+- **100% API Coverage**: All Mailgun APIs fully typed and tested
 
 ## Installation
 
@@ -304,10 +304,10 @@ targets: [
 ```
 
 This gives you:
-- ✅ Full Mailgun functionality via URLSession
-- ✅ HTML email support via swift-html
-- ✅ Identity integration support
-- ✅ All convenience APIs and helpers
+- Full Mailgun functionality via URLSession
+- HTML email support via swift-html
+- Identity integration support
+- All convenience APIs and helpers
 
 ### Option 2: Core Implementation Only (Without Extra Integrations)
 
@@ -327,10 +327,10 @@ targets: [
 ```
 
 This gives you:
-- ✅ Full Mailgun functionality via URLSession
-- ✅ Authentication and environment configuration
-- ❌ No HTML integration
-- ❌ No identity system integration
+- Full Mailgun functionality via URLSession
+- Authentication and environment configuration
+- No HTML integration
+- No identity system integration
 
 ### Option 3: Types Only (For Custom Implementations)
 
@@ -928,11 +928,11 @@ See [CLAUDE.md](CLAUDE.md#creating-new-feature-modules) for a step-by-step guide
 
 ## Support
 
-- 🐛 [Issues](https://github.com/coenttb/swift-mailgun-types/issues) - Report bugs or request features
-- 💬 [Discussions](https://github.com/coenttb/swift-mailgun-types/discussions) - Ask questions or share ideas
-- 📧 [Newsletter](http://coenttb.com/en/newsletter/subscribe) - Get updates on new releases
-- 🐦 [X (Twitter)](http://x.com/coenttb) - Follow for announcements
-- 💼 [LinkedIn](https://www.linkedin.com/in/tenthijeboonkkamp) - Professional networking
+- [Issues](https://github.com/coenttb/swift-mailgun-types/issues) - Report bugs or request features
+- [Discussions](https://github.com/coenttb/swift-mailgun-types/discussions) - Ask questions or share ideas
+- [Newsletter](http://coenttb.com/en/newsletter/subscribe) - Get updates on new releases
+- [X (Twitter)](http://x.com/coenttb) - Follow for announcements
+- [LinkedIn](https://www.linkedin.com/in/tenthijeboonkkamp) - Professional networking
 
 ## Related Packages
 
