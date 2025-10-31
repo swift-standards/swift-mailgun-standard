@@ -934,6 +934,21 @@ See [CLAUDE.md](CLAUDE.md#creating-new-feature-modules) for a step-by-step guide
 - 🐦 [X (Twitter)](http://x.com/coenttb) - Follow for announcements
 - 💼 [LinkedIn](https://www.linkedin.com/in/tenthijeboonkkamp) - Professional networking
 
+## Related Packages
+
+### Dependencies
+
+- [swift-types-foundation](https://github.com/coenttb/swift-types-foundation): A Swift package bundling essential type-safe packages for domain modeling.
+
+### Used By
+
+- [swift-mailgun](https://github.com/coenttb/swift-mailgun): The Swift library for the Mailgun API.
+- [swift-mailgun-live](https://github.com/coenttb/swift-mailgun-live): A Swift package with live implementations for Mailgun.
+
+### Third-Party Dependencies
+
+- [pointfreeco/swift-dependencies](https://github.com/pointfreeco/swift-dependencies): A dependency management library for controlling dependencies in Swift.
+
 ## License
 
 This project is licensed under the Apache License 2.0. See [LICENSE](LICENSE) for details.
