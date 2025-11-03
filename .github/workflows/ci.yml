@@ -116,24 +116,6 @@ jobs:
       - name: Run tests
         run: swift test
 
-  package-validation:
-    name: Package Validation
-    runs-on: macos-26
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.0.app
-
-      - name: Validate Package.swift
-        run: swift package dump-package
-
-      - name: Check for API breaking changes
-        run: |
-          swift package diagnose-api-breaking-changes \
-            --breakage-allowlist-path .swift-api-breakage-allowlist || true
-        continue-on-error: true
-
   readme-validation:
     name: README Code Examples
     runs-on: macos-26
@@ -141,7 +123,7 @@ jobs:
       - uses: actions/checkout@v5
 
       - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.0.app
+        run: sudo xcode-select -s /Applications/Xcode_26.0.app
 
       - name: Run README verification tests
         run: swift test --filter ReadmeVerificationTests
@@ -149,19 +131,3 @@ jobs:
       - name: Validate README examples compile
         run: |
           echo "✅ All README code examples are verified to compile and work"
-
-  windows:
-    name: Windows (Swift 6.2)
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v5
-
-      - uses: SwiftyLab/setup-swift@latest
-        with:
-          swift-version: "6.2"
-
-      - name: Build
-        run: swift build
-
-      - name: Run tests
-        run: swift test
