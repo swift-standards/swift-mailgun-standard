@@ -13,22 +13,25 @@ import Testing
 
 @Suite("DKIM Security Router Tests")
 struct DKIMSecurityRouterTests {
-  @Test("Creates correct URL for updating rotation")
-  func testUpdateRotationURL() throws {
-    let router: Mailgun.Domains.DKIM_Security.API.Router = .init()
-    let domain = try Domain("example.com")
-    let request = Mailgun.Domains.DKIM_Security.Rotation.Update.Request(rotationEnabled: true)
+    @Test("Creates correct URL for updating rotation")
+    func testUpdateRotationURL() throws {
+        let router: Mailgun.Domains.DKIM_Security.API.Router = .init()
+        let domain = try Domain("example.com")
+        let request = Mailgun.Domains.DKIM_Security.Rotation.Update.Request(rotationEnabled: true)
 
-    let api: Mailgun.Domains.DKIM_Security.API = .updateRotation(domain: domain, request: request)
+        let api: Mailgun.Domains.DKIM_Security.API = .updateRotation(
+            domain: domain,
+            request: request
+        )
 
-    let url = router.url(for: api)
-    #expect(url.path == "/v1/dkim_management/domains/example.com/rotation")
+        let url = router.url(for: api)
+        #expect(url.path == "/v1/dkim_management/domains/example.com/rotation")
 
-    let match: Mailgun.Domains.DKIM_Security.API = try router.match(
-      request: try router.request(for: api)
-    )
+        let match: Mailgun.Domains.DKIM_Security.API = try router.match(
+            request: try router.request(for: api)
+        )
 
-    #expect(match.is(\.updateRotation))
-    #expect(match.updateRotation?.domain == domain)
-  }
+        #expect(match.is(\.updateRotation))
+        #expect(match.updateRotation?.domain == domain)
+    }
 }

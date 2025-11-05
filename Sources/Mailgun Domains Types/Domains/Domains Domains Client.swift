@@ -10,37 +10,37 @@ import DependenciesMacros
 import Mailgun_Types_Shared
 
 extension Mailgun.Domains.Domains {
-  @DependencyClient
-  public struct Client: Sendable {
-    @DependencyEndpoint
-    public var list:
-      @Sendable (_ request: Mailgun.Domains.Domains.List.Request?) async throws ->
-        Mailgun.Domains.Domains.List.Response
+    @DependencyClient
+    public struct Client: Sendable {
+        @DependencyEndpoint
+        public var list:
+            @Sendable (_ request: Mailgun.Domains.Domains.List.Request?) async throws ->
+                Mailgun.Domains.Domains.List.Response
 
-    @DependencyEndpoint
-    public var create:
-      @Sendable (_ request: Mailgun.Domains.Domains.Create.Request) async throws ->
-        Mailgun.Domains.Domains.Create.Response
+        @DependencyEndpoint
+        public var create:
+            @Sendable (_ request: Mailgun.Domains.Domains.Create.Request) async throws ->
+                Mailgun.Domains.Domains.Create.Response
 
-    @DependencyEndpoint
-    public var get:
-      @Sendable (_ domain: TypesFoundation.Domain) async throws ->
-        Mailgun.Domains.Domains.Get.Response
+        @DependencyEndpoint
+        public var get:
+            @Sendable (_ domain: TypesFoundation.Domain) async throws ->
+                Mailgun.Domains.Domains.Get.Response
 
-    @DependencyEndpoint
-    public var update:
-      @Sendable (
-        _ domain: TypesFoundation.Domain, _ request: Mailgun.Domains.Domains.Update.Request
-      ) async throws -> Mailgun.Domains.Domains.Update.Response
+        @DependencyEndpoint
+        public var update:
+            @Sendable (
+                _ domain: TypesFoundation.Domain, _ request: Mailgun.Domains.Domains.Update.Request
+            ) async throws -> Mailgun.Domains.Domains.Update.Response
 
-    @DependencyEndpoint
-    public var delete:
-      @Sendable (_ domain: TypesFoundation.Domain) async throws ->
-        Mailgun.Domains.Domains.Delete.Response
+        @DependencyEndpoint
+        public var delete:
+            @Sendable (_ domain: TypesFoundation.Domain) async throws ->
+                Mailgun.Domains.Domains.Delete.Response
 
-    @DependencyEndpoint
-    public var verify:
-      @Sendable (_ domain: TypesFoundation.Domain) async throws ->
-        Mailgun.Domains.Domains.Verify.Response
-  }
+        @DependencyEndpoint
+        public var verify:
+            @Sendable (_ domain: TypesFoundation.Domain) async throws ->
+                Mailgun.Domains.Domains.Verify.Response
+    }
 }

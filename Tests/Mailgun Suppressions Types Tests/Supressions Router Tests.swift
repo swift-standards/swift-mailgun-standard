@@ -13,33 +13,35 @@ import Testing
 @testable import Mailgun_Suppressions_Types
 
 @Suite(
-  "Suppressions Router Tests"
+    "Suppressions Router Tests"
 )
 struct SuppressionsRouterTests {
 
-  @Test("Routes bounce requests correctly")
-  func testBouncesRouting() throws {
-    let router: Mailgun.Suppressions.API.Router = .init()
+    @Test("Routes bounce requests correctly")
+    func testBouncesRouting() throws {
+        let router: Mailgun.Suppressions.API.Router = .init()
 
-    let listRequest = Mailgun.Suppressions.Bounces.List.Request(limit: 25)
-    let bouncesAPI = Mailgun.Suppressions.Bounces.API.list(
-      domain: try .init("test.domain.com"),
-      request: listRequest
-    )
-    let api: Mailgun.Suppressions.API = .bounces(bouncesAPI)
+        let listRequest = Mailgun.Suppressions.Bounces.List.Request(limit: 25)
+        let bouncesAPI = Mailgun.Suppressions.Bounces.API.list(
+            domain: try .init("test.domain.com"),
+            request: listRequest
+        )
+        let api: Mailgun.Suppressions.API = .bounces(bouncesAPI)
 
-    let url = router.url(for: api)
-    #expect(url.path == "/v3/test.domain.com/bounces")
+        let url = router.url(for: api)
+        #expect(url.path == "/v3/test.domain.com/bounces")
 
-    let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
-    let queryDict = Dictionary(
-      uniqueKeysWithValues: (components?.queryItems ?? []).map { ($0.name, $0.value) }
-    )
-    #expect(queryDict["limit"] == "25")
+        let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        let queryDict = Dictionary(
+            uniqueKeysWithValues: (components?.queryItems ?? []).map { ($0.name, $0.value) }
+        )
+        #expect(queryDict["limit"] == "25")
 
-    let match: Mailgun.Suppressions.API = try router.match(request: try router.request(for: api))
-    #expect(match.is(\.bounces))
-    let expected1 = try Domain("test.domain.com")
-    #expect(match.bounces?.list?.domain == expected1)
-  }
+        let match: Mailgun.Suppressions.API = try router.match(
+            request: try router.request(for: api)
+        )
+        #expect(match.is(\.bounces))
+        let expected1 = try Domain("test.domain.com")
+        #expect(match.bounces?.list?.domain == expected1)
+    }
 }
