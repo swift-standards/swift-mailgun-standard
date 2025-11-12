@@ -1,4 +1,4 @@
-// swift-tools-version:5.10
+// swift-tools-version: 6.0
 
 import PackageDescription
 
@@ -50,6 +50,7 @@ extension Target.Dependency {
     static var typesFoundation: Self { .product(name: "TypesFoundation", package: "swift-types-foundation") }
     static var dependenciesMacros: Self { .product(name: "DependenciesMacros", package: "swift-dependencies") }
     static var dependenciesTestSupport: Self { .product(name: "DependenciesTestSupport", package: "swift-dependencies") }
+    static var email: Self { .product(name: "Email", package: "swift-email-type") }
 }
 
 let package = Package(
@@ -81,7 +82,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/coenttb/swift-types-foundation", from: "0.0.1"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.9.2")
+        .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.9.2"),
+        .package(path: "../../swift-standards/swift-email-type")
     ],
     targets: [
         .target(
@@ -235,8 +237,8 @@ let package = Package(
             name: .messages,
             dependencies: [
                 .shared,
-                .typesFoundation
-
+                .typesFoundation,
+                .email
             ]
         ),
         .testTarget(
