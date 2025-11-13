@@ -50,7 +50,7 @@ extension Target.Dependency {
     static var typesFoundation: Self { .product(name: "TypesFoundation", package: "swift-types-foundation") }
     static var dependenciesMacros: Self { .product(name: "DependenciesMacros", package: "swift-dependencies") }
     static var dependenciesTestSupport: Self { .product(name: "DependenciesTestSupport", package: "swift-dependencies") }
-    static var email: Self { .product(name: "Email", package: "swift-email-type") }
+    static var emailType: Self { .product(name: "Email Type", package: "swift-email-type") }
 }
 
 let package = Package(
@@ -83,7 +83,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/coenttb/swift-types-foundation", from: "0.0.1"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.9.2"),
-        .package(path: "../../swift-standards/swift-email-type")
+        .package(url: "https://github.com/swift-standards/swift-email-type", from: "0.1.0")
     ],
     targets: [
         .target(
@@ -238,7 +238,7 @@ let package = Package(
             dependencies: [
                 .shared,
                 .typesFoundation,
-                .email
+                .emailType
             ]
         ),
         .testTarget(

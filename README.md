@@ -303,7 +303,7 @@ targets: [
 
 This gives you:
 - Full Mailgun functionality via URLSession
-- HTML email support via swift-html
+- Provider-agnostic `Email` type with HTML builder support
 - Identity integration support
 - All convenience APIs and helpers
 
@@ -468,6 +468,62 @@ let richEmail = Mailgun.Messages.Send.Request(
     recipientVariables: #"{"subscriber1@example.com":{"name":"Alice","id":"001"}}"#  // JSON string
 )
 ```
+
+### 📧 Email Type Integration
+
+The **Messages** module includes seamless integration with the provider-agnostic [`Email`](https://github.com/coenttb/swift-email) type, allowing you to compose emails once and send them via any provider:
+
+```swift
+import Mailgun_Messages_Types
+
+// Create a provider-agnostic Email with HTML
+let email = try Email(
+    to: [.init("user@example.com")],
+    from: .init("hello@yourdomain.com"),
+    subject: "Welcome!",
+    body: .html("<h1>Welcome!</h1><p>Thanks for joining.</p>")
+)
+
+// Convert to Mailgun request (automatically handled by send method)
+let request = Mailgun.Messages.Send.Request(email: email)
+
+// Add Mailgun-specific options
+let response = try await mailgun.messages.send(
+    email: email,
+    tags: ["welcome", "onboarding"],
+    tracking: .yes,
+    testMode: true
+)
+```
+
+**HTML Email Builder Support:**
+
+When using [swift-mailgun](https://github.com/coenttb/swift-mailgun), you get type-safe HTML email composition via [swift-html](https://github.com/coenttb/swift-html):
+
+```swift
+let email = try Email(
+    to: [.init("user@example.com")],
+    from: .init("newsletter@yourdomain.com"),
+    subject: "Monthly Update"
+) {
+    div {
+        h1 { "This Month's Highlights" }
+        ul {
+            li { "New features" }
+            li { "Bug fixes" }
+        }
+    }
+    .fontFamily(.systemUI)
+    .padding(.rem(2))
+}
+```
+
+**Key Benefits:**
+- ✅ **Provider-agnostic**: Write email composition logic once, use with any provider
+- ✅ **Type-safe HTML**: Compile-time validation of HTML structure
+- ✅ **Mailgun features**: Full access to tags, tracking, scheduling, etc.
+- ✅ **Multipart emails**: Automatic text+HTML alternative generation
+- ✅ **RFC compliance**: Built on RFC 5322 email standards
 
 ### 📋 Working with Templates
 
