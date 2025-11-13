@@ -1,5 +1,5 @@
-import Foundation
 import Email_Type
+import Foundation
 
 extension Mailgun.Messages.Send.Request {
     /// Creates a Mailgun send request from a generic Email
@@ -86,9 +86,12 @@ extension Mailgun.Messages.Send.Request {
         }
 
         // Convert RFC_5322.Header array to [String: String] for Mailgun API
-        let headersDict: [String: String]? = headers.isEmpty ? nil : Dictionary(
-            uniqueKeysWithValues: headers.map { ($0.name.rawValue, $0.value) }
-        )
+        let headersDict: [String: String]? =
+            headers.isEmpty
+            ? nil
+            : Dictionary(
+                uniqueKeysWithValues: headers.map { ($0.name.rawValue, $0.value) }
+            )
 
         // Convert body to text/html
         let (text, html) = Self.convertBody(email.body)

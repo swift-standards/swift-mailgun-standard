@@ -1,5 +1,5 @@
-import Foundation
 import Email_Type
+import Foundation
 
 extension Mailgun.Messages.Client {
     /// Sends an email with optional Mailgun-specific features

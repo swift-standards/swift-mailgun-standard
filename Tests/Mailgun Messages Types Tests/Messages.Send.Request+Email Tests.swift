@@ -86,7 +86,7 @@ struct MessagesSendRequestEmailTests {
             to: [
                 EmailAddress("recipient1@example.com"),
                 EmailAddress("recipient2@example.com"),
-                EmailAddress("recipient3@example.com")
+                EmailAddress("recipient3@example.com"),
             ],
             from: EmailAddress("sender@example.com"),
             subject: "Test Subject",
@@ -108,7 +108,7 @@ struct MessagesSendRequestEmailTests {
             from: EmailAddress("sender@example.com"),
             cc: [
                 EmailAddress("cc1@example.com"),
-                EmailAddress("cc2@example.com")
+                EmailAddress("cc2@example.com"),
             ],
             subject: "Test Subject",
             body: .text("Hello!")
@@ -128,7 +128,7 @@ struct MessagesSendRequestEmailTests {
             from: EmailAddress("sender@example.com"),
             bcc: [
                 EmailAddress("bcc1@example.com"),
-                EmailAddress("bcc2@example.com")
+                EmailAddress("bcc2@example.com"),
             ],
             subject: "Test Subject",
             body: .text("Hello!")
@@ -184,7 +184,7 @@ struct MessagesSendRequestEmailTests {
             body: .text("Hello!"),
             additionalHeaders: [
                 RFC_5322.Header(name: "X-Custom-Header", value: "CustomValue"),
-                RFC_5322.Header(name: "X-Priority", value: "1")
+                RFC_5322.Header(name: "X-Priority", value: "1"),
             ]
         )
 
@@ -301,7 +301,7 @@ struct MessagesSendRequestEmailTests {
             body: .text("Hello!")
         )
 
-        let deliveryDate = Date(timeIntervalSince1970: 1700000000)
+        let deliveryDate = Date(timeIntervalSince1970: 1_700_000_000)
         let request = Mailgun.Messages.Send.Request(
             email: email,
             deliveryTime: deliveryDate
