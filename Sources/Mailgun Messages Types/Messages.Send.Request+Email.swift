@@ -1,5 +1,5 @@
 import Foundation
-import Email
+import Email_Type
 
 extension Mailgun.Messages.Send.Request {
     /// Creates a Mailgun send request from a generic Email
