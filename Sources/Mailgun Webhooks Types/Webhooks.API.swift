@@ -6,6 +6,7 @@
 //
 
 import Mailgun_Types_Shared
+import FormCoding
 
 extension Mailgun.Webhooks {
     @CasePathable

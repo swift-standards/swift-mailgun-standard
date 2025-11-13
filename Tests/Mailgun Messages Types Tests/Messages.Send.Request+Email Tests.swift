@@ -6,7 +6,8 @@
 //
 
 import DependenciesTestSupport
-import Email
+import Mailgun_Messages_Types
+import Email_Type
 import Foundation
 import Testing
 
@@ -23,7 +24,7 @@ struct MessagesSendRequestEmailTests {
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
             subject: "Test Subject",
-            body: .text("Hello, World!")
+            body: "Hello, World!"
         )
 
         let request = Mailgun.Messages.Send.Request(email: email)
@@ -57,7 +58,7 @@ struct MessagesSendRequestEmailTests {
 
     @Test("Converts multipart email (text + HTML)")
     func convertMultipartEmail() throws {
-        let multipart = try RFC_2046.Multipart.alternative(
+        let multipart = try Multipart.alternative(
             textContent: "Plain text version",
             htmlContent: "<h1>HTML version</h1>"
         )
@@ -90,7 +91,7 @@ struct MessagesSendRequestEmailTests {
             ],
             from: EmailAddress("sender@example.com"),
             subject: "Test Subject",
-            body: .text("Hello!")
+            body: "Hello!"
         )
 
         let request = Mailgun.Messages.Send.Request(email: email)
@@ -111,7 +112,7 @@ struct MessagesSendRequestEmailTests {
                 EmailAddress("cc2@example.com"),
             ],
             subject: "Test Subject",
-            body: .text("Hello!")
+            body: "Hello!"
         )
 
         let request = Mailgun.Messages.Send.Request(email: email)
@@ -131,7 +132,7 @@ struct MessagesSendRequestEmailTests {
                 EmailAddress("bcc2@example.com"),
             ],
             subject: "Test Subject",
-            body: .text("Hello!")
+            body: "Hello!"
         )
 
         let request = Mailgun.Messages.Send.Request(email: email)
@@ -150,7 +151,7 @@ struct MessagesSendRequestEmailTests {
             from: EmailAddress("sender@example.com"),
             replyTo: EmailAddress("replyto@example.com"),
             subject: "Test Subject",
-            body: .text("Hello!")
+            body: "Hello!"
         )
 
         let request = Mailgun.Messages.Send.Request(email: email)
@@ -165,7 +166,7 @@ struct MessagesSendRequestEmailTests {
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
             subject: "Test Subject",
-            body: .text("Hello!")
+            body: "Hello!"
         )
 
         let request = Mailgun.Messages.Send.Request(email: email)
@@ -181,10 +182,10 @@ struct MessagesSendRequestEmailTests {
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
             subject: "Test Subject",
-            body: .text("Hello!"),
+            body: "Hello!",
             additionalHeaders: [
-                RFC_5322.Header(name: "X-Custom-Header", value: "CustomValue"),
-                RFC_5322.Header(name: "X-Priority", value: "1"),
+                .init(name: "X-Custom-Header", value: "CustomValue"),
+                .init(name: "X-Priority", value: "1")
             ]
         )
 
@@ -200,7 +201,7 @@ struct MessagesSendRequestEmailTests {
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
             subject: "Test Subject",
-            body: .text("Hello!")
+            body: "Hello!"
         )
 
         let request = Mailgun.Messages.Send.Request(email: email)
@@ -215,9 +216,9 @@ struct MessagesSendRequestEmailTests {
             from: EmailAddress("sender@example.com"),
             replyTo: EmailAddress("replyto@example.com"),
             subject: "Test Subject",
-            body: .text("Hello!"),
+            body: "Hello!",
             additionalHeaders: [
-                RFC_5322.Header(name: "X-Custom-Header", value: "CustomValue")
+                .init(name: "X-Custom-Header", value: "CustomValue")
             ]
         )
 
@@ -236,7 +237,7 @@ struct MessagesSendRequestEmailTests {
             to: [EmailAddress(displayName: "Recipient Name", "recipient@example.com")],
             from: EmailAddress(displayName: "Sender Name", "sender@example.com"),
             subject: "Test Subject",
-            body: .text("Hello!")
+            body: "Hello!"
         )
 
         let request = Mailgun.Messages.Send.Request(email: email)
@@ -255,7 +256,7 @@ struct MessagesSendRequestEmailTests {
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
             subject: "Test Subject",
-            body: .text("Hello!")
+            body: "Hello!"
         )
 
         let request = Mailgun.Messages.Send.Request(
@@ -280,7 +281,7 @@ struct MessagesSendRequestEmailTests {
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
             subject: "Test Subject",
-            body: .text("Hello!")
+            body: "Hello!"
         )
 
         let request = Mailgun.Messages.Send.Request(
@@ -298,7 +299,7 @@ struct MessagesSendRequestEmailTests {
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
             subject: "Test Subject",
-            body: .text("Hello!")
+            body: "Hello!"
         )
 
         let deliveryDate = Date(timeIntervalSince1970: 1_700_000_000)
@@ -318,7 +319,7 @@ struct MessagesSendRequestEmailTests {
             to: [EmailAddress("用户@example.com")],
             from: EmailAddress("发送者@example.com"),
             subject: "国际化测试",
-            body: .text("你好世界!")
+            body: "你好世界!"
         )
 
         let request = Mailgun.Messages.Send.Request(email: email)
@@ -335,7 +336,7 @@ struct MessagesSendRequestEmailTests {
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
             subject: "Test with émojis 🎉 and spëcial çhars!",
-            body: .text("Hello!")
+            body: "Hello!"
         )
 
         let request = Mailgun.Messages.Send.Request(email: email)
@@ -350,7 +351,7 @@ struct MessagesSendRequestEmailTests {
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
             subject: longSubject,
-            body: .text("Hello!")
+            body: "Hello!"
         )
 
         let request = Mailgun.Messages.Send.Request(email: email)
@@ -367,7 +368,7 @@ struct MessagesSendRequestEmailTests {
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
             subject: "Test Subject",
-            body: .text("Hello!")
+            body: "Hello!"
         )
 
         let request = Mailgun.Messages.Send.Request(email: email)
