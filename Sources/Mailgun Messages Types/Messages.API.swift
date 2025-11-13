@@ -7,8 +7,7 @@
 
 import Foundation
 import Mailgun_Types_Shared
-import URLFormCoding
-import MultipartFormCodingURLRouting
+
 
 extension Mailgun.Messages {
     @CasePathable
