@@ -183,7 +183,7 @@ struct MessagesSendRequestEmailTests {
             body: "Hello!",
             additionalHeaders: [
                 .init(name: "X-Custom-Header", value: "CustomValue"),
-                .init(name: "X-Priority", value: "1")
+                .init(name: "X-Priority", value: "1"),
             ]
         )
 

@@ -6,4 +6,5 @@
 //
 
 @_exported import Email_Type
+
 public typealias Multipart = RFC_2046.Multipart

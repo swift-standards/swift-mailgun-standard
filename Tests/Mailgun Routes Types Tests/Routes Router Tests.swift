@@ -40,9 +40,12 @@ struct RoutesRouterTests {
         let router: Mailgun.Routes.API.Router = .init()
 
         let apis: [(String, Mailgun.Routes.API)] = [
-            ("create", .create(
-                request: .init(priority: 0, description: "Test", expression: "test", action: [])
-            )),
+            (
+                "create",
+                .create(
+                    request: .init(priority: 0, description: "Test", expression: "test", action: [])
+                )
+            ),
             ("list", .list(limit: nil, skip: nil)),
             ("get", .get(id: "test")),
             ("update", .update(id: "test", request: .init(description: "test"))),
@@ -53,7 +56,10 @@ struct RoutesRouterTests {
         for (name, api) in apis {
             let url = router.url(for: api)
             print("DEBUG: \(name) -> \(url.path)")
-            #expect(url.path.hasPrefix("/v3/"), "Failed for endpoint: \(name), got path: \(url.path)")
+            #expect(
+                url.path.hasPrefix("/v3/"),
+                "Failed for endpoint: \(name), got path: \(url.path)"
+            )
         }
     }
 }
