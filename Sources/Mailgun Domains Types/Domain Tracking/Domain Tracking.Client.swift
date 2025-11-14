@@ -14,27 +14,27 @@ extension Mailgun.Domains.Domains.Tracking {
     public struct Client: Sendable {
         @DependencyEndpoint
         public var get:
-            @Sendable (_ domain: TypesFoundation.Domain) async throws ->
+            @Sendable (_ domain: Domain) async throws ->
                 Mailgun.Domains.Domains.Tracking.Get.Response
 
         @DependencyEndpoint
         public var updateClick:
             @Sendable (
-                _ domain: TypesFoundation.Domain,
+                _ domain: Domain,
                 _ request: Mailgun.Domains.Domains.Tracking.UpdateClick.Request
             ) async throws -> Mailgun.Domains.Domains.Tracking.UpdateClick.Response
 
         @DependencyEndpoint
         public var updateOpen:
             @Sendable (
-                _ domain: TypesFoundation.Domain,
+                _ domain: Domain,
                 _ request: Mailgun.Domains.Domains.Tracking.UpdateOpen.Request
             ) async throws -> Mailgun.Domains.Domains.Tracking.UpdateOpen.Response
 
         @DependencyEndpoint
         public var updateUnsubscribe:
             @Sendable (
-                _ domain: TypesFoundation.Domain,
+                _ domain: Domain,
                 _ request: Mailgun.Domains.Domains.Tracking.UpdateUnsubscribe.Request
             ) async throws -> Mailgun.Domains.Domains.Tracking.UpdateUnsubscribe.Response
     }

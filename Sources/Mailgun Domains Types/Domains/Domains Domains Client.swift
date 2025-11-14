@@ -24,23 +24,23 @@ extension Mailgun.Domains.Domains {
 
         @DependencyEndpoint
         public var get:
-            @Sendable (_ domain: TypesFoundation.Domain) async throws ->
+            @Sendable (_ domain: Domain) async throws ->
                 Mailgun.Domains.Domains.Get.Response
 
         @DependencyEndpoint
         public var update:
             @Sendable (
-                _ domain: TypesFoundation.Domain, _ request: Mailgun.Domains.Domains.Update.Request
+                _ domain: Domain, _ request: Mailgun.Domains.Domains.Update.Request
             ) async throws -> Mailgun.Domains.Domains.Update.Response
 
         @DependencyEndpoint
         public var delete:
-            @Sendable (_ domain: TypesFoundation.Domain) async throws ->
+            @Sendable (_ domain: Domain) async throws ->
                 Mailgun.Domains.Domains.Delete.Response
 
         @DependencyEndpoint
         public var verify:
-            @Sendable (_ domain: TypesFoundation.Domain) async throws ->
+            @Sendable (_ domain: Domain) async throws ->
                 Mailgun.Domains.Domains.Verify.Response
     }
 }

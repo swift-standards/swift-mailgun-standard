@@ -37,7 +37,7 @@ extension Mailgun.Suppressions.Unsubscribe.API {
                     let multipart = try! Multipart.FileUpload.csv()
 
                     Headers {
-                        Field.contentType { multipart.contentType }
+                        Field("Content-Type") { multipart.contentType }
                     }
 
                     Body(multipart)

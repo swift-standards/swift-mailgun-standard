@@ -12,10 +12,10 @@ extension Mailgun.Domains.DKIM_Security {
     @dynamicMemberLookup
     public enum API: Equatable, Sendable {
         case updateRotation(
-            domain: TypesFoundation.Domain,
+            domain: Domain,
             request: Mailgun.Domains.DKIM_Security.Rotation.Update.Request
         )
-        case rotateManually(domain: TypesFoundation.Domain)
+        case rotateManually(domain: Domain)
     }
 }
 
@@ -30,7 +30,7 @@ extension Mailgun.Domains.DKIM_Security.API {
                     Path { "v1" }
                     Path { "dkim_management" }
                     Path { "domains" }
-                    Path { Parse(.string.representing(TypesFoundation.Domain.self)) }
+                    Path { Parse(.string.representing(Domain.self)) }
                     Path { "rotation" }
                     Body(
                         .form(
@@ -46,7 +46,7 @@ extension Mailgun.Domains.DKIM_Security.API {
                     Path { "v1" }
                     Path { "dkim_management" }
                     Path { "domains" }
-                    Path { Parse(.string.representing(TypesFoundation.Domain.self)) }
+                    Path { Parse(.string.representing(Domain.self)) }
                     Path { "rotate" }
                 }
             }

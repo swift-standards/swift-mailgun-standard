@@ -29,7 +29,7 @@ extension Mailgun.Messages.API {
                 URLRouting.Route(.case(Mailgun.Messages.API.send)) {
                     let sendMultipartConversion = Mailgun.Messages.SendMultipartConversion()
                     Headers {
-                        Field.contentType { sendMultipartConversion.contentType }
+                        Field("Content-Type") { sendMultipartConversion.contentType }
                     }
                     Method.post
                     Path { "v3" }
@@ -41,7 +41,7 @@ extension Mailgun.Messages.API {
                 URLRouting.Route(.case(Mailgun.Messages.API.sendMime)) {
                     let mimeMultipartConversion = Mailgun.Messages.MimeMultipartConversion()
                     Headers {
-                        Field.contentType { mimeMultipartConversion.contentType }
+                        Field("Content-Type") { mimeMultipartConversion.contentType }
                     }
                     Method.post
                     Path { "v3" }

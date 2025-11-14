@@ -47,17 +47,22 @@ extension Target.Dependency {
 }
 
 extension Target.Dependency {
-    static var typesFoundation: Self { .product(name: "TypesFoundation", package: "swift-types-foundation") }
+    static var dependencies: Self { .product(name: "Dependencies", package: "swift-dependencies") }
     static var dependenciesMacros: Self { .product(name: "DependenciesMacros", package: "swift-dependencies") }
     static var dependenciesTestSupport: Self { .product(name: "DependenciesTestSupport", package: "swift-dependencies") }
+    static var dateParsing: Self { .product(name: "UnixEpochParsing", package: "swift-date-parsing") }
     static var emailType: Self { .product(name: "Email Type", package: "swift-email-type") }
+    static var domain: Self { .product(name: "Domain", package: "swift-domain-type") }
+    static var emailAddress: Self { .product(name: "EmailAddress", package: "swift-emailaddress-type") }
+    static var urlRouting: Self { .product(name: "URLRouting", package: "swift-url-routing") }
+    static var casePaths: Self { .product(name: "CasePaths", package: "swift-case-paths") }
 }
 
 let package = Package(
     name: "swift-mailgun-types",
     platforms: [
-        .macOS(.v14),
-        .iOS(.v17)
+        .macOS(.v15),
+        .iOS(.v18)
     ],
     products: [
         .library(name: .mailgun, targets: [.mailgun]),
@@ -81,28 +86,31 @@ let package = Package(
         .library(name: .shared, targets: [.shared])
     ],
     dependencies: [
-        .package(
-            url: "https://github.com/coenttb/swift-types-foundation",
-            from: "0.4.0",
-            traits: ["URLRouting"]
-        ),
+        .package(path: "../swift-date-parsing"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.9.2"),
-        .package(url: "https://github.com/swift-standards/swift-email-type", from: "0.3.1")
+        .package(url: "https://github.com/swift-standards/swift-email-type", from: "0.3.1"),
+        .package(url: "https://github.com/swift-standards/swift-domain-type", from: "0.2.0"),
+        .package(url: "https://github.com/swift-standards/swift-emailaddress-type", from: "0.3.0"),
+        .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
+        .package(path: "../swift-url-routing")
     ],
     targets: [
         .target(
             name: .shared,
             dependencies: [
-                .typesFoundation,
-                .dependenciesMacros
-
+                .dependenciesMacros,
+                .domain,
+                .emailAddress,
+                .urlRouting,
+                .casePaths,
+                .dateParsing,
+                .dependencies
             ]
         ),
         .target(
             name: .mailgun,
             dependencies: [
                 .shared,
-                .typesFoundation,
                 .accountManagement,
                 .credentials,
                 .customMessageLimit,
@@ -132,9 +140,7 @@ let package = Package(
         .target(
             name: .accountManagement,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -144,9 +150,7 @@ let package = Package(
         .target(
             name: .credentials,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -156,9 +160,7 @@ let package = Package(
         .target(
             name: .customMessageLimit,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -168,9 +170,7 @@ let package = Package(
         .target(
             name: .domains,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -180,9 +180,7 @@ let package = Package(
         .target(
             name: .ipAllowlist,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -192,9 +190,7 @@ let package = Package(
         .target(
             name: .ipPools,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -204,9 +200,7 @@ let package = Package(
         .target(
             name: .ips,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -216,9 +210,7 @@ let package = Package(
         .target(
             name: .keys,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -228,9 +220,7 @@ let package = Package(
         .target(
             name: .lists,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -241,7 +231,6 @@ let package = Package(
             name: .messages,
             dependencies: [
                 .shared,
-                .typesFoundation,
                 .emailType
             ]
         ),
@@ -252,9 +241,7 @@ let package = Package(
         .target(
             name: .reporting,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -264,9 +251,7 @@ let package = Package(
         .target(
             name: .routes,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -276,9 +261,7 @@ let package = Package(
         .target(
             name: .subaccounts,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -288,9 +271,7 @@ let package = Package(
         .target(
             name: .suppressions,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -300,9 +281,7 @@ let package = Package(
         .target(
             name: .templates,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -312,9 +291,7 @@ let package = Package(
         .target(
             name: .users,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -324,9 +301,7 @@ let package = Package(
         .target(
             name: .webhooks,
             dependencies: [
-                .shared,
-                .typesFoundation
-
+                .shared
             ]
         ),
         .testTarget(
@@ -335,7 +310,6 @@ let package = Package(
         )
     ]
 )
-
 
 extension String {
     var tests: Self { self + " Tests" }

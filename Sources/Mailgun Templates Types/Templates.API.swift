@@ -79,13 +79,6 @@ extension Mailgun.Templates.API {
 
                 // PUT /v3/{domain_name}/templates/{template_name}/versions/{version_name}
                 Route(.case(Mailgun.Templates.API.updateVersion)) {
-                    let multipartFormCoding = Multipart.Conversion(
-                        Mailgun.Templates.Version.Update.Request.self,
-                        arrayEncodingStrategy: .brackets
-                    )
-                    Headers {
-                        Field.contentType { multipartFormCoding.contentType }
-                    }
                     Method.put
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }
@@ -93,7 +86,10 @@ extension Mailgun.Templates.API {
                     Path { Parse(.string) }
                     Path.versions
                     Path { Parse(.string) }
-                    Body(multipartFormCoding)
+                    Multipart(
+                        Mailgun.Templates.Version.Update.Request.self,
+                        arrayEncodingStrategy: .brackets
+                    )
                 }
 
                 // DELETE /v3/{domain_name}/templates/{template_name}/versions/{version_name}
@@ -120,20 +116,16 @@ extension Mailgun.Templates.API {
 
                 // POST /v3/{domain_name}/templates/{template_name}/versions
                 Route(.case(Mailgun.Templates.API.createVersion)) {
-                    let multipartFormCoding = Multipart.Conversion(
-                        Mailgun.Templates.Version.Create.Request.self,
-                        arrayEncodingStrategy: .brackets
-                    )
-                    Headers {
-                        Field.contentType { multipartFormCoding.contentType }
-                    }
                     Method.post
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }
                     Path.templates
                     Path { Parse(.string) }
                     Path.versions
-                    Body(multipartFormCoding)
+                    Multipart(
+                        Mailgun.Templates.Version.Create.Request.self,
+                        arrayEncodingStrategy: .brackets
+                    )
                 }
 
                 // GET /v3/{domain_name}/templates/{template_name}/versions
@@ -165,19 +157,15 @@ extension Mailgun.Templates.API {
 
                 // PUT /v3/{domain_name}/templates/{template_name}
                 Route(.case(Mailgun.Templates.API.update)) {
-                    let multipartFormCoding = Multipart.Conversion(
-                        Mailgun.Templates.Update.Request.self,
-                        arrayEncodingStrategy: .brackets
-                    )
-                    Headers {
-                        Field.contentType { multipartFormCoding.contentType }
-                    }
                     Method.put
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }
                     Path.templates
                     Path { Parse(.string) }
-                    Body(multipartFormCoding)
+                    Multipart(
+                        Mailgun.Templates.Update.Request.self,
+                        arrayEncodingStrategy: .brackets
+                    )
                 }
 
                 // DELETE /v3/{domain_name}/templates/{template_name}
@@ -209,18 +197,14 @@ extension Mailgun.Templates.API {
 
                 // POST /v3/{domain_name}/templates
                 Route(.case(Mailgun.Templates.API.create)) {
-                    let multipartFormCoding = Multipart.Conversion(
-                        Mailgun.Templates.Create.Request.self,
-                        arrayEncodingStrategy: .brackets
-                    )
-                    Headers {
-                        Field.contentType { multipartFormCoding.contentType }
-                    }
                     Method.post
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }
                     Path.templates
-                    Body(multipartFormCoding)
+                    Multipart(
+                        Mailgun.Templates.Create.Request.self,
+                        arrayEncodingStrategy: .brackets
+                    )
                 }
 
                 // DELETE /v3/{domain_name}/templates

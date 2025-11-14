@@ -72,7 +72,7 @@ extension Mailgun.Suppressions.Allowlist.API {
                 URLRouting.Route(.case(Mailgun.Suppressions.Allowlist.API.create)) {
                     Method.post
                     Headers {
-                        Field.contentType { "application/x-www-form-urlencoded" }
+                        Field("Content-Type") { "application/x-www-form-urlencoded" }
                     }
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }
@@ -99,7 +99,7 @@ extension Mailgun.Suppressions.Allowlist.API {
 
                     Method.post
                     Headers {
-                        Field.contentType { multipart.contentType }
+                        Field("Content-Type") { multipart.contentType }
                     }
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }

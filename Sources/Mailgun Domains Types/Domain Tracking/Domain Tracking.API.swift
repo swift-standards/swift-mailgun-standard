@@ -11,17 +11,17 @@ extension Mailgun.Domains.Domains.Tracking {
     @CasePathable
     @dynamicMemberLookup
     public enum API: Equatable, Sendable {
-        case get(domain: TypesFoundation.Domain)
+        case get(domain: Domain)
         case updateClick(
-            domain: TypesFoundation.Domain,
+            domain: Domain,
             request: Mailgun.Domains.Domains.Tracking.UpdateClick.Request
         )
         case updateOpen(
-            domain: TypesFoundation.Domain,
+            domain: Domain,
             request: Mailgun.Domains.Domains.Tracking.UpdateOpen.Request
         )
         case updateUnsubscribe(
-            domain: TypesFoundation.Domain,
+            domain: Domain,
             request: Mailgun.Domains.Domains.Tracking.UpdateUnsubscribe.Request
         )
     }
@@ -37,7 +37,7 @@ extension Mailgun.Domains.Domains.Tracking.API {
                     Method.get
                     Path { "v3" }
                     Path { "domains" }
-                    Path { Parse(.string.representing(TypesFoundation.Domain.self)) }
+                    Path { Parse(.string.representing(Domain.self)) }
                     Path { "tracking" }
                 }
 
@@ -45,7 +45,7 @@ extension Mailgun.Domains.Domains.Tracking.API {
                     Method.put
                     Path { "v3" }
                     Path { "domains" }
-                    Path { Parse(.string.representing(TypesFoundation.Domain.self)) }
+                    Path { Parse(.string.representing(Domain.self)) }
                     Path { "tracking" }
                     Path { "click" }
                     Body(
@@ -61,7 +61,7 @@ extension Mailgun.Domains.Domains.Tracking.API {
                     Method.put
                     Path { "v3" }
                     Path { "domains" }
-                    Path { Parse(.string.representing(TypesFoundation.Domain.self)) }
+                    Path { Parse(.string.representing(Domain.self)) }
                     Path { "tracking" }
                     Path { "open" }
                     Body(
@@ -77,7 +77,7 @@ extension Mailgun.Domains.Domains.Tracking.API {
                     Method.put
                     Path { "v3" }
                     Path { "domains" }
-                    Path { Parse(.string.representing(TypesFoundation.Domain.self)) }
+                    Path { Parse(.string.representing(Domain.self)) }
                     Path { "tracking" }
                     Path { "unsubscribe" }
                     Body(

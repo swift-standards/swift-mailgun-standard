@@ -157,20 +157,16 @@ extension Mailgun.Lists.API {
                 }
 
                 URLRouting.Route(.case(Mailgun.Lists.API.updateMember)) {
-                    let multipartFormCoding = Multipart.Conversion(
-                        Mailgun.Lists.Member.Update.Request.self,
-                        arrayEncodingStrategy: .brackets
-                    )
-                    Headers {
-                        Field.contentType { multipartFormCoding.contentType }
-                    }
                     Method.put
                     Path { "v3" }
                     Path.lists
                     Path { Parse(.string.representing(EmailAddress.self)) }
                     Path.members
                     Path { Parse(.string.representing(EmailAddress.self)) }
-                    Body(multipartFormCoding)
+                    Multipart(
+                        Mailgun.Lists.Member.Update.Request.self,
+                        arrayEncodingStrategy: .brackets
+                    )
                 }
 
                 URLRouting.Route(.case(Mailgun.Lists.API.deleteMember)) {
@@ -192,18 +188,14 @@ extension Mailgun.Lists.API {
                 }
 
                 URLRouting.Route(.case(Mailgun.Lists.API.update)) {
-                    let multipartFormCoding = Multipart.Conversion(
-                        Mailgun.Lists.List.Update.Request.self,
-                        arrayEncodingStrategy: .brackets
-                    )
-                    Headers {
-                        Field.contentType { multipartFormCoding.contentType }
-                    }
                     Method.put
                     Path { "v3" }
                     Path.lists
                     Path { Parse(.string.representing(EmailAddress.self)) }
-                    Body(multipartFormCoding)
+                    Multipart(
+                        Mailgun.Lists.List.Update.Request.self,
+                        arrayEncodingStrategy: .brackets
+                    )
                 }
 
                 URLRouting.Route(.case(Mailgun.Lists.API.delete)) {

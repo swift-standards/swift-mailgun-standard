@@ -13,10 +13,10 @@ extension Mailgun.Domains.Domains {
     public enum API: Equatable, Sendable {
         case list(request: Mailgun.Domains.Domains.List.Request?)
         case create(request: Mailgun.Domains.Domains.Create.Request)
-        case get(domain: TypesFoundation.Domain)
-        case update(domain: TypesFoundation.Domain, request: Mailgun.Domains.Domains.Update.Request)
-        case delete(domain: TypesFoundation.Domain)
-        case verify(domain: TypesFoundation.Domain)
+        case get(domain: Domain)
+        case update(domain: Domain, request: Mailgun.Domains.Domains.Update.Request)
+        case delete(domain: Domain)
+        case verify(domain: Domain)
     }
 }
 
@@ -71,14 +71,14 @@ extension Mailgun.Domains.Domains.API {
                     Method.get
                     Path { "v4" }
                     Path { "domains" }
-                    Path { Parse(.string.representing(TypesFoundation.Domain.self)) }
+                    Path { Parse(.string.representing(Domain.self)) }
                 }
 
                 URLRouting.Route(.case(Mailgun.Domains.Domains.API.update)) {
                     Method.put
                     Path { "v4" }
                     Path { "domains" }
-                    Path { Parse(.string.representing(TypesFoundation.Domain.self)) }
+                    Path { Parse(.string.representing(Domain.self)) }
                     Body(
                         .form(
                             Mailgun.Domains.Domains.Update.Request.self,
@@ -92,14 +92,14 @@ extension Mailgun.Domains.Domains.API {
                     Method.delete
                     Path { "v4" }
                     Path { "domains" }
-                    Path { Parse(.string.representing(TypesFoundation.Domain.self)) }
+                    Path { Parse(.string.representing(Domain.self)) }
                 }
 
                 URLRouting.Route(.case(Mailgun.Domains.Domains.API.verify)) {
                     Method.put
                     Path { "v4" }
                     Path { "domains" }
-                    Path { Parse(.string.representing(TypesFoundation.Domain.self)) }
+                    Path { Parse(.string.representing(Domain.self)) }
                     Path { "verify" }
                 }
             }
