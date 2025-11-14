@@ -83,7 +83,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/coenttb/swift-types-foundation",
-            from: "0.3.0",
+            from: "0.4.0",
             traits: ["URLRouting"]
         ),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.9.2"),
