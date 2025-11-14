@@ -31,9 +31,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .build
-          key: ${{ runner.os }}-swift62-spm-${{ hashFiles('Package.swift') }}
+          key: ${{ runner.os }}-swift62-spm-v2-${{ hashFiles('Package.swift') }}
           restore-keys: |
-            ${{ runner.os }}-swift62-spm-
+            ${{ runner.os }}-swift62-spm-v2-
 
       # Note: swift test builds automatically, no separate build step needed
       - name: Test
@@ -63,8 +63,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .build
-          key: ${{ runner.os }}-swift62-spm-${{ hashFiles('Package.swift') }}
-          restore-keys: ${{ runner.os }}-swift62-spm-
+          key: ${{ runner.os }}-swift62-spm-v2-${{ hashFiles('Package.swift') }}
+          restore-keys: ${{ runner.os }}-swift62-spm-v2-
 
       # Note: swift test builds automatically in release mode
       - name: Test (release)
@@ -83,8 +83,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .build
-          key: ${{ runner.os }}-swift61-compat-spm-${{ hashFiles('Package.swift') }}
-          restore-keys: ${{ runner.os }}-swift61-compat-spm-
+          key: ${{ runner.os }}-swift61-compat-spm-v2-${{ hashFiles('Package.swift') }}
+          restore-keys: ${{ runner.os }}-swift61-compat-spm-v2-
 
       # Note: swift test builds automatically
       - name: Test (Swift 6.1)
