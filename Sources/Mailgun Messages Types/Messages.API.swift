@@ -8,7 +8,6 @@
 import Foundation
 import Mailgun_Types_Shared
 
-
 extension Mailgun.Messages {
     @CasePathable
     @dynamicMemberLookup

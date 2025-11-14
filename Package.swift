@@ -47,12 +47,7 @@ extension Target.Dependency {
 }
 
 extension Target.Dependency {
-    static var typesFoundation: Self {
-        .product(
-            name: "TypesFoundation",
-            package: "swift-types-foundation"
-        )
-    }
+    static var typesFoundation: Self { .product(name: "TypesFoundation", package: "swift-types-foundation") }
     static var dependenciesMacros: Self { .product(name: "DependenciesMacros", package: "swift-dependencies") }
     static var dependenciesTestSupport: Self { .product(name: "DependenciesTestSupport", package: "swift-dependencies") }
     static var emailType: Self { .product(name: "Email Type", package: "swift-email-type") }
@@ -88,7 +83,7 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/coenttb/swift-types-foundation",
-            from: "0.0.1",
+            from: "0.3.0",
             traits: ["URLRouting"]
         ),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.9.2"),
@@ -340,6 +335,14 @@ let package = Package(
         )
     ]
 )
+
+#if swift(>=6.1) && swift(<6.3)
+// Workaround for SPM trait propagation bug in Swift 6.1-6.2
+// Explicitly include transitive conditional dependencies that are not already declared
+package.dependencies.append(contentsOf: [
+    .package(url: "https://github.com/swift-standards/swift-rfc-7578", from: "0.2.1")
+])
+#endif
 
 extension String {
     var tests: Self { self + " Tests" }

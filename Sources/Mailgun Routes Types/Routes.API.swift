@@ -40,19 +40,11 @@ extension Mailgun.Routes.API {
                 }
 
                 URLRouting.Route(.case(Mailgun.Routes.API.update)) {
-                    let multipartFormCoding = URLFormCoding.Multipart.Conversion(
-                        Mailgun.Routes.Update.Request.self,
-                        decoder: .mailgunRoutes,
-                        encoder: .mailgunRoutes  // Use the encoder with accumulateValues for arrays
-                    )
-                    Headers {
-                        Field.contentType { multipartFormCoding.contentType }
-                    }
                     Method.put
                     Path { "v3" }
                     Path.routes
                     Path { Parse(.string) }
-                    Body(multipartFormCoding)
+                    Body(.multipart(Mailgun.Routes.Update.Request.self))
                 }
 
                 URLRouting.Route(.case(Mailgun.Routes.API.delete)) {

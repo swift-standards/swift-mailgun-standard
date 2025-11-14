@@ -157,10 +157,9 @@ extension Mailgun.Lists.API {
                 }
 
                 URLRouting.Route(.case(Mailgun.Lists.API.updateMember)) {
-                    let multipartFormCoding = URLFormCoding.Multipart.Conversion(
+                    let multipartFormCoding = Multipart.Conversion(
                         Mailgun.Lists.Member.Update.Request.self,
-                        decoder: .mailgun,
-                        encoder: .mailgun
+                        arrayEncodingStrategy: .brackets
                     )
                     Headers {
                         Field.contentType { multipartFormCoding.contentType }
@@ -193,10 +192,9 @@ extension Mailgun.Lists.API {
                 }
 
                 URLRouting.Route(.case(Mailgun.Lists.API.update)) {
-                    let multipartFormCoding = URLFormCoding.Multipart.Conversion(
+                    let multipartFormCoding = Multipart.Conversion(
                         Mailgun.Lists.List.Update.Request.self,
-                        decoder: .mailgun,
-                        encoder: .mailgun
+                        arrayEncodingStrategy: .brackets
                     )
                     Headers {
                         Field.contentType { multipartFormCoding.contentType }

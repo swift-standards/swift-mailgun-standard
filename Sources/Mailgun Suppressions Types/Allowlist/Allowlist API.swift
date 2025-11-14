@@ -95,7 +95,7 @@ extension Mailgun.Suppressions.Allowlist.API {
 
                 URLRouting.Route(.case(Mailgun.Suppressions.Allowlist.API.importList)) {
 
-                    let multipart = URLFormCoding.Multipart.FileUpload.csv()
+                    let multipart = try! Multipart.FileUpload.csv()
 
                     Method.post
                     Headers {

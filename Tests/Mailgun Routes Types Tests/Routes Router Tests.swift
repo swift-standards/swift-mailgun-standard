@@ -39,20 +39,21 @@ struct RoutesRouterTests {
     func testAllEndpointsUseV3() throws {
         let router: Mailgun.Routes.API.Router = .init()
 
-        let apis: [Mailgun.Routes.API] = [
-            .create(
+        let apis: [(String, Mailgun.Routes.API)] = [
+            ("create", .create(
                 request: .init(priority: 0, description: "Test", expression: "test", action: [])
-            ),
-            .list(limit: nil, skip: nil),
-            .get(id: "test"),
-            .update(id: "test", request: .init()),
-            .delete(id: "test"),
-            .match(address: "test@example.com"),
+            )),
+            ("list", .list(limit: nil, skip: nil)),
+            ("get", .get(id: "test")),
+            ("update", .update(id: "test", request: .init(description: "test"))),
+            ("delete", .delete(id: "test")),
+            ("match", .match(address: "test@example.com")),
         ]
 
-        for api in apis {
+        for (name, api) in apis {
             let url = router.url(for: api)
-            #expect(url.path.hasPrefix("/v3/"))
+            print("DEBUG: \(name) -> \(url.path)")
+            #expect(url.path.hasPrefix("/v3/"), "Failed for endpoint: \(name), got path: \(url.path)")
         }
     }
 }

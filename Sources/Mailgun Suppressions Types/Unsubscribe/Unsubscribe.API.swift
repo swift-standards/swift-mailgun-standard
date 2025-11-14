@@ -34,7 +34,7 @@ extension Mailgun.Suppressions.Unsubscribe.API {
                     Path.unsubscribes
                     Path { "import" }
 
-                    let multipart = URLFormCoding.Multipart.FileUpload.csv()
+                    let multipart = try! Multipart.FileUpload.csv()
 
                     Headers {
                         Field.contentType { multipart.contentType }

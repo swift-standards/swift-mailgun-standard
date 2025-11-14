@@ -6,12 +6,10 @@
 //
 
 import DependenciesTestSupport
-import Mailgun_Messages_Types
 import Email_Type
 import Foundation
+import Mailgun_Messages_Types
 import Testing
-
-@testable import Mailgun_Messages_Types
 
 @Suite("Messages.Send.Request+Email Integration Tests")
 struct MessagesSendRequestEmailTests {

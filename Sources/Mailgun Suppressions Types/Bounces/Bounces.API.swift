@@ -26,7 +26,7 @@ extension Mailgun.Suppressions.Bounces.API {
                     Path.bounces
                     Path { "import" }
 
-                    let multipart = URLFormCoding.Multipart.FileUpload.csv()
+                    let multipart = try! Multipart.FileUpload.csv()
 
                     Headers {
                         Field.contentType { multipart.contentType }

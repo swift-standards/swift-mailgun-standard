@@ -6,7 +6,6 @@
 //
 
 import Mailgun_Types_Shared
-import URLFormCoding
 
 extension Mailgun.Templates {
     @CasePathable
@@ -80,10 +79,9 @@ extension Mailgun.Templates.API {
 
                 // PUT /v3/{domain_name}/templates/{template_name}/versions/{version_name}
                 Route(.case(Mailgun.Templates.API.updateVersion)) {
-                    let multipartFormCoding = URLFormCoding.Multipart.Conversion(
+                    let multipartFormCoding = Multipart.Conversion(
                         Mailgun.Templates.Version.Update.Request.self,
-                        decoder: .mailgun,
-                        encoder: .mailgun
+                        arrayEncodingStrategy: .brackets
                     )
                     Headers {
                         Field.contentType { multipartFormCoding.contentType }
@@ -122,10 +120,9 @@ extension Mailgun.Templates.API {
 
                 // POST /v3/{domain_name}/templates/{template_name}/versions
                 Route(.case(Mailgun.Templates.API.createVersion)) {
-                    let multipartFormCoding = URLFormCoding.Multipart.Conversion(
+                    let multipartFormCoding = Multipart.Conversion(
                         Mailgun.Templates.Version.Create.Request.self,
-                        decoder: .mailgun,
-                        encoder: .mailgun
+                        arrayEncodingStrategy: .brackets
                     )
                     Headers {
                         Field.contentType { multipartFormCoding.contentType }
@@ -168,10 +165,9 @@ extension Mailgun.Templates.API {
 
                 // PUT /v3/{domain_name}/templates/{template_name}
                 Route(.case(Mailgun.Templates.API.update)) {
-                    let multipartFormCoding = URLFormCoding.Multipart.Conversion(
+                    let multipartFormCoding = Multipart.Conversion(
                         Mailgun.Templates.Update.Request.self,
-                        decoder: .mailgun,
-                        encoder: .mailgun
+                        arrayEncodingStrategy: .brackets
                     )
                     Headers {
                         Field.contentType { multipartFormCoding.contentType }
@@ -213,10 +209,9 @@ extension Mailgun.Templates.API {
 
                 // POST /v3/{domain_name}/templates
                 Route(.case(Mailgun.Templates.API.create)) {
-                    let multipartFormCoding = URLFormCoding.Multipart.Conversion(
+                    let multipartFormCoding = Multipart.Conversion(
                         Mailgun.Templates.Create.Request.self,
-                        decoder: .mailgun,
-                        encoder: .mailgun
+                        arrayEncodingStrategy: .brackets
                     )
                     Headers {
                         Field.contentType { multipartFormCoding.contentType }
