@@ -37,13 +37,13 @@ jobs:
 
       # Note: swift test builds automatically, no separate build step needed
       - name: Test
-        run: swift test -c debug --traits URLRouting
+        run: swift test -c debug
 
       - name: Validate Package.swift
         run: swift package dump-package
 
       - name: Run README verification tests
-        run: swift test --filter ReadmeVerificationTests --traits URLRouting
+        run: swift test --filter ReadmeVerificationTests
 
       - name: Check for API breaking changes
         run: |
@@ -68,7 +68,7 @@ jobs:
 
       # Note: swift test builds automatically in release mode
       - name: Test (release)
-        run: swift test -c release --traits URLRouting
+        run: swift test -c release
 
   # Compatibility check: Minimum supported Swift version (6.1)
   # Note: Swift 6.1+ required for package traits support
@@ -88,4 +88,4 @@ jobs:
 
       # Note: swift test builds automatically
       - name: Test (Swift 6.1)
-        run: swift test -c release --traits URLRouting
+        run: swift test -c release
