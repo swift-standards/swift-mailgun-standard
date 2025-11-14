@@ -336,13 +336,6 @@ let package = Package(
     ]
 )
 
-#if swift(>=6.1) && swift(<6.3)
-// Workaround for SPM trait propagation bug in Swift 6.1-6.2
-// Explicitly include transitive conditional dependencies that are not already declared
-package.dependencies.append(contentsOf: [
-    .package(url: "https://github.com/swift-standards/swift-rfc-7578", from: "0.2.1")
-])
-#endif
 
 extension String {
     var tests: Self { self + " Tests" }
