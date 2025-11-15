@@ -90,12 +90,16 @@ extension Path<PathBuilder.Component<String>> {
 
 extension Mailgun.Messages {
     struct SendMultipartConversion: URLRouting.Conversion {
-        public let boundary = "Boundary-\(UUID().uuidString)"
+        public let boundary = RFC_2046.Boundary()
 
         public init() {}
 
         public var contentType: String {
-            "multipart/form-data; boundary=\(boundary)"
+            RFC_2045.ContentType(
+                type: "multipart",
+                subtype: "form-data",
+                parameters: ["boundary": boundary.value]
+            ).headerValue
         }
 
         public func apply(_ input: Foundation.Data) throws -> Mailgun.Messages.Send.Request {
@@ -103,67 +107,58 @@ extension Mailgun.Messages {
         }
 
         public func unapply(_ request: Mailgun.Messages.Send.Request) throws -> Foundation.Data {
-            var body = Foundation.Data()
+            var parts: [RFC_2046.BodyPart] = []
 
-            func appendBoundary() {
-                body.append("--\(boundary)\r\n".data(using: .utf8)!)
-            }
-
-            func appendClosingBoundary() {
-                body.append("--\(boundary)--\r\n".data(using: .utf8)!)
-            }
-
-            func appendField(name: String, value: String) {
-                appendBoundary()
-                body.append(
-                    "Content-Disposition: form-data; name=\"\(name)\"\r\n\r\n".data(using: .utf8)!
+            // Helper to add text field
+            func addField(name: String, value: String) {
+                parts.append(
+                    RFC_2046.BodyPart(
+                        headers: .formDataTextField(name: name),
+                        text: value
+                    )
                 )
-                body.append("\(value)\r\n".data(using: .utf8)!)
             }
 
-            func appendFileField(
-                name: String,
-                filename: String,
-                contentType: String,
-                data: Foundation.Data
-            ) {
-                appendBoundary()
-                body.append(
-                    "Content-Disposition: form-data; name=\"\(name)\"; filename=\"\(filename)\"\r\n"
-                        .data(
-                            using: .utf8
-                        )!
+            // Helper to add file field
+            func addFileField(name: String, filename: String, contentType: String, data: Foundation.Data) {
+                let parsedContentType = try? RFC_2045.ContentType(parsing: contentType)
+                parts.append(
+                    RFC_2046.BodyPart(
+                        headers: .formDataFile(
+                            name: name,
+                            filename: filename,
+                            contentType: parsedContentType
+                        ),
+                        content: data
+                    )
                 )
-                body.append("Content-Type: \(contentType)\r\n\r\n".data(using: .utf8)!)
-                body.append(data)
-                body.append("\r\n".data(using: .utf8)!)
             }
 
             // Add required fields
-            appendField(
+            addField(
                 name: Mailgun.Messages.Send.Request.CodingKeys.from.rawValue,
                 value: request.from.rawValue
             )
             for recipient in request.to {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.to.rawValue,
                     value: recipient.rawValue
                 )
             }
-            appendField(
+            addField(
                 name: Mailgun.Messages.Send.Request.CodingKeys.subject.rawValue,
                 value: request.subject
             )
 
             // Add optional text/html content
             if let html = request.html {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.html.rawValue,
                     value: html
                 )
             }
             if let text = request.text {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.text.rawValue,
                     value: text
                 )
@@ -172,7 +167,7 @@ extension Mailgun.Messages {
             // Add CC/BCC
             if let cc = request.cc {
                 for ccRecipient in cc {
-                    appendField(
+                    addField(
                         name: Mailgun.Messages.Send.Request.CodingKeys.cc.rawValue,
                         value: ccRecipient.rawValue
                     )
@@ -180,7 +175,7 @@ extension Mailgun.Messages {
             }
             if let bcc = request.bcc {
                 for bccRecipient in bcc {
-                    appendField(
+                    addField(
                         name: Mailgun.Messages.Send.Request.CodingKeys.bcc.rawValue,
                         value: bccRecipient.rawValue
                     )
@@ -189,7 +184,7 @@ extension Mailgun.Messages {
 
             // Add AMP HTML
             if let ampHtml = request.ampHtml {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.ampHtml.rawValue,
                     value: ampHtml
                 )
@@ -197,25 +192,25 @@ extension Mailgun.Messages {
 
             // Add template fields
             if let template = request.template {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.template.rawValue,
                     value: template
                 )
             }
             if let templateVersion = request.templateVersion {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.templateVersion.rawValue,
                     value: templateVersion
                 )
             }
             if let templateText = request.templateText {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.templateText.rawValue,
                     value: templateText ? "yes" : "no"
                 )
             }
             if let templateVariables = request.templateVariables {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.templateVariables.rawValue,
                     value: templateVariables
                 )
@@ -224,7 +219,7 @@ extension Mailgun.Messages {
             // Add attachments
             if let attachments = request.attachments {
                 for attachment in attachments {
-                    appendFileField(
+                    addFileField(
                         name: Mailgun.Messages.Send.Request.CodingKeys.attachments.rawValue,
                         filename: attachment.filename,
                         contentType: attachment.contentType,
@@ -236,7 +231,7 @@ extension Mailgun.Messages {
             // Add inline attachments
             if let inline = request.inline {
                 for inlineAttachment in inline {
-                    appendFileField(
+                    addFileField(
                         name: Mailgun.Messages.Send.Request.CodingKeys.inline.rawValue,
                         filename: inlineAttachment.filename,
                         contentType: inlineAttachment.contentType,
@@ -248,7 +243,7 @@ extension Mailgun.Messages {
             // Add tags
             if let tags = request.tags {
                 for tag in tags {
-                    appendField(
+                    addField(
                         name: Mailgun.Messages.Send.Request.CodingKeys.tags.rawValue,
                         value: tag
                     )
@@ -257,19 +252,19 @@ extension Mailgun.Messages {
 
             // Add DKIM settings
             if let dkim = request.dkim {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.dkim.rawValue,
                     value: dkim ? "yes" : "no"
                 )
             }
             if let secondaryDkim = request.secondaryDkim {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.secondaryDkim.rawValue,
                     value: secondaryDkim
                 )
             }
             if let secondaryDkimPublic = request.secondaryDkimPublic {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.secondaryDkimPublic.rawValue,
                     value: secondaryDkimPublic
                 )
@@ -280,20 +275,20 @@ extension Mailgun.Messages {
                 let formatter = DateFormatter()
                 formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
                 formatter.locale = Locale(identifier: "en_US_POSIX")
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.deliveryTime.rawValue,
                     value: formatter.string(from: deliveryTime)
                 )
             }
             if let deliveryTimeOptimizePeriod = request.deliveryTimeOptimizePeriod {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.deliveryTimeOptimizePeriod
                         .rawValue,
                     value: deliveryTimeOptimizePeriod
                 )
             }
             if let timeZoneLocalize = request.timeZoneLocalize {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.timeZoneLocalize.rawValue,
                     value: timeZoneLocalize
                 )
@@ -301,7 +296,7 @@ extension Mailgun.Messages {
 
             // Add test mode
             if let testMode = request.testMode {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.testMode.rawValue,
                     value: testMode ? "yes" : "no"
                 )
@@ -309,19 +304,19 @@ extension Mailgun.Messages {
 
             // Add tracking options
             if let tracking = request.tracking {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.tracking.rawValue,
                     value: tracking.rawValue
                 )
             }
             if let trackingClicks = request.trackingClicks {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.trackingClicks.rawValue,
                     value: trackingClicks.rawValue
                 )
             }
             if let trackingOpens = request.trackingOpens {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.trackingOpens.rawValue,
                     value: trackingOpens ? "yes" : "no"
                 )
@@ -329,13 +324,13 @@ extension Mailgun.Messages {
 
             // Add TLS settings
             if let requireTls = request.requireTls {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.requireTls.rawValue,
                     value: requireTls ? "yes" : "no"
                 )
             }
             if let skipVerification = request.skipVerification {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.skipVerification.rawValue,
                     value: skipVerification ? "yes" : "no"
                 )
@@ -343,13 +338,13 @@ extension Mailgun.Messages {
 
             // Add sending IP settings
             if let sendingIp = request.sendingIp {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.sendingIp.rawValue,
                     value: sendingIp
                 )
             }
             if let sendingIpPool = request.sendingIpPool {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.sendingIpPool.rawValue,
                     value: sendingIpPool
                 )
@@ -357,7 +352,7 @@ extension Mailgun.Messages {
 
             // Add tracking pixel location
             if let trackingPixelLocationTop = request.trackingPixelLocationTop {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.trackingPixelLocationTop
                         .rawValue,
                     value: trackingPixelLocationTop ? "yes" : "no"
@@ -368,7 +363,7 @@ extension Mailgun.Messages {
             if let headers = request.headers {
                 let headerPrefix = Mailgun.Messages.Send.Request.CodingKeys.headers.rawValue
                 for (key, value) in headers {
-                    appendField(name: "\(headerPrefix):\(key)", value: value)
+                    addField(name: "\(headerPrefix):\(key)", value: value)
                 }
             }
 
@@ -376,30 +371,39 @@ extension Mailgun.Messages {
             if let variables = request.variables {
                 let variablePrefix = Mailgun.Messages.Send.Request.CodingKeys.variables.rawValue
                 for (key, value) in variables {
-                    appendField(name: "\(variablePrefix):\(key)", value: value)
+                    addField(name: "\(variablePrefix):\(key)", value: value)
                 }
             }
 
             // Add recipient variables
             if let recipientVariables = request.recipientVariables {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Request.CodingKeys.recipientVariables.rawValue,
                     value: recipientVariables
                 )
             }
 
-            appendClosingBoundary()
-            return body
+            // Build and encode multipart message
+            let multipart = try RFC_2046.Multipart(
+                subtype: .formData,
+                parts: parts,
+                boundary: boundary
+            )
+            return Data(multipart.render().utf8)
         }
     }
 
     struct MimeMultipartConversion: URLRouting.Conversion {
-        public let boundary = "Boundary-\(UUID().uuidString)"
+        public let boundary = RFC_2046.Boundary()
 
         public init() {}
 
         public var contentType: String {
-            "multipart/form-data; boundary=\(boundary)"
+            RFC_2045.ContentType(
+                type: "multipart",
+                subtype: "form-data",
+                parameters: ["boundary": boundary.value]
+            ).headerValue
         }
 
         public func apply(_ input: Foundation.Data) throws -> Mailgun.Messages.Send.Mime.Request {
@@ -408,47 +412,42 @@ extension Mailgun.Messages {
 
         public func unapply(_ request: Mailgun.Messages.Send.Mime.Request) throws -> Foundation.Data
         {
-            var body = Foundation.Data()
+            var parts: [RFC_2046.BodyPart] = []
 
-            func appendBoundary() {
-                body.append("--\(boundary)\r\n".data(using: .utf8)!)
-            }
-
-            func appendClosingBoundary() {
-                body.append("--\(boundary)--\r\n".data(using: .utf8)!)
-            }
-
-            func appendField(name: String, value: String) {
-                appendBoundary()
-                body.append(
-                    "Content-Disposition: form-data; name=\"\(name)\"\r\n\r\n".data(using: .utf8)!
+            // Helper to add text field
+            func addField(name: String, value: String) {
+                parts.append(
+                    RFC_2046.BodyPart(
+                        headers: .formDataTextField(name: name),
+                        text: value
+                    )
                 )
-                body.append("\(value)\r\n".data(using: .utf8)!)
             }
 
-            func appendFileField(name: String, filename: String, data: Foundation.Data) {
-                appendBoundary()
-                body.append(
-                    "Content-Disposition: form-data; name=\"\(name)\"; filename=\"\(filename)\"\r\n"
-                        .data(
-                            using: .utf8
-                        )!
+            // Helper to add file field
+            func addFileField(name: String, filename: String, data: Foundation.Data) {
+                parts.append(
+                    RFC_2046.BodyPart(
+                        headers: .formDataFile(
+                            name: name,
+                            filename: filename,
+                            contentType: RFC_2045.ContentType(type: "application", subtype: "octet-stream")
+                        ),
+                        content: data
+                    )
                 )
-                body.append("Content-Type: application/octet-stream\r\n\r\n".data(using: .utf8)!)
-                body.append(data)
-                body.append("\r\n".data(using: .utf8)!)
             }
 
             // Add recipients
             for recipient in request.to {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.to.rawValue,
                     value: recipient.rawValue
                 )
             }
 
             // Add message as file upload
-            appendFileField(
+            addFileField(
                 name: Mailgun.Messages.Send.Mime.Request.CodingKeys.message.rawValue,
                 filename: "message",
                 data: request.message
@@ -456,51 +455,51 @@ extension Mailgun.Messages {
 
             // Add optional fields
             if let template = request.template {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.template.rawValue,
                     value: template
                 )
             }
             if let templateVersion = request.templateVersion {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.templateVersion.rawValue,
                     value: templateVersion
                 )
             }
             if let templateText = request.templateText {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.templateText.rawValue,
                     value: templateText ? "yes" : "no"
                 )
             }
             if let templateVariables = request.templateVariables {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.templateVariables.rawValue,
                     value: templateVariables
                 )
             }
             if let tags = request.tags {
                 for tag in tags {
-                    appendField(
+                    addField(
                         name: Mailgun.Messages.Send.Mime.Request.CodingKeys.tags.rawValue,
                         value: tag
                     )
                 }
             }
             if let dkim = request.dkim {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.dkim.rawValue,
                     value: dkim ? "yes" : "no"
                 )
             }
             if let secondaryDkim = request.secondaryDkim {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.secondaryDkim.rawValue,
                     value: secondaryDkim
                 )
             }
             if let secondaryDkimPublic = request.secondaryDkimPublic {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.secondaryDkimPublic
                         .rawValue,
                     value: secondaryDkimPublic
@@ -510,74 +509,74 @@ extension Mailgun.Messages {
                 let formatter = DateFormatter()
                 formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
                 formatter.locale = Locale(identifier: "en_US_POSIX")
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.deliveryTime.rawValue,
                     value: formatter.string(from: deliveryTime)
                 )
             }
             if let deliveryTimeOptimizePeriod = request.deliveryTimeOptimizePeriod {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.deliveryTimeOptimizePeriod
                         .rawValue,
                     value: deliveryTimeOptimizePeriod
                 )
             }
             if let timeZoneLocalize = request.timeZoneLocalize {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.timeZoneLocalize.rawValue,
                     value: timeZoneLocalize
                 )
             }
             if let testMode = request.testMode {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.testMode.rawValue,
                     value: testMode ? "yes" : "no"
                 )
             }
             if let tracking = request.tracking {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.tracking.rawValue,
                     value: tracking.rawValue
                 )
             }
             if let trackingClicks = request.trackingClicks {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.trackingClicks.rawValue,
                     value: trackingClicks.rawValue
                 )
             }
             if let trackingOpens = request.trackingOpens {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.trackingOpens.rawValue,
                     value: trackingOpens ? "yes" : "no"
                 )
             }
             if let requireTls = request.requireTls {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.requireTls.rawValue,
                     value: requireTls ? "yes" : "no"
                 )
             }
             if let skipVerification = request.skipVerification {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.skipVerification.rawValue,
                     value: skipVerification ? "yes" : "no"
                 )
             }
             if let sendingIp = request.sendingIp {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.sendingIp.rawValue,
                     value: sendingIp
                 )
             }
             if let sendingIpPool = request.sendingIpPool {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.sendingIpPool.rawValue,
                     value: sendingIpPool
                 )
             }
             if let trackingPixelLocationTop = request.trackingPixelLocationTop {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.trackingPixelLocationTop
                         .rawValue,
                     value: trackingPixelLocationTop ? "yes" : "no"
@@ -586,25 +585,30 @@ extension Mailgun.Messages {
             if let headers = request.headers {
                 let headerPrefix = Mailgun.Messages.Send.Mime.Request.CodingKeys.headers.rawValue
                 for (key, value) in headers {
-                    appendField(name: "\(headerPrefix):\(key)", value: value)
+                    addField(name: "\(headerPrefix):\(key)", value: value)
                 }
             }
             if let variables = request.variables {
                 let variablePrefix = Mailgun.Messages.Send.Mime.Request.CodingKeys.variables
                     .rawValue
                 for (key, value) in variables {
-                    appendField(name: "\(variablePrefix):\(key)", value: value)
+                    addField(name: "\(variablePrefix):\(key)", value: value)
                 }
             }
             if let recipientVariables = request.recipientVariables {
-                appendField(
+                addField(
                     name: Mailgun.Messages.Send.Mime.Request.CodingKeys.recipientVariables.rawValue,
                     value: recipientVariables
                 )
             }
 
-            appendClosingBoundary()
-            return body
+            // Build and encode multipart message
+            let multipart = try RFC_2046.Multipart(
+                subtype: .formData,
+                parts: parts,
+                boundary: boundary
+            )
+            return Data(multipart.render().utf8)
         }
     }
 }
