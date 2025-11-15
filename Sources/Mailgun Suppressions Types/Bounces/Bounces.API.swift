@@ -25,7 +25,7 @@ extension Mailgun.Suppressions.Bounces.API {
                     Path { Parse(.string.representing(Domain.self)) }
                     Path.bounces
                     Path { "import" }
-                    try! Multipart.FileUpload.csv()
+                    try! FileUpload.csv()
                 }
 
                 URLRouting.Route(.case(Mailgun.Suppressions.Bounces.API.get)) {

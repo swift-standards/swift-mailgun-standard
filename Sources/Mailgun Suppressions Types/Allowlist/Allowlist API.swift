@@ -99,7 +99,7 @@ extension Mailgun.Suppressions.Allowlist.API {
                     Path { Parse(.string.representing(Domain.self)) }
                     Path.whitelists
                     Path { "import" }
-                    try! Multipart.FileUpload.csv()
+                    try! FileUpload.csv()
                 }
             }
         }
