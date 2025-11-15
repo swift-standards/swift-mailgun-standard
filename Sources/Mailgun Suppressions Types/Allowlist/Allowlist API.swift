@@ -94,18 +94,12 @@ extension Mailgun.Suppressions.Allowlist.API {
                 }
 
                 URLRouting.Route(.case(Mailgun.Suppressions.Allowlist.API.importList)) {
-
-                    let multipart = try! Multipart.FileUpload.csv()
-
                     Method.post
-                    Headers {
-                        Field("Content-Type") { multipart.contentType }
-                    }
                     Path { "v3" }
                     Path { Parse(.string.representing(Domain.self)) }
                     Path.whitelists
                     Path { "import" }
-                    Body(multipart)
+                    try! Multipart.FileUpload.csv()
                 }
             }
         }

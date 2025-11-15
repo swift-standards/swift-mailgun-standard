@@ -33,14 +33,7 @@ extension Mailgun.Suppressions.Unsubscribe.API {
                     Path { Parse(.string.representing(Domain.self)) }
                     Path.unsubscribes
                     Path { "import" }
-
-                    let multipart = try! Multipart.FileUpload.csv()
-
-                    Headers {
-                        Field("Content-Type") { multipart.contentType }
-                    }
-
-                    Body(multipart)
+                    try! Multipart.FileUpload.csv()
                 }
 
                 // DELETE /v3/{domainID}/unsubscribes/{address}

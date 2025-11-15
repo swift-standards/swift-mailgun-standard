@@ -25,14 +25,7 @@ extension Mailgun.Suppressions.Bounces.API {
                     Path { Parse(.string.representing(Domain.self)) }
                     Path.bounces
                     Path { "import" }
-
-                    let multipart = try! Multipart.FileUpload.csv()
-
-                    Headers {
-                        Field("Content-Type") { multipart.contentType }
-                    }
-
-                    Body(multipart)
+                    try! Multipart.FileUpload.csv()
                 }
 
                 URLRouting.Route(.case(Mailgun.Suppressions.Bounces.API.get)) {
