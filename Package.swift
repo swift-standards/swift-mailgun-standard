@@ -51,9 +51,9 @@ extension Target.Dependency {
     static var dependenciesMacros: Self { .product(name: "DependenciesMacros", package: "swift-dependencies") }
     static var dependenciesTestSupport: Self { .product(name: "DependenciesTestSupport", package: "swift-dependencies") }
     static var dateParsing: Self { .product(name: "UnixEpochParsing", package: "swift-date-parsing") }
-    static var emailType: Self { .product(name: "Email Type", package: "swift-email-type") }
-    static var domain: Self { .product(name: "Domain", package: "swift-domain-type") }
-    static var emailAddress: Self { .product(name: "EmailAddress", package: "swift-emailaddress-type") }
+    static var emailType: Self { .product(name: "Email Type", package: "swift-email-standard") }
+    static var domain: Self { .product(name: "Domain", package: "swift-domain-standard") }
+    static var emailAddress: Self { .product(name: "EmailAddress", package: "swift-emailaddress-standard") }
     static var urlRouting: Self { .product(name: "URLRouting", package: "swift-url-routing") }
     static var casePaths: Self { .product(name: "CasePaths", package: "swift-case-paths") }
 }
@@ -88,9 +88,9 @@ let package = Package(
     dependencies: [
         .package(path: "../swift-date-parsing"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.9.2"),
-        .package(url: "https://github.com/swift-standards/swift-email-type", from: "0.3.1"),
-        .package(url: "https://github.com/swift-standards/swift-domain-type", from: "0.2.0"),
-        .package(url: "https://github.com/swift-standards/swift-emailaddress-type", from: "0.3.0"),
+        .package(url: "https://github.com/swift-standards/swift-email-standard", from: "0.3.1"),
+        .package(url: "https://github.com/swift-standards/swift-domain-standard", from: "0.2.0"),
+        .package(url: "https://github.com/swift-standards/swift-emailaddress-standard", from: "0.3.0"),
         .package(url: "https://github.com/pointfreeco/swift-case-paths", from: "1.7.2"),
         .package(path: "../swift-url-routing")
     ],
