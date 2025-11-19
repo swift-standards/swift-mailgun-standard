@@ -120,7 +120,12 @@ extension Mailgun.Messages {
             }
 
             // Helper to add file field
-            func addFileField(name: String, filename: String, contentType: String, data: Foundation.Data) {
+            func addFileField(
+                name: String,
+                filename: String,
+                contentType: String,
+                data: Foundation.Data
+            ) {
                 let parsedContentType = try? RFC_2045.ContentType(parsing: contentType)
                 parts.append(
                     RFC_2046.BodyPart(
@@ -431,7 +436,10 @@ extension Mailgun.Messages {
                         headers: .formDataFile(
                             name: name,
                             filename: filename,
-                            contentType: RFC_2045.ContentType(type: "application", subtype: "octet-stream")
+                            contentType: RFC_2045.ContentType(
+                                type: "application",
+                                subtype: "octet-stream"
+                            )
                         ),
                         content: data
                     )
