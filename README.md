@@ -1,7 +1,7 @@
 # swift-mailgun-types
 
-[![CI](https://github.com/coenttb/swift-mailgun-types/workflows/CI/badge.svg)](https://github.com/coenttb/swift-mailgun-types/actions/workflows/ci.yml)
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
+[![CI](https://github.com/swift-standards/swift-mailgun-types/workflows/CI/badge.svg)](https://github.com/swift-standards/swift-mailgun-types/actions/workflows/ci.yml)
 
 Type-safe foundation for Mailgun Swift SDKs with comprehensive API coverage.
 
@@ -336,7 +336,7 @@ Install the entire types package:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/coenttb/swift-mailgun-types", from: "0.2.0")
+    .package(url: "https://github.com/swift-standards/swift-mailgun-types", from: "0.2.0")
 ],
 targets: [
     .target(
@@ -355,7 +355,7 @@ Import only the specific modules you need:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/coenttb/swift-mailgun-types", from: "0.2.0")
+    .package(url: "https://github.com/swift-standards/swift-mailgun-types", from: "0.2.0")
 ],
 targets: [
     .target(
@@ -982,8 +982,8 @@ See [CLAUDE.md](CLAUDE.md#creating-new-feature-modules) for a step-by-step guide
 
 ## Support
 
-- [Issues](https://github.com/coenttb/swift-mailgun-types/issues) - Report bugs or request features
-- [Discussions](https://github.com/coenttb/swift-mailgun-types/discussions) - Ask questions or share ideas
+- [Issues](https://github.com/swift-standards/swift-mailgun-types/issues) - Report bugs or request features
+- [Discussions](https://github.com/swift-standards/swift-mailgun-types/discussions) - Ask questions or share ideas
 - [Newsletter](http://coenttb.com/en/newsletter/subscribe) - Get updates on new releases
 - [X (Twitter)](http://x.com/coenttb) - Follow for announcements
 - [LinkedIn](https://www.linkedin.com/in/tenthijeboonkkamp) - Professional networking
