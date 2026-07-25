@@ -1,0 +1,9 @@
+# .github/metadata.yaml
+description: "Type-safe request and response types covering the Mailgun API for Swift."
+topics:
+  - standards
+  - mailgun
+  - email
+homepage: "https://swift-institute.org"
+readme:
+  family: E
