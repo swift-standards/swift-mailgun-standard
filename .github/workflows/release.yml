@@ -79,98 +79,11 @@ jobs:
 
           echo "✅ Created library archives"
 
-      - name: Generate documentation
-        run: |
-          swift package \
-            --allow-writing-to-directory ./docs \
-            generate-documentation \
-            --target StripeTypes \
-            --output-path ./docs \
-            --transform-for-static-hosting \
-            --hosting-base-path swift-stripe-types
-
-          cat > ./docs/index.html << 'EOF'
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <meta charset="utf-8">
-              <title>Redirecting to swift-stripe-types documentation</title>
-              <meta http-equiv="refresh" content="0; url=./documentation/stripetypes/">
-              <link rel="canonical" href="./documentation/stripetypes/">
-            </head>
-            <body>
-              <p>Redirecting to <a href="./documentation/stripetypes/">swift-stripe-types documentation</a>...</p>
-            </body>
-          </html>
-          EOF
-
-          # Create documentation archive
-          zip -r documentation.zip docs/
-        continue-on-error: true
-
       - name: Upload artifacts to release
         if: github.event_name == 'release'
         uses: softprops/action-gh-release@v2
         with:
           files: |
             .build/swift-stripe-types-macos.tar.gz
-            documentation.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  publish-documentation:
-    name: Publish Documentation
-    needs: validate
-    runs-on: macos-15
-    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.0.app
-
-      - name: Build documentation
-        run: |
-          # Generate documentation for main target
-          swift package \
-            --allow-writing-to-directory ./docs \
-            generate-documentation \
-            --target StripeTypes \
-            --output-path ./docs \
-            --transform-for-static-hosting \
-            --hosting-base-path swift-stripe-types
-
-          # Create root index.html redirect
-          cat > ./docs/index.html << 'EOF'
-          <!DOCTYPE html>
-          <html>
-            <head>
-              <meta charset="utf-8">
-              <title>Redirecting to swift-stripe-types documentation</title>
-              <meta http-equiv="refresh" content="0; url=./documentation/stripetypes/">
-              <link rel="canonical" href="./documentation/stripetypes/">
-            </head>
-            <body>
-              <p>Redirecting to <a href="./documentation/stripetypes/">swift-stripe-types documentation</a>...</p>
-            </body>
-          </html>
-          EOF
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
-        with:
-          path: ./docs
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
