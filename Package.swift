@@ -2,74 +2,6 @@
 
 import PackageDescription
 
-extension String {
-    static let mailgun: Self = "Mailgun".types
-    static let accountManagement: Self = "Mailgun AccountManagement".types
-    static let credentials: Self = "Mailgun Credentials".types
-    static let customMessageLimit: Self = "Mailgun CustomMessageLimit".types
-    static let domains: Self = "Mailgun Domains".types
-    static let ipAllowlist: Self = "Mailgun IPAllowlist".types
-    static let ipPools: Self = "Mailgun IPPools".types
-    static let ips: Self = "Mailgun IPs".types
-    static let keys: Self = "Mailgun Keys".types
-    static let lists: Self = "Mailgun Lists".types
-    static let messages: Self = "Mailgun Messages".types
-    static let reporting: Self = "Mailgun Reporting".types
-    static let routes: Self = "Mailgun Routes".types
-    static let subaccounts: Self = "Mailgun Subaccounts".types
-    static let suppressions: Self = "Mailgun Suppressions".types
-    static let templates: Self = "Mailgun Templates".types
-    static let users: Self = "Mailgun Users".types
-    static let webhooks: Self = "Mailgun Webhooks".types
-    static let shared: Self = "Mailgun Types Shared"
-}
-
-extension Target.Dependency {
-    static var mailgun: Self { .target(name: .mailgun) }
-    static var accountManagement: Self { .target(name: .accountManagement) }
-    static var credentials: Self { .target(name: .credentials) }
-    static var customMessageLimit: Self { .target(name: .customMessageLimit) }
-    static var domains: Self { .target(name: .domains) }
-    static var ipAllowlist: Self { .target(name: .ipAllowlist) }
-    static var ipPools: Self { .target(name: .ipPools) }
-    static var ips: Self { .target(name: .ips) }
-    static var keys: Self { .target(name: .keys) }
-    static var lists: Self { .target(name: .lists) }
-    static var messages: Self { .target(name: .messages) }
-    static var reporting: Self { .target(name: .reporting) }
-    static var routes: Self { .target(name: .routes) }
-    static var subaccounts: Self { .target(name: .subaccounts) }
-    static var suppressions: Self { .target(name: .suppressions) }
-    static var templates: Self { .target(name: .templates) }
-    static var users: Self { .target(name: .users) }
-    static var webhooks: Self { .target(name: .webhooks) }
-    static var shared: Self { .target(name: .shared) }
-}
-
-extension Target.Dependency {
-    static var dependencies: Self { .product(name: "Dependencies", package: "swift-dependencies") }
-    static var dependenciesTestSupport: Self { .product(name: "Dependencies Test Support", package: "swift-dependencies") }
-    static var emailType: Self { .product(name: "Email Standard", package: "swift-email-standard") }
-    static var domain: Self { .product(name: "Domain Standard", package: "swift-domain-standard") }
-    static var emailAddress: Self { .product(name: "EmailAddress", package: "swift-emailaddress") }
-    static var htmlFormCoder: Self {
-        .product(name: "HTML Form Coder Codable", package: "swift-html-form-coder")
-    }
-    static var htmlStandard: Self {
-        .product(name: "HTML Standard", package: "swift-html-standard")
-    }
-    static var rfc2822: Self { .product(name: "RFC 2822", package: "swift-rfc-2822") }
-    static var rfc2045: Self { .product(name: "RFC 2045", package: "swift-rfc-2045") }
-    static var rfc2046: Self { .product(name: "RFC 2046", package: "swift-rfc-2046") }
-    static var rfc2183: Self { .product(name: "RFC 2183", package: "swift-rfc-2183") }
-    static var rfc7578: Self { .product(name: "RFC 7578", package: "swift-rfc-7578") }
-    static var urlRouting: Self { .product(name: "URLRouting", package: "swift-url-routing") }
-    static var urlRoutingFoundation: Self {
-        .product(name: "URL Routing Foundation Integration", package: "swift-url-routing")
-    }
-    static var dual: Self { .product(name: "Dual", package: "swift-dual") }
-}
-
 let package = Package(
     name: "swift-mailgun-types",
     platforms: [
@@ -80,323 +12,35 @@ let package = Package(
         .visionOS(.v26),
     ],
     products: [
-        .library(name: .mailgun, targets: [.mailgun]),
-        .library(name: .accountManagement, targets: [.accountManagement]),
-        .library(name: .credentials, targets: [.credentials]),
-        .library(name: .customMessageLimit, targets: [.customMessageLimit]),
-        .library(name: .domains, targets: [.domains]),
-        .library(name: .ipAllowlist, targets: [.ipAllowlist]),
-        .library(name: .ipPools, targets: [.ipPools]),
-        .library(name: .ips, targets: [.ips]),
-        .library(name: .keys, targets: [.keys]),
-        .library(name: .lists, targets: [.lists]),
-        .library(name: .messages, targets: [.messages]),
-        .library(name: .reporting, targets: [.reporting]),
-        .library(name: .routes, targets: [.routes]),
-        .library(name: .subaccounts, targets: [.subaccounts]),
-        .library(name: .suppressions, targets: [.suppressions]),
-        .library(name: .templates, targets: [.templates]),
-        .library(name: .users, targets: [.users]),
-        .library(name: .webhooks, targets: [.webhooks]),
-        .library(name: .shared, targets: [.shared])
+        .library(
+            name: "Mailgun Standard",
+            targets: ["Mailgun Standard"]
+        )
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-foundations/swift-dependencies.git", branch: "main"),
-        .package(url: "https://github.com/swift-standards/swift-email-standard.git", branch: "main"),
         .package(url: "https://github.com/swift-standards/swift-domain-standard.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-emailaddress.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-html-form-coder.git", branch: "main"),
-        .package(url: "https://github.com/swift-standards/swift-html-standard.git", branch: "main"),
-        .package(url: "https://github.com/swift-ietf/swift-rfc-2045.git", branch: "main"),
-        .package(url: "https://github.com/swift-ietf/swift-rfc-2046.git", branch: "main"),
-        .package(url: "https://github.com/swift-ietf/swift-rfc-2183.git", branch: "main"),
-        .package(url: "https://github.com/swift-ietf/swift-rfc-7578.git", branch: "main"),
-        .package(url: "https://github.com/swift-ietf/swift-rfc-2822.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-dual.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-url-routing.git", branch: "main"),
+        .package(url: "https://github.com/swift-standards/swift-email-standard.git", branch: "main"),
+        .package(url: "https://github.com/swift-standards/swift-emailaddress-standard.git", branch: "main"),
+        .package(url: "https://github.com/swift-ietf/swift-rfc-3986.git", branch: "main"),
+        .package(url: "https://github.com/swift-primitives/swift-time-primitives.git", branch: "main"),
     ],
     targets: [
         .target(
-            name: .shared,
+            name: "Mailgun Standard",
             dependencies: [
-                .domain,
-                .emailAddress,
-                .urlRouting,
-                .htmlFormCoder,
-                .htmlStandard,
-                .dual,
-                .dependencies
-            ]
-        ),
-        .target(
-            name: .mailgun,
-            dependencies: [
-                .shared,
-                .accountManagement,
-                .credentials,
-                .customMessageLimit,
-                .domains,
-                .ipAllowlist,
-                .ipPools,
-                .ips,
-                .keys,
-                .lists,
-                .messages,
-                .reporting,
-                .routes,
-                .subaccounts,
-                .suppressions,
-                .templates,
-                .users,
-                .webhooks
+                .product(name: "Domain Standard", package: "swift-domain-standard"),
+                .product(name: "Email Standard", package: "swift-email-standard"),
+                .product(name: "EmailAddress Standard", package: "swift-emailaddress-standard"),
+                // Pagination links (Lists.Paging, Reporting.Tags.*.Paging, ...).
+                .product(name: "RFC 3986", package: "swift-rfc-3986"),
+                // Unix-epoch-seconds timestamp fields.
+                .product(name: "Time Primitive", package: "swift-time-primitives"),
             ]
         ),
         .testTarget(
-            name: .mailgun.tests,
-            dependencies: [
-                .mailgun,
-                .htmlFormCoder,
-                .dependenciesTestSupport
-            ]
+            name: "Mailgun Standard Tests",
+            dependencies: ["Mailgun Standard"]
         ),
-        .target(
-            name: .accountManagement,
-            dependencies: [
-                .shared
-            ]
-        ),
-        .testTarget(
-            name: .accountManagement.tests,
-            dependencies: [
-                .accountManagement, .shared, .dependenciesTestSupport, .urlRoutingFoundation
-            ]
-        ),
-        .target(
-            name: .credentials,
-            dependencies: [
-                .shared
-            ]
-        ),
-        .testTarget(
-            name: .credentials.tests,
-            dependencies: [.credentials, .shared, .dependenciesTestSupport, .urlRoutingFoundation]
-        ),
-        .target(
-            name: .customMessageLimit,
-            dependencies: [
-                .shared
-            ]
-        ),
-        .testTarget(
-            name: .customMessageLimit.tests,
-            dependencies: [
-                .customMessageLimit, .shared, .dependenciesTestSupport, .urlRoutingFoundation
-            ]
-        ),
-        .target(
-            name: .domains,
-            dependencies: [
-                .shared
-            ]
-        ),
-        .testTarget(
-            name: .domains.tests,
-            dependencies: [.domains, .shared, .dependenciesTestSupport, .urlRoutingFoundation]
-        ),
-        .target(
-            name: .ipAllowlist,
-            dependencies: [
-                .shared
-            ]
-        ),
-        .testTarget(
-            name: .ipAllowlist.tests,
-            dependencies: [
-                .ipAllowlist, .shared, .dependenciesTestSupport, .urlRoutingFoundation
-            ]
-        ),
-        .target(
-            name: .ipPools,
-            dependencies: [
-                .shared
-            ]
-        ),
-        .testTarget(
-            name: .ipPools.tests,
-            dependencies: [.ipPools, .shared, .dependenciesTestSupport, .urlRoutingFoundation]
-        ),
-        .target(
-            name: .ips,
-            dependencies: [
-                .shared
-            ]
-        ),
-        .testTarget(
-            name: .ips.tests,
-            dependencies: [.ips, .shared, .dependenciesTestSupport, .urlRoutingFoundation]
-        ),
-        .target(
-            name: .keys,
-            dependencies: [
-                .shared
-            ]
-        ),
-        .testTarget(
-            name: .keys.tests,
-            dependencies: [.keys, .shared, .dependenciesTestSupport, .urlRoutingFoundation]
-        ),
-        .target(
-            name: .lists,
-            dependencies: [
-                .shared,
-                .htmlFormCoder,
-                .htmlStandard,
-                .rfc2046
-            ]
-        ),
-        .testTarget(
-            name: .lists.tests,
-            dependencies: [.lists, .shared, .dependenciesTestSupport, .urlRoutingFoundation]
-        ),
-        .target(
-            name: .messages,
-            dependencies: [
-                .shared,
-                .emailType,
-                .rfc2045,
-                .rfc2046,
-                .rfc2183
-            ]
-        ),
-        .testTarget(
-            name: .messages.tests,
-            dependencies: [.messages, .shared, .dependenciesTestSupport, .urlRoutingFoundation]
-        ),
-        .target(
-            name: .reporting,
-            dependencies: [
-                .shared,
-                .rfc2822,
-                .urlRoutingFoundation
-            ]
-        ),
-        .testTarget(
-            name: .reporting.tests,
-            dependencies: [
-                .reporting, .shared, .dependenciesTestSupport, .urlRoutingFoundation
-            ]
-        ),
-        .target(
-            name: .routes,
-            dependencies: [
-                .shared,
-                .htmlFormCoder,
-                .htmlStandard,
-                .rfc2046
-            ]
-        ),
-        .testTarget(
-            name: .routes.tests,
-            dependencies: [.routes, .shared, .dependenciesTestSupport, .urlRoutingFoundation]
-        ),
-        .target(
-            name: .subaccounts,
-            dependencies: [
-                .shared
-            ]
-        ),
-        .testTarget(
-            name: .subaccounts.tests,
-            dependencies: [
-                .subaccounts, .shared, .dependenciesTestSupport, .urlRoutingFoundation
-            ]
-        ),
-        .target(
-            name: .suppressions,
-            dependencies: [
-                .shared,
-                .htmlFormCoder,
-                .htmlStandard,
-                .rfc2045,
-                .rfc2046,
-                .rfc2183,
-                .rfc7578
-            ]
-        ),
-        .testTarget(
-            name: .suppressions.tests,
-            dependencies: [
-                .suppressions, .shared, .dependenciesTestSupport, .urlRoutingFoundation
-            ]
-        ),
-        .target(
-            name: .templates,
-            dependencies: [
-                .shared,
-                .htmlFormCoder,
-                .htmlStandard,
-                .rfc2046
-            ]
-        ),
-        .testTarget(
-            name: .templates.tests,
-            dependencies: [
-                .templates, .shared, .dependenciesTestSupport, .urlRoutingFoundation
-            ]
-        ),
-        .target(
-            name: .users,
-            dependencies: [
-                .shared
-            ]
-        ),
-        .testTarget(
-            name: .users.tests,
-            dependencies: [.users, .shared, .dependenciesTestSupport, .urlRoutingFoundation]
-        ),
-        .target(
-            name: .webhooks,
-            dependencies: [
-                .shared
-            ]
-        ),
-        .testTarget(
-            name: .webhooks.tests,
-            dependencies: [
-                .webhooks, .shared, .dependenciesTestSupport, .urlRoutingFoundation
-            ]
-        ),
-        .testTarget(
-            name: "Mailgun Router Parity Tests",
-            dependencies: [
-                .mailgun,
-                .shared,
-                .accountManagement,
-                .credentials,
-                .customMessageLimit,
-                .domains,
-                .ipAllowlist,
-                .ipPools,
-                .ips,
-                .keys,
-                .lists,
-                .messages,
-                .reporting,
-                .routes,
-                .subaccounts,
-                .suppressions,
-                .templates,
-                .users,
-                .webhooks,
-                .product(name: "URL Routing Test Support", package: "swift-url-routing")
-            ],
-            path: "Tests/Mailgun Router Parity Tests",
-            exclude: ["__Corpus__"]
-        )
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )
-
-extension String {
-    var tests: Self { self + " Tests" }
-    var types: Self { self + " Types" }
-}
