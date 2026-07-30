@@ -27,6 +27,7 @@ let package = Package(
             url: "https://github.com/swift-standards/swift-emailaddress-standard.git",
             branch: "main"
         ),
+        .package(url: "https://github.com/swift-ietf/swift-rfc-2046.git", branch: "main"),
         .package(url: "https://github.com/swift-ietf/swift-rfc-3986.git", branch: "main"),
         // swift-primitives/swift-time-primitives has zero tags and zero releases. The Institute
         // develops solely on main and issues no tag authorization (coordinator ruling, #13);
@@ -52,7 +53,11 @@ let package = Package(
         ),
         .testTarget(
             name: "Mailgun Standard Tests",
-            dependencies: ["Mailgun Standard"]
+            dependencies: [
+                "Mailgun Standard",
+                // Multipart test fixture for Email -> Mailgun.Messages.Send.Request conversion.
+                .product(name: "RFC 2046", package: "swift-rfc-2046"),
+            ]
         ),
     ],
     swiftLanguageModes: [.v6]

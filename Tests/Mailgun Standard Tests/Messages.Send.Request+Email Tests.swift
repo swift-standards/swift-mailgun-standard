@@ -7,6 +7,7 @@
 
 import Email_Standard
 import Mailgun_Standard
+import RFC_2046
 import Testing
 import Time_Primitive
 
@@ -57,7 +58,7 @@ struct MessagesSendRequestEmailTests {
 
     @Test("Converts multipart email (text + HTML)")
     func convertMultipartEmail() throws {
-        let multipart = try Multipart.alternative(
+        let multipart = try RFC_2046.Multipart.alternative(
             textContent: "Plain text version",
             htmlContent: "<h1>HTML version</h1>"
         )

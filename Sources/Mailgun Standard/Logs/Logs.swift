@@ -129,12 +129,16 @@ extension Mailgun.Reporting.Logs.Analytics {
             switch self {
             case .string(let value):
                 try container.encode(value)
+
             case .int(let value):
                 try container.encode(value)
+
             case .double(let value):
                 try container.encode(value)
+
             case .bool(let value):
                 try container.encode(value)
+
             case .array(let value):
                 try container.encode(value)
             }

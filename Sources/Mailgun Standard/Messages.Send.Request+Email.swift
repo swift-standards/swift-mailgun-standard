@@ -138,8 +138,10 @@ extension Mailgun.Messages.Send.Request {
         switch body {
         case .text(let data, _):
             return (text: String(decoding: data, as: UTF8.self), html: nil)
+
         case .html(let data, _):
             return (text: nil, html: String(decoding: data, as: UTF8.self))
+
         case .multipart(let multipart):
             // Extract text and HTML from multipart/alternative
             // For multipart/alternative, the parts are typically [text/plain, text/html]

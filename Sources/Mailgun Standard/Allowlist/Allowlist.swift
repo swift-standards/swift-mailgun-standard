@@ -124,6 +124,7 @@ extension Mailgun.Suppressions.Allowlist.Create {
             switch self {
             case .address(let email):
                 try container.encode(email.address, forKey: .address)
+
             case .domain(let domain):
                 try container.encode(domain.rawValue, forKey: .domain)
             }
