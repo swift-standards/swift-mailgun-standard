@@ -60,10 +60,10 @@ extension Mailgun.IPAddressWarmup {
         }
 
         public enum Status: String, Sendable, Codable, Equatable {
-            case active = "active"
-            case scheduled = "scheduled"
-            case completed = "completed"
-            case paused = "paused"
+            case active
+            case scheduled
+            case completed
+            case paused
         }
     }
 }

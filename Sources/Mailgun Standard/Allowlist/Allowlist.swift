@@ -43,7 +43,7 @@ extension Mailgun.Suppressions.Allowlist {
             case type
             case value
             case reason
-            case createdAt = "createdAt"
+            case createdAt
         }
     }
 }

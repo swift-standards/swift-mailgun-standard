@@ -1,4 +1,3 @@
-
 extension Mailgun.Reporting {
     public enum Stats {}
 }

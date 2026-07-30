@@ -80,7 +80,12 @@ extension Mailgun.Lists {
         public let next: RFC_3986.URI?
         public let previous: RFC_3986.URI?
 
-        public init(first: RFC_3986.URI, last: RFC_3986.URI, next: RFC_3986.URI?, previous: RFC_3986.URI?) {
+        public init(
+            first: RFC_3986.URI,
+            last: RFC_3986.URI,
+            next: RFC_3986.URI?,
+            previous: RFC_3986.URI?
+        ) {
             self.first = first
             self.last = last
             self.next = next

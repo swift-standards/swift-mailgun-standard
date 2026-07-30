@@ -91,7 +91,12 @@ extension Mailgun.Reporting.Tags {
             public let next: RFC_3986.URI?
             public let last: RFC_3986.URI
 
-            public init(previous: RFC_3986.URI?, first: RFC_3986.URI, next: RFC_3986.URI?, last: RFC_3986.URI) {
+            public init(
+                previous: RFC_3986.URI?,
+                first: RFC_3986.URI,
+                next: RFC_3986.URI?,
+                last: RFC_3986.URI
+            ) {
                 self.previous = previous
                 self.first = first
                 self.next = next

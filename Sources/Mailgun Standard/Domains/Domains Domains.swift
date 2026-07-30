@@ -5,7 +5,6 @@
 //  Created by Coen ten Thije Boonkkamp on 24/12/2024.
 //
 
-
 extension Mailgun.Domains {
     public enum Domains {}
 }
@@ -96,20 +95,20 @@ extension Mailgun.Domains.Domains {
     }
 
     public enum SpamAction: String, Sendable, Codable, Equatable {
-        case disabled = "disabled"
-        case block = "block"
-        case tag = "tag"
+        case disabled
+        case block
+        case tag
     }
 
     public enum State: String, Sendable, Codable, Equatable {
-        case active = "active"
-        case unverified = "unverified"
-        case disabled = "disabled"
+        case active
+        case unverified
+        case disabled
     }
 
     public enum DomainType: String, Sendable, Codable, Equatable {
-        case sandbox = "sandbox"
-        case custom = "custom"
+        case sandbox
+        case custom
     }
 
     public struct DnsRecord: Sendable, Codable, Equatable {

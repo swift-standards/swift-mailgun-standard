@@ -23,6 +23,9 @@ extension Mailgun.Users {
         public let role: String?
         public let accountId: String?
         public let openedIp: String?
+        // reason: mirrors the Mailgun API's literal wire field name "is_master"; renaming the
+        // public property would break the documented API-fidelity contract of this wire type.
+        // swiftlint:disable:next inclusive_language
         public let isMaster: Bool?
         public let metadata: [String: String]?
         public let tfaEnabled: Bool?
@@ -45,6 +48,8 @@ extension Mailgun.Users {
             role: String? = nil,
             accountId: String? = nil,
             openedIp: String? = nil,
+            // reason: mirrors the Mailgun API's literal wire field name "is_master".
+            // swiftlint:disable:next inclusive_language
             isMaster: Bool? = nil,
             metadata: [String: String]? = nil,
             tfaEnabled: Bool? = nil,
@@ -89,6 +94,8 @@ extension Mailgun.Users {
             case role
             case accountId = "account_id"
             case openedIp = "opened_ip"
+            // reason: mirrors the Mailgun API's literal wire field name "is_master".
+            // swiftlint:disable:next inclusive_language
             case isMaster = "is_master"
             case metadata
             case tfaEnabled = "tfa_enabled"
@@ -196,11 +203,11 @@ extension Mailgun.Users {
     }
 
     public enum Role: String, Sendable, Codable, Equatable {
-        case basic = "basic"
-        case billing = "billing"
-        case support = "support"
-        case developer = "developer"
-        case admin = "admin"
+        case basic
+        case billing
+        case support
+        case developer
+        case admin
     }
 }
 

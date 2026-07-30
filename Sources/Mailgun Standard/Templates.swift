@@ -5,7 +5,6 @@
 //  Created by Coen ten Thije Boonkkamp on 30/12/2024.
 //
 
-
 extension Mailgun {
     public enum Templates {}
 }

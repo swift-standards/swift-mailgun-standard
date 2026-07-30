@@ -87,7 +87,8 @@ struct ReadmeVerificationTests {
             trackingClicks: .htmlOnly,
             trackingOpens: true,
             headers: ["X-Campaign-ID": "JAN2024"],
-            recipientVariables: #"{"subscriber1@example.com":{"name":"Alice","id":"001"}}"#  // JSON string
+            // JSON string
+            recipientVariables: #"{"subscriber1@example.com":{"name":"Alice","id":"001"}}"#
         )
 
         #expect(richEmail.from.rawValue.contains("news@yourdomain.com"))

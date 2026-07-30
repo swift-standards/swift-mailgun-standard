@@ -5,7 +5,6 @@
 //  Created by Coen ten Thije Boonkkamp on 24/12/2024.
 //
 
-
 extension Mailgun.Domains {
     public enum DKIM_Security {}
 }

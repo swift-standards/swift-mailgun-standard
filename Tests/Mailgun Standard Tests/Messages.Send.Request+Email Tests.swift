@@ -314,7 +314,9 @@ struct MessagesSendRequestEmailTests {
             body: "Hello!"
         )
 
-        let deliveryDate = Time.Epoch(referenceDate: Time(Instant(secondsSinceUnixEpoch: 1_700_000_000)))
+        let deliveryDate = Time.Epoch(
+            referenceDate: Time(Instant(secondsSinceUnixEpoch: 1_700_000_000))
+        )
         let request = Mailgun.Messages.Send.Request(
             email: email,
             deliveryTime: deliveryDate
