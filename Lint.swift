@@ -18,7 +18,7 @@ Lint.run(dependencies: [
         url: "https://github.com/swift-standards/swift-standards-linter-rules.git",
         branch: "main",
         products: ["Linter Standards Rules"]
-    ),
+    )
 ]) {
     Lint.Rule.Bundle.standards
 }

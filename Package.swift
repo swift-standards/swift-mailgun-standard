@@ -18,11 +18,22 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-standards/swift-domain-standard.git", branch: "main"),
-        .package(url: "https://github.com/swift-standards/swift-email-standard.git", branch: "main"),
-        .package(url: "https://github.com/swift-standards/swift-emailaddress-standard.git", branch: "main"),
-        .package(url: "https://github.com/swift-ietf/swift-rfc-3986.git", branch: "main"),
-        .package(url: "https://github.com/swift-primitives/swift-time-primitives.git", branch: "main"),
+        .package(
+            url: "https://github.com/swift-standards/swift-domain-standard.git",
+            from: "0.4.4"
+        ),
+        .package(url: "https://github.com/swift-standards/swift-email-standard.git", from: "0.4.3"),
+        .package(
+            url: "https://github.com/swift-standards/swift-emailaddress-standard.git",
+            from: "0.4.3"
+        ),
+        .package(url: "https://github.com/swift-ietf/swift-rfc-3986.git", from: "0.3.6"),
+        // swift-time-primitives has no tagged release yet (org: swift-primitives); pinned to
+        // branch until upstream cuts a version. BRANCH-PIN-001 exemption tracked pending a tag.
+        .package(
+            url: "https://github.com/swift-primitives/swift-time-primitives.git",
+            branch: "main"
+        ),
     ],
     targets: [
         .target(
