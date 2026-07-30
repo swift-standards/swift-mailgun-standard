@@ -20,14 +20,14 @@ let package = Package(
     dependencies: [
         .package(
             url: "https://github.com/swift-standards/swift-domain-standard.git",
-            from: "0.4.4"
+            branch: "main"
         ),
-        .package(url: "https://github.com/swift-standards/swift-email-standard.git", from: "0.4.3"),
+        .package(url: "https://github.com/swift-standards/swift-email-standard.git", branch: "main"),
         .package(
             url: "https://github.com/swift-standards/swift-emailaddress-standard.git",
-            from: "0.4.3"
+            branch: "main"
         ),
-        .package(url: "https://github.com/swift-ietf/swift-rfc-3986.git", from: "0.3.6"),
+        .package(url: "https://github.com/swift-ietf/swift-rfc-3986.git", branch: "main"),
         // swift-primitives/swift-time-primitives has zero tags and zero releases. The Institute
         // develops solely on main and issues no tag authorization (coordinator ruling, #13);
         // this dependency is tracked with branch: "main" per ecosystem convention, not as a
