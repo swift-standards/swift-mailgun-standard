@@ -180,6 +180,10 @@ extension Mailgun.Domains.Domains.List {
             self.totalCount = totalCount
         }
 
+        // REASON: `Swift.Decodable.init(from:)` is declared with untyped `throws`
+        // upstream; a conforming implementation is signature-forced and cannot
+        // express `throws(E)`.
+        // swiftlint:disable:next typed_throws_required
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.items =

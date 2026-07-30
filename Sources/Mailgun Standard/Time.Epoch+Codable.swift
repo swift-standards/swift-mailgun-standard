@@ -6,11 +6,19 @@ import Time_Primitive
 // every Mailgun field whose wire form is unix-epoch seconds, so every such field needs to
 // decode/encode. Conformance here forwards to the already-Codable `Time` it wraps.
 extension Time.Epoch: Codable {
+    // REASON: `Swift.Decodable.init(from:)` is declared with untyped `throws`
+    // upstream; a conforming implementation is signature-forced and cannot
+    // express `throws(E)`.
+    // swiftlint:disable:next typed_throws_required
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         self.init(referenceDate: try container.decode(Time.self))
     }
 
+    // REASON: `Swift.Encodable.encode(to:)` is declared with untyped `throws`
+    // upstream; a conforming implementation is signature-forced and cannot
+    // express `throws(E)`.
+    // swiftlint:disable:next typed_throws_required
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(referenceDate)
