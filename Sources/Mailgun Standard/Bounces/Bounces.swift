@@ -1,3 +1,5 @@
+import EmailAddress_Standard
+
 extension Mailgun.Suppressions {
     public enum Bounces {}
 }
