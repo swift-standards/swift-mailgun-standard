@@ -69,14 +69,14 @@ struct ReadmeVerificationTests {
                     data: reportData,
                     filename: "report.pdf",
                     contentType: "application/pdf"
-                ),
+                )
             ],
             inline: [
                 Mailgun.Messages.Attachment.Data(
                     data: logoData,
                     filename: "logo.png",
                     contentType: "image/png"
-                ),
+                )
             ],
             tags: ["newsletter", "monthly"],
             // Send in 1 hour.
@@ -225,9 +225,9 @@ struct ReadmeVerificationTests {
                         Mailgun.Reporting.Metrics.FilterValue(
                             label: "Delivered",
                             value: "delivered"
-                        ),
+                        )
                     ]
-                ),
+                )
             ]
         )
 
