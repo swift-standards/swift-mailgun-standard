@@ -28,8 +28,10 @@ let package = Package(
             from: "0.4.3"
         ),
         .package(url: "https://github.com/swift-ietf/swift-rfc-3986.git", from: "0.3.6"),
-        // swift-time-primitives has no tagged release yet (org: swift-primitives); pinned to
-        // branch until upstream cuts a version. BRANCH-PIN-001 exemption tracked pending a tag.
+        // swift-primitives/swift-time-primitives has zero tags and zero releases. The Institute
+        // develops solely on main and issues no tag authorization (coordinator ruling, #13);
+        // this dependency is tracked with branch: "main" per ecosystem convention, not as a
+        // pending exemption awaiting a future tag.
         .package(
             url: "https://github.com/swift-primitives/swift-time-primitives.git",
             branch: "main"
