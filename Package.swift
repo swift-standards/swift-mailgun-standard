@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-mailgun-types",
+    name: "swift-mailgun-standard",
     platforms: [
         .macOS(.v26),
         .iOS(.v26),

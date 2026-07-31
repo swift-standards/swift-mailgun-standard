@@ -1,7 +1,7 @@
-# swift-mailgun-types
+# swift-mailgun-standard
 
 ![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
-[![CI](https://github.com/swift-standards/swift-mailgun-types/workflows/CI/badge.svg)](https://github.com/swift-standards/swift-mailgun-types/actions/workflows/ci.yml)
+[![CI](https://github.com/swift-standards/swift-mailgun-standard/workflows/CI/badge.svg)](https://github.com/swift-standards/swift-mailgun-standard/actions/workflows/ci.yml)
 
 Foundation-free Swift value types for Mailgun's REST API contracts.
 
@@ -13,9 +13,9 @@ reporting, infrastructure, and account-management request/response/payload types
 while leaving transport, authentication, retries, and application persistence to
 higher layers:
 
-- **swift-mailgun-types** (this package) — request, response, and payload value types
-- **swift-mailgun-live** — the HTTP binding (URLSession, authentication, live routing)
-- **swift-mailgun** — the developer-facing entry point, re-exporting `swift-mailgun-live`
+- **swift-mailgun-standard** (this package) — request, response, and payload value types
+- **swift-mailgun-http** — the HTTP binding (URLSession, authentication, live routing)
+- **swift-mailgun** — the developer-facing entry point, re-exporting `swift-mailgun-http`
   with additional integrations (HTML email composition, identity systems)
 
 ## Products
@@ -31,7 +31,7 @@ Add the package and depend on the `Mailgun Standard` product:
 ```swift
 dependencies: [
     .package(
-        url: "https://github.com/swift-standards/swift-mailgun-types.git",
+        url: "https://github.com/swift-standards/swift-mailgun-standard.git",
         branch: "main"
     )
 ]
@@ -43,7 +43,7 @@ dependencies: [
     dependencies: [
         .product(
             name: "Mailgun Standard",
-            package: "swift-mailgun-types"
+            package: "swift-mailgun-standard"
         )
     ]
 )
@@ -57,7 +57,7 @@ import Mailgun_Standard
 let request = Mailgun.Messages.Send.Request(
     from: try .init("hello@yourdomain.com"),
     to: [try .init("user@example.com")],
-    subject: "Welcome to swift-mailgun-types!",
+    subject: "Welcome to swift-mailgun-standard!",
     html: "<h1>Type-safe emails</h1><p>Built with Swift</p>"
 )
 ```
@@ -131,7 +131,7 @@ Institute Standards/Primitives types instead:
 `Mailgun_Standard` defines contracts only. The per-resource `*.API.swift` URLRouting
 routers and `*.Client.swift` witnesses that previously lived in this package are
 being rebuilt at their correct layers: HTTP request construction in
-[swift-mailgun-live](https://github.com/swift-foundations/swift-mailgun-live)'s
+[swift-mailgun-http](https://github.com/swift-foundations/swift-mailgun-http)'s
 `Mailgun HTTP` rebuild, and typed clients in
 [swift-mailgun](https://github.com/swift-foundations/swift-mailgun)'s domain
 rebuild. No deprecated per-resource `Mailgun <Resource> Types` products or the
