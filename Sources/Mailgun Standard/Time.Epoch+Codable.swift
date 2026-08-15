@@ -12,7 +12,6 @@ extension Time.Epoch: @retroactive Codable {
     // REASON: `Swift.Decodable.init(from:)` is declared with untyped `throws`
     // upstream; a conforming implementation is signature-forced and cannot
     // express `throws(E)`.
-    // swiftlint:disable:next typed_throws_required
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         self.init(referenceDate: try container.decode(Time.self))
@@ -21,7 +20,6 @@ extension Time.Epoch: @retroactive Codable {
     // REASON: `Swift.Encodable.encode(to:)` is declared with untyped `throws`
     // upstream; a conforming implementation is signature-forced and cannot
     // express `throws(E)`.
-    // swiftlint:disable:next typed_throws_required
     public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(referenceDate)
