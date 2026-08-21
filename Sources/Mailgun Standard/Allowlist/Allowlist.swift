@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  swift-mailgun
-//
-//  Created by Coen ten Thije Boonkkamp on 24/12/2024.
-//
-
 import Domain_Standard
 import EmailAddress_Standard
 
@@ -119,9 +112,6 @@ extension Mailgun.Suppressions.Allowlist.Create {
             case domain
         }
 
-        // REASON: `Swift.Encodable.encode(to:)` is declared with untyped `throws`
-        // upstream; a conforming implementation is signature-forced and cannot
-        // express `throws(E)`.
         public func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
             switch self {
@@ -133,9 +123,6 @@ extension Mailgun.Suppressions.Allowlist.Create {
             }
         }
 
-        // REASON: `Swift.Decodable.init(from:)` is declared with untyped `throws`
-        // upstream; a conforming implementation is signature-forced and cannot
-        // express `throws(E)`.
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             if let address = try container.decodeIfPresent(String.self, forKey: .address) {

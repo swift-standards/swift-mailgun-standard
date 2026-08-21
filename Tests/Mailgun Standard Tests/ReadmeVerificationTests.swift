@@ -5,11 +5,9 @@ import Time_Primitive
 @Suite("README Code Examples Validation", .serialized)
 struct ReadmeVerificationTests {
 
-    // MARK: - Quick Start Example (README lines 44-53)
-
     @Test("Quick Start - Type-safe request models (README lines 44-53)")
     func quickStartExample() async throws {
-        // Type-safe request models with compile-time validation
+
         let request = Mailgun.Messages.Send.Request(
             from: try .init("hello@yourdomain.com"),
             to: [try .init("user@example.com")],
@@ -17,15 +15,12 @@ struct ReadmeVerificationTests {
             html: "<h1>Type-safe emails</h1><p>Built with Swift</p>"
         )
 
-        // Verify the request was created correctly
         #expect(request.from.rawValue == "hello@yourdomain.com")
         #expect(request.to.count == 1)
         #expect(request.to.first?.rawValue == "user@example.com")
         #expect(request.subject == "Welcome to swift-mailgun-types!")
         #expect(request.html == "<h1>Type-safe emails</h1><p>Built with Swift</p>")
     }
-
-    // MARK: - Sending Messages (README lines 431-481)
 
     @Test("Simple email (README lines 434-439)")
     func simpleEmailExample() async throws {
@@ -53,7 +48,7 @@ struct ReadmeVerificationTests {
                 try .init("subscriber1@example.com"),
                 try .init("subscriber2@example.com"),
             ],
-            subject: "Monthly Newsletter",  // subject must come before cc/bcc
+            subject: "Monthly Newsletter",
             html: """
                     <h1>Your Monthly Update</h1>
                     <p>Check out our latest features!</p>
@@ -63,7 +58,7 @@ struct ReadmeVerificationTests {
             cc: [try .init("manager@yourdomain.com")],
             bcc: [try .init("archive@yourdomain.com")],
             template: "monthly-newsletter",
-            templateVariables: #"{"month":"January","year":"2024"}"#,  // JSON string
+            templateVariables: #"{"month":"January","year":"2024"}"#,
             attachments: [
                 Mailgun.Messages.Attachment.Data(
                     data: reportData,
@@ -79,7 +74,7 @@ struct ReadmeVerificationTests {
                 )
             ],
             tags: ["newsletter", "monthly"],
-            // Send in 1 hour.
+
             deliveryTime: Time.Epoch(
                 referenceDate: Time(Instant(secondsSinceUnixEpoch: 1_700_003_600))
             ),
@@ -87,7 +82,7 @@ struct ReadmeVerificationTests {
             trackingClicks: .htmlOnly,
             trackingOpens: true,
             headers: ["X-Campaign-ID": "JAN2024"],
-            // JSON string
+
             recipientVariables: #"{"subscriber1@example.com":{"name":"Alice","id":"001"}}"#
         )
 
@@ -101,8 +96,6 @@ struct ReadmeVerificationTests {
         #expect(richEmail.attachments?.count == 1)
         #expect(richEmail.inline?.count == 1)
     }
-
-    // MARK: - Working with Templates (README lines 486-512)
 
     @Test("Create a template (README lines 489-499)")
     func createTemplateExample() async throws {
@@ -134,7 +127,7 @@ struct ReadmeVerificationTests {
                 """,
             tag: "v2.0",
             comment: "Added CTA button",
-            active: "yes"  // Note: active is a String, not Bool
+            active: "yes"
         )
 
         #expect(newVersion.tag == "v2.0")
@@ -142,8 +135,6 @@ struct ReadmeVerificationTests {
         #expect(newVersion.active == "yes")
         #expect(newVersion.template.contains("{{cta_link}}"))
     }
-
-    // MARK: - Managing Suppressions (README lines 518-544)
 
     @Test("Handle a bounce (README lines 521-525)")
     func handleBounceExample() async throws {
@@ -162,7 +153,7 @@ struct ReadmeVerificationTests {
     func addUnsubscribeExample() async throws {
         let unsubscribe = Mailgun.Suppressions.Unsubscribe.Create.Request(
             address: try .init("user@example.com"),
-            tags: ["newsletter"]  // Unsubscribe from specific tags
+            tags: ["newsletter"]
         )
 
         #expect(unsubscribe.address.rawValue == "user@example.com")
@@ -171,7 +162,7 @@ struct ReadmeVerificationTests {
 
     @Test("Allowlist VIP addresses (README lines 534-536)")
     func allowlistExample() async throws {
-        // Allowlist VIP addresses (enum-based)
+
         let allowlist = Mailgun.Suppressions.Allowlist.Create.Request.address(
             try .init("vip@partner.com")
         )
@@ -187,7 +178,7 @@ struct ReadmeVerificationTests {
     func querySuppressions() async throws {
         let query = Mailgun.Suppressions.Bounces.List.Request(
             limit: 100,
-            page: "next",  // page is a String
+            page: "next",
             term: "example.com"
         )
 
@@ -195,8 +186,6 @@ struct ReadmeVerificationTests {
         #expect(query.page == "next")
         #expect(query.term == "example.com")
     }
-
-    // MARK: - Analytics and Reporting (README lines 549-584)
 
     @Test("Get total stats (README lines 552-558)")
     func getStatisticsExample() async throws {
@@ -249,8 +238,6 @@ struct ReadmeVerificationTests {
         #expect(metricsQuery.includeSubaccounts == true)
     }
 
-    // MARK: - Managing Domains (README lines 590-612)
-
     @Test("Create a domain (README lines 593-595)")
     func createDomainExample() async throws {
         let createRequest = Mailgun.Domains.Domains.Create.Request(
@@ -284,11 +271,9 @@ struct ReadmeVerificationTests {
         #expect(listRequest.skip == 0)
     }
 
-    // MARK: - Type Conformance Validation
-
     @Test("Verify all types are Sendable and Codable")
     func typeConformanceValidation() async throws {
-        // Verify Send.Request conforms to required protocols
+
         let request = Mailgun.Messages.Send.Request(
             from: try .init("test@test.com"),
             to: [try .init("user@test.com")],
@@ -299,7 +284,6 @@ struct ReadmeVerificationTests {
         let _: any Sendable = request
         let _: any Codable = request
 
-        // Verify Response types conform
         let response = Mailgun.Messages.Send.Response(
             id: "test-id",
             message: "Queued"
@@ -307,7 +291,6 @@ struct ReadmeVerificationTests {
         let _: any Sendable = response
         let _: any Decodable = response
 
-        // Verify Template types conform
         let template = Mailgun.Templates.Create.Request(
             name: "test",
             template: "<h1>Test</h1>"

@@ -1,17 +1,8 @@
-//
-//  IPAddressWarmup.swift
-//  swift-mailgun-types
-//
-//  Created by Assistant on 05/08/2025.
-//
-
 import Time_Primitive
 
 extension Mailgun {
     public enum IPAddressWarmup {}
 }
-
-// MARK: - Core Types
 
 extension Mailgun.IPAddressWarmup {
     public struct IPWarmup: Sendable, Codable, Equatable {
@@ -68,8 +59,6 @@ extension Mailgun.IPAddressWarmup {
     }
 }
 
-// MARK: - List Operation
-
 extension Mailgun.IPAddressWarmup {
     public enum List {}
 }
@@ -108,8 +97,6 @@ extension Mailgun.IPAddressWarmup.List {
     }
 }
 
-// MARK: - Create Operation
-
 extension Mailgun.IPAddressWarmup {
     public enum Create {}
 }
@@ -146,8 +133,6 @@ extension Mailgun.IPAddressWarmup.Create {
         }
     }
 }
-
-// MARK: - Delete Operation
 
 extension Mailgun.IPAddressWarmup {
     public enum Delete {}

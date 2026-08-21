@@ -1,15 +1,6 @@
-//
-//  File.swift
-//  swift-mailgun
-//
-//  Created by Coen ten Thije Boonkkamp on 24/12/2024.
-//
-
 extension Mailgun.Domains {
     public enum DKIM_Security {}
 }
-
-// MARK: - Rotation Update
 
 extension Mailgun.Domains.DKIM_Security {
     public enum Rotation {}
@@ -46,8 +37,6 @@ extension Mailgun.Domains.DKIM_Security.Rotation.Update {
         }
     }
 }
-
-// MARK: - Manual Rotation
 
 extension Mailgun.Domains.DKIM_Security.Rotation {
     public enum Manual {}

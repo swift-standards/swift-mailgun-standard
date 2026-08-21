@@ -32,10 +32,7 @@ let package = Package(
         ),
         .package(url: "https://github.com/swift-ietf/swift-rfc-2046.git", branch: "main"),
         .package(url: "https://github.com/swift-ietf/swift-rfc-3986.git", branch: "main"),
-        // swift-primitives/swift-time-primitives has zero tags and zero releases. The Institute
-        // develops solely on main and issues no tag authorization (coordinator ruling, #13);
-        // this dependency is tracked with branch: "main" per ecosystem convention, not as a
-        // pending exemption awaiting a future tag.
+
         .package(
             url: "https://github.com/swift-primitives/swift-time-primitives.git",
             branch: "main"
@@ -48,9 +45,9 @@ let package = Package(
                 .product(name: "Domain Standard", package: "swift-domain-standard"),
                 .product(name: "Email Standard", package: "swift-email-standard"),
                 .product(name: "EmailAddress Standard", package: "swift-emailaddress-standard"),
-                // Pagination links (Lists.Paging, Reporting.Tags.*.Paging, ...).
+
                 .product(name: "RFC 3986", package: "swift-rfc-3986"),
-                // Unix-epoch-seconds timestamp fields.
+
                 .product(name: "Time Primitive", package: "swift-time-primitives"),
             ]
         ),
@@ -58,7 +55,7 @@ let package = Package(
             name: "Mailgun Standard Tests",
             dependencies: [
                 "Mailgun Standard",
-                // Multipart test fixture for Email -> Mailgun.Messages.Send.Request conversion.
+
                 .product(name: "RFC 2046", package: "swift-rfc-2046"),
             ]
         ),

@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  swift-mailgun
-//
-//  Created by Coen ten Thije Boonkkamp on 20/12/2024.
-//
-
 import EmailAddress_Standard
 import RFC_3986
 
@@ -222,7 +215,7 @@ extension Mailgun.Lists.List {
                 case description
                 case name
                 case accessLevel = "access_level"
-                // KNOWN ISSUE: API TYPO. API EXPECTS reply_reference, but this is a typo for reply_preference. DO NOT CHANGE.
+
                 case replyPreference = "reply_reference"
                 case listId = "list-id"
             }
@@ -372,11 +365,6 @@ extension Mailgun.Lists.Member {
                 self.upsert = upsert
             }
 
-            // RT-030b: Mailgun's list-members API expects `subscribed`/`upsert` as the
-            // literal strings "yes"/"no", not Swift's default Bool encoding. This is a
-            // wire-format concern, handled by the route's HTML form encoder/decoder
-            // (`boolEncodingStrategy`/`boolDecodingStrategy = .yes`; see `.addMember`
-            // in Lists.API.swift), so Codable is synthesized here.
         }
 
         public struct Response: Sendable, Codable, Equatable {

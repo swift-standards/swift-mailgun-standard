@@ -1,15 +1,6 @@
-//
-//  File.swift
-//  swift-mailgun
-//
-//  Created by Coen ten Thije Boonkkamp on 24/12/2024.
-//
-
 extension Mailgun {
     public enum Webhooks {}
 }
-
-// MARK: - Core Types
 
 extension Mailgun.Webhooks {
     public struct Webhook: Sendable, Codable, Equatable {
@@ -32,8 +23,6 @@ extension Mailgun.Webhooks {
     }
 }
 
-// MARK: - List
-
 extension Mailgun.Webhooks {
     public enum List {}
 }
@@ -54,12 +43,9 @@ extension Mailgun.Webhooks.List {
         public let clicked: Mailgun.Webhooks.Webhook?
         public let unsubscribed: Mailgun.Webhooks.Webhook?
         public let complained: Mailgun.Webhooks.Webhook?
-        // These mirror the Mailgun API's literal wire field names (no explicit CodingKeys
-        // remaps them); renaming would break the documented API-fidelity contract and require
-        // introducing CodingKeys, a public-surface change out of scope for a lint-only pass.
-        // swift-format-ignore: AlwaysUseLowerCamelCase
+
         public let temporary_fail: Mailgun.Webhooks.Webhook?
-        // swift-format-ignore: AlwaysUseLowerCamelCase
+
         public let permanent_fail: Mailgun.Webhooks.Webhook?
 
         public init(
@@ -97,8 +83,6 @@ extension Mailgun.Webhooks.List {
     }
 }
 
-// MARK: - Get
-
 extension Mailgun.Webhooks {
     public enum Get {}
 }
@@ -112,8 +96,6 @@ extension Mailgun.Webhooks.Get {
         }
     }
 }
-
-// MARK: - Create
 
 extension Mailgun.Webhooks {
     public enum Create {}
@@ -146,8 +128,6 @@ extension Mailgun.Webhooks.Create {
     }
 }
 
-// MARK: - Update
-
 extension Mailgun.Webhooks {
     public enum Update {}
 }
@@ -175,8 +155,6 @@ extension Mailgun.Webhooks.Update {
         }
     }
 }
-
-// MARK: - Delete
 
 extension Mailgun.Webhooks {
     public enum Delete {}

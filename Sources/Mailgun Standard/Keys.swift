@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  swift-mailgun
-//
-//  Created by Coen ten Thije Boonkkamp on 24/12/2024.
-//
-
 extension Mailgun {
     public enum Keys {}
 }
@@ -12,7 +5,7 @@ extension Mailgun {
 extension Mailgun.Keys {
     public struct Key: Sendable, Codable, Equatable {
         public let id: String
-        public let createdAt: String  // API returns string date
+        public let createdAt: String
         public let updatedAt: String?
         public let description: String?
         public let isDisabled: Bool

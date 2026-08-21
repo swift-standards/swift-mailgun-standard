@@ -1,15 +1,6 @@
-//
-//  File.swift
-//  swift-mailgun
-//
-//  Created by Coen ten Thije Boonkkamp on 24/12/2024.
-//
-
 extension Mailgun.Domains.Domains {
     public enum Tracking {}
 }
-
-// MARK: - Core Types
 
 extension Mailgun.Domains.Domains.Tracking {
     public struct Settings: Sendable, Codable, Equatable {
@@ -67,8 +58,6 @@ extension Mailgun.Domains.Domains.Tracking {
     }
 }
 
-// MARK: - Get Tracking Settings
-
 extension Mailgun.Domains.Domains.Tracking {
     public enum Get {}
 }
@@ -82,8 +71,6 @@ extension Mailgun.Domains.Domains.Tracking.Get {
         }
     }
 }
-
-// MARK: - Update Click Tracking
 
 extension Mailgun.Domains.Domains.Tracking {
     public enum UpdateClick {}
@@ -112,8 +99,6 @@ extension Mailgun.Domains.Domains.Tracking.UpdateClick {
     }
 }
 
-// MARK: - Update Open Tracking
-
 extension Mailgun.Domains.Domains.Tracking {
     public enum UpdateOpen {}
 }
@@ -140,8 +125,6 @@ extension Mailgun.Domains.Domains.Tracking.UpdateOpen {
         }
     }
 }
-
-// MARK: - Update Unsubscribe Tracking
 
 extension Mailgun.Domains.Domains.Tracking {
     public enum UpdateUnsubscribe {}

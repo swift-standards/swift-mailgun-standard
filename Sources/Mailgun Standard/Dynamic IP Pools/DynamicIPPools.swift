@@ -1,10 +1,3 @@
-//
-//  DynamicIPPools.swift
-//  swift-mailgun-types
-//
-//  Created by Assistant on 05/08/2025.
-//
-
 import Time_Primitive
 
 extension Mailgun {
@@ -46,8 +39,6 @@ extension Mailgun.DynamicIPPools {
         }
     }
 }
-
-// MARK: - History List Operation
 
 extension Mailgun.DynamicIPPools {
     public enum HistoryList {}
@@ -126,8 +117,6 @@ extension Mailgun.DynamicIPPools.HistoryList {
         }
     }
 }
-
-// MARK: - Remove Override Operation
 
 extension Mailgun.DynamicIPPools {
     public enum RemoveOverride {}

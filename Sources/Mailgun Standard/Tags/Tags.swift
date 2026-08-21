@@ -1,10 +1,3 @@
-//
-//  Tags.swift
-//  swift-mailgun
-//
-//  Created by Claude on 31/12/2024.
-//
-
 import RFC_3986
 
 extension Mailgun.Reporting {

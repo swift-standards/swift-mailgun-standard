@@ -1,10 +1,3 @@
-//
-//  Template.swift
-//  swift-mailgun
-//
-//  Created by Coen ten Thije Boonkkamp on 30/12/2024.
-//
-
 extension Mailgun {
     public enum Templates {}
 }
@@ -105,7 +98,6 @@ extension Mailgun.Templates {
     }
 }
 
-// MARK: - List
 extension Mailgun.Templates {
     public enum List {}
 }
@@ -138,7 +130,6 @@ extension Mailgun.Templates.List {
     }
 }
 
-// MARK: - Create
 extension Mailgun.Templates {
     public enum Create {}
 }
@@ -183,7 +174,6 @@ extension Mailgun.Templates.Create {
     }
 }
 
-// MARK: - Delete All
 extension Mailgun.Templates {
     public enum DeleteAll {}
 }
@@ -198,7 +188,6 @@ extension Mailgun.Templates.DeleteAll {
     }
 }
 
-// MARK: - Get
 extension Mailgun.Templates {
     public enum Get {}
 }
@@ -221,7 +210,6 @@ extension Mailgun.Templates.Get {
     }
 }
 
-// MARK: - Update
 extension Mailgun.Templates {
     public enum Update {}
 }
@@ -255,12 +243,11 @@ extension Mailgun.Templates.Update {
         }
 
         public struct VersionUpdate: Sendable, Decodable, Equatable {
-            // Version update details if needed
+
         }
     }
 }
 
-// MARK: - Delete
 extension Mailgun.Templates {
     public enum Delete {}
 }
@@ -286,12 +273,11 @@ extension Mailgun.Templates.Delete {
         }
 
         public struct VersionDelete: Sendable, Decodable, Equatable {
-            // Version delete details if needed
+
         }
     }
 }
 
-// MARK: - Versions
 extension Mailgun.Templates {
     public enum Versions {}
 }
@@ -324,9 +310,8 @@ extension Mailgun.Templates.Versions {
     }
 }
 
-// MARK: - Version Operations
 extension Mailgun.Templates.Version {
-    // MARK: - Create Version
+
     public enum Create {}
 }
 
@@ -364,7 +349,6 @@ extension Mailgun.Templates.Version.Create {
     }
 }
 
-// MARK: - Get Version
 extension Mailgun.Templates.Version {
     public enum Get {}
 }
@@ -379,7 +363,6 @@ extension Mailgun.Templates.Version.Get {
     }
 }
 
-// MARK: - Update Version
 extension Mailgun.Templates.Version {
     public enum Update {}
 }
@@ -424,12 +407,11 @@ extension Mailgun.Templates.Version.Update {
         }
 
         public struct VersionUpdate: Sendable, Decodable, Equatable {
-            // Version update details if needed
+
         }
     }
 }
 
-// MARK: - Delete Version
 extension Mailgun.Templates.Version {
     public enum Delete {}
 }
@@ -455,12 +437,11 @@ extension Mailgun.Templates.Version.Delete {
         }
 
         public struct VersionDelete: Sendable, Decodable, Equatable {
-            // Version delete details if needed
+
         }
     }
 }
 
-// MARK: - Copy Version
 extension Mailgun.Templates.Version {
     public enum Copy {}
 }
@@ -477,7 +458,7 @@ extension Mailgun.Templates.Version.Copy {
     public struct Response: Sendable, Decodable, Equatable {
         public let message: String
         public let version: Mailgun.Templates.Version?
-        public let template: Mailgun.Templates.Version?  // Deprecated field
+        public let template: Mailgun.Templates.Version?
 
         public init(
             message: String,

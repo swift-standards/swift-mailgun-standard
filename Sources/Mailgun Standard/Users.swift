@@ -1,17 +1,9 @@
-//
-//  File.swift
-//  swift-mailgun
-//
-//  Created by Coen ten Thije Boonkkamp on 24/12/2024.
-//
-
 import EmailAddress_Standard
 
 extension Mailgun {
     public enum Users {}
 }
 
-// MARK: - Core Types
 extension Mailgun.Users {
     public struct User: Sendable, Decodable, Equatable {
         public let id: String
@@ -23,9 +15,7 @@ extension Mailgun.Users {
         public let role: String?
         public let accountId: String?
         public let openedIp: String?
-        // reason: mirrors the Mailgun API's literal wire field name "is_master"; renaming the
-        // public property would break the documented API-fidelity contract of this wire type.
-        // swiftlint:disable:next inclusive_language
+
         public let isMaster: Bool?
         public let metadata: [String: String]?
         public let tfaEnabled: Bool?
@@ -48,8 +38,7 @@ extension Mailgun.Users {
             role: String? = nil,
             accountId: String? = nil,
             openedIp: String? = nil,
-            // reason: mirrors the Mailgun API's literal wire field name "is_master".
-            // swiftlint:disable:next inclusive_language
+
             isMaster: Bool? = nil,
             metadata: [String: String]? = nil,
             tfaEnabled: Bool? = nil,
@@ -94,8 +83,7 @@ extension Mailgun.Users {
             case role
             case accountId = "account_id"
             case openedIp = "opened_ip"
-            // reason: mirrors the Mailgun API's literal wire field name "is_master".
-            // swiftlint:disable:next inclusive_language
+
             case isMaster = "is_master"
             case metadata
             case tfaEnabled = "tfa_enabled"
@@ -211,7 +199,6 @@ extension Mailgun.Users {
     }
 }
 
-// MARK: - List
 extension Mailgun.Users {
     public enum List {}
 }
@@ -247,7 +234,6 @@ extension Mailgun.Users.List {
     }
 }
 
-// MARK: - Get
 extension Mailgun.Users {
     public enum Get {}
 }
@@ -256,7 +242,6 @@ extension Mailgun.Users.Get {
     public typealias Response = Mailgun.Users.User
 }
 
-// MARK: - Me
 extension Mailgun.Users {
     public enum Me {}
 }
@@ -265,7 +250,6 @@ extension Mailgun.Users.Me {
     public typealias Response = Mailgun.Users.User
 }
 
-// MARK: - Organization
 extension Mailgun.Users {
     public enum Organization {}
 }
@@ -276,7 +260,7 @@ extension Mailgun.Users.Organization {
 }
 
 extension Mailgun.Users.Organization.Add {
-    public typealias Request = Void  // No request body needed
+    public typealias Request = Void
 
     public struct Response: Sendable, Decodable, Equatable {
         public let message: String

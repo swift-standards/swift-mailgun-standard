@@ -1,15 +1,6 @@
-//
-//  File.swift
-//  swift-mailgun
-//
-//  Created by Coen ten Thije Boonkkamp on 24/12/2024.
-//
-
 extension Mailgun.Domains {
     public enum DomainKeys {}
 }
-
-// MARK: - Core Types
 
 extension Mailgun.Domains.DomainKeys {
     public struct Key: Sendable, Codable, Equatable {
@@ -62,8 +53,6 @@ extension Mailgun.Domains.DomainKeys {
     }
 }
 
-// MARK: - List Keys
-
 extension Mailgun.Domains.DomainKeys {
     public enum List {}
 }
@@ -108,8 +97,6 @@ extension Mailgun.Domains.DomainKeys.List {
         }
     }
 }
-
-// MARK: - Create Key
 
 extension Mailgun.Domains.DomainKeys {
     public enum Create {}
@@ -203,8 +190,6 @@ extension Mailgun.Domains.DomainKeys.Create {
     }
 }
 
-// MARK: - Delete Key
-
 extension Mailgun.Domains.DomainKeys {
     public enum Delete {}
 }
@@ -237,8 +222,6 @@ extension Mailgun.Domains.DomainKeys.Delete {
     }
 }
 
-// MARK: - Activate Key
-
 extension Mailgun.Domains.DomainKeys {
     public enum Activate {}
 }
@@ -252,8 +235,6 @@ extension Mailgun.Domains.DomainKeys.Activate {
         }
     }
 }
-
-// MARK: - List Domain Keys
 
 extension Mailgun.Domains.DomainKeys {
     public enum DomainKeysList {}
@@ -279,8 +260,6 @@ extension Mailgun.Domains.DomainKeys.DomainKeysList {
     }
 }
 
-// MARK: - Deactivate Key
-
 extension Mailgun.Domains.DomainKeys {
     public enum Deactivate {}
 }
@@ -294,8 +273,6 @@ extension Mailgun.Domains.DomainKeys.Deactivate {
         }
     }
 }
-
-// MARK: - Set DKIM Authority
 
 extension Mailgun.Domains.DomainKeys {
     public enum SetDkimAuthority {}
@@ -322,8 +299,6 @@ extension Mailgun.Domains.DomainKeys.SetDkimAuthority {
         }
     }
 }
-
-// MARK: - Set DKIM Selector
 
 extension Mailgun.Domains.DomainKeys {
     public enum SetDkimSelector {}

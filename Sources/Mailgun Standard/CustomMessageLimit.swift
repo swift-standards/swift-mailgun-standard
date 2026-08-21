@@ -1,21 +1,13 @@
-//
-//  File.swift
-//  swift-mailgun
-//
-//  Created by Coen ten Thije Boonkkamp on 24/12/2024.
-//
-
 extension Mailgun {
     public enum CustomMessageLimit {}
 }
 
-// MARK: - Monthly Limit Management
 extension Mailgun.CustomMessageLimit {
     public enum Monthly {}
 }
 
 extension Mailgun.CustomMessageLimit.Monthly {
-    // MARK: - Get Monthly Limit
+
     public enum Get {}
 }
 
@@ -37,7 +29,6 @@ extension Mailgun.CustomMessageLimit.Monthly.Get {
     }
 }
 
-// MARK: - Set Monthly Limit
 extension Mailgun.CustomMessageLimit.Monthly {
     public enum Set {}
 }
@@ -60,7 +51,6 @@ extension Mailgun.CustomMessageLimit.Monthly.Set {
     }
 }
 
-// MARK: - Delete Monthly Limit
 extension Mailgun.CustomMessageLimit.Monthly {
     public enum Delete {}
 }
@@ -75,7 +65,6 @@ extension Mailgun.CustomMessageLimit.Monthly.Delete {
     }
 }
 
-// MARK: - Enable Account
 extension Mailgun.CustomMessageLimit {
     public enum EnableAccount {}
 }

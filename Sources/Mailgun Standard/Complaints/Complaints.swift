@@ -1,11 +1,9 @@
-// Complaints.swift
 import EmailAddress_Standard
 
 extension Mailgun.Suppressions {
     public enum Complaints {}
 }
 
-// MARK: - Namespace markers for operations
 extension Mailgun.Suppressions.Complaints {
     public enum Get {}
 }
@@ -34,7 +32,6 @@ extension Mailgun.Suppressions.Complaints {
     }
 }
 
-// MARK: - Import Operation
 extension Mailgun.Suppressions.Complaints {
     public enum Import {}
 }
@@ -57,13 +54,12 @@ extension Mailgun.Suppressions.Complaints.Import {
     }
 }
 
-// MARK: - Create Operation
 extension Mailgun.Suppressions.Complaints {
     public enum Create {}
 }
 
 extension Mailgun.Suppressions.Complaints.Create {
-    // For single record creation via form-data
+
     public struct Request: Sendable, Codable, Equatable {
         public let address: EmailAddress
         public let createdAt: String?
@@ -91,7 +87,6 @@ extension Mailgun.Suppressions.Complaints.Create {
     }
 }
 
-// MARK: - Delete Operation
 extension Mailgun.Suppressions.Complaints {
     public enum Delete {}
 }
@@ -125,7 +120,6 @@ extension Mailgun.Suppressions.Complaints.Delete {
     }
 }
 
-// MARK: - List Operation
 extension Mailgun.Suppressions.Complaints {
     public enum List {}
 }

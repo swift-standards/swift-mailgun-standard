@@ -1,15 +1,6 @@
-//
-//  File.swift
-//  swift-mailgun
-//
-//  Created by Coen ten Thije Boonkkamp on 24/12/2024.
-//
-
 extension Mailgun.Domains {
     public enum Domains {}
 }
-
-// MARK: - Core Domain Types
 
 extension Mailgun.Domains.Domains {
     public struct DomainInfo: Sendable, Codable, Equatable {
@@ -142,8 +133,6 @@ extension Mailgun.Domains.Domains {
     }
 }
 
-// MARK: - List Domains
-
 extension Mailgun.Domains.Domains {
     public enum List {}
 }
@@ -180,9 +169,6 @@ extension Mailgun.Domains.Domains.List {
             self.totalCount = totalCount
         }
 
-        // REASON: `Swift.Decodable.init(from:)` is declared with untyped `throws`
-        // upstream; a conforming implementation is signature-forced and cannot
-        // express `throws(E)`.
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.items =
@@ -200,8 +186,6 @@ extension Mailgun.Domains.Domains.List {
         }
     }
 }
-
-// MARK: - Create Domain
 
 extension Mailgun.Domains.Domains {
     public enum Create {}
@@ -281,8 +265,6 @@ extension Mailgun.Domains.Domains.Create {
     }
 }
 
-// MARK: - Get Domain
-
 extension Mailgun.Domains.Domains {
     public enum Get {}
 }
@@ -310,8 +292,6 @@ extension Mailgun.Domains.Domains.Get {
         }
     }
 }
-
-// MARK: - Update Domain
 
 extension Mailgun.Domains.Domains {
     public enum Update {}
@@ -367,8 +347,6 @@ extension Mailgun.Domains.Domains.Update {
     }
 }
 
-// MARK: - Delete Domain
-
 extension Mailgun.Domains.Domains {
     public enum Delete {}
 }
@@ -382,8 +360,6 @@ extension Mailgun.Domains.Domains.Delete {
         }
     }
 }
-
-// MARK: - Verify Domain
 
 extension Mailgun.Domains.Domains {
     public enum Verify {}

@@ -1,15 +1,6 @@
-//
-//  File.swift
-//  swift-mailgun
-//
-//  Created by Coen ten Thije Boonkkamp on 24/12/2024.
-//
-
 extension Mailgun {
     public enum IPs {}
 }
-
-// MARK: - Core Types
 
 extension Mailgun.IPs {
     public struct IP: Sendable, Codable, Equatable {
@@ -43,8 +34,6 @@ extension Mailgun.IPs {
     }
 }
 
-// MARK: - List Operation
-
 extension Mailgun.IPs {
     public enum List {}
 }
@@ -73,8 +62,6 @@ extension Mailgun.IPs.List {
     }
 }
 
-// MARK: - Domain List Operation
-
 extension Mailgun.IPs {
     public enum DomainList {}
 }
@@ -99,8 +86,6 @@ extension Mailgun.IPs.DomainList {
     }
 }
 
-// MARK: - Assign Domain Operation
-
 extension Mailgun.IPs {
     public enum AssignDomain {}
 }
@@ -122,8 +107,6 @@ extension Mailgun.IPs.AssignDomain {
         }
     }
 }
-
-// MARK: - IP Band Operation
 
 extension Mailgun.IPs {
     public enum IPBand {}
@@ -150,8 +133,6 @@ extension Mailgun.IPs.IPBand {
         }
     }
 }
-
-// MARK: - Request New IPs Operation
 
 extension Mailgun.IPs {
     public enum RequestNew {}
@@ -192,8 +173,6 @@ extension Mailgun.IPs.RequestNew {
         }
     }
 }
-
-// MARK: - Delete Operation
 
 extension Mailgun.IPs {
     public enum Delete {}

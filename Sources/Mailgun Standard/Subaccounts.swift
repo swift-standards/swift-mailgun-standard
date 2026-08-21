@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  swift-mailgun
-//
-//  Created by Coen ten Thije Boonkkamp on 24/12/2024.
-//
-
 extension Mailgun {
     public enum Subaccounts {}
 }
@@ -51,7 +44,6 @@ extension Mailgun.Subaccounts {
     }
 }
 
-// MARK: - Get
 extension Mailgun.Subaccounts {
     public enum Get {}
 }
@@ -66,7 +58,6 @@ extension Mailgun.Subaccounts.Get {
     }
 }
 
-// MARK: - List
 extension Mailgun.Subaccounts {
     public enum List {}
 }
@@ -113,7 +104,6 @@ extension Mailgun.Subaccounts.List {
     }
 }
 
-// MARK: - Create
 extension Mailgun.Subaccounts {
     public enum Create {}
 }
@@ -136,7 +126,6 @@ extension Mailgun.Subaccounts.Create {
     }
 }
 
-// MARK: - Delete
 extension Mailgun.Subaccounts {
     public enum Delete {}
 }
@@ -151,7 +140,6 @@ extension Mailgun.Subaccounts.Delete {
     }
 }
 
-// MARK: - Disable
 extension Mailgun.Subaccounts {
     public enum Disable {}
 }
@@ -176,7 +164,6 @@ extension Mailgun.Subaccounts.Disable {
     }
 }
 
-// MARK: - Enable
 extension Mailgun.Subaccounts {
     public enum Enable {}
 }
@@ -191,7 +178,6 @@ extension Mailgun.Subaccounts.Enable {
     }
 }
 
-// MARK: - CustomLimit
 extension Mailgun.Subaccounts {
     public enum CustomLimit {}
 }
@@ -244,7 +230,6 @@ extension Mailgun.Subaccounts.CustomLimit.Delete {
     }
 }
 
-// MARK: - Features
 extension Mailgun.Subaccounts {
     public enum Features {}
 }

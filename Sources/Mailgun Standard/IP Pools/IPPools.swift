@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  swift-mailgun
-//
-//  Created by Coen ten Thije Boonkkamp on 24/12/2024.
-//
-
 extension Mailgun {
     public enum IPPools {}
 }
@@ -45,8 +38,6 @@ extension Mailgun.IPPools {
     }
 }
 
-// MARK: - List Operation
-
 extension Mailgun.IPPools {
     public enum List {}
 }
@@ -70,8 +61,6 @@ extension Mailgun.IPPools.List {
         }
     }
 }
-
-// MARK: - Create Operation
 
 extension Mailgun.IPPools {
     public enum Create {}
@@ -113,8 +102,6 @@ extension Mailgun.IPPools.Create {
     }
 }
 
-// MARK: - Update Operation
-
 extension Mailgun.IPPools {
     public enum Update {}
 }
@@ -155,8 +142,6 @@ extension Mailgun.IPPools.Update {
     }
 }
 
-// MARK: - Delete Operation
-
 extension Mailgun.IPPools {
     public enum Delete {}
 }
@@ -188,8 +173,6 @@ extension Mailgun.IPPools.Delete {
         }
     }
 }
-
-// MARK: - Domains List Operation
 
 extension Mailgun.IPPools {
     public enum DomainsList {}

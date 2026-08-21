@@ -1,10 +1,3 @@
-//
-//  Logs.swift
-//  swift-mailgun-types
-//
-//  Created by Coen ten Thije Boonkkamp on 31/12/2024.
-//
-
 import Time_Primitive
 
 extension Mailgun.Reporting {
@@ -103,9 +96,6 @@ extension Mailgun.Reporting.Logs.Analytics {
         case bool(Bool)
         case array([String])
 
-        // REASON: `Swift.Decodable.init(from:)` is declared with untyped `throws`
-        // upstream; a conforming implementation is signature-forced and cannot
-        // express `throws(E)`.
         public init(from decoder: Decoder) throws {
             let container = try decoder.singleValueContainer()
 
@@ -127,27 +117,14 @@ extension Mailgun.Reporting.Logs.Analytics {
             }
         }
 
-        /// Reads the container as `T`, or `nil` when the wire value is not that shape.
-        ///
-        /// `Value` is a five-shape union whose Mailgun wire form carries no discriminator, so
-        /// the only way to identify the shape is to attempt each decode in turn. An
-        /// unsuccessful attempt is the *discrimination signal*, not a failure; the exhausted
-        /// case is reported by the `DecodingError.dataCorrupted` in ``init(from:)``.
         private static func decoded<T: Decodable, Container: SingleValueDecodingContainer>(
             _ type: T.Type,
             from container: Container
         ) -> T? {
-            // REASON: `SingleValueDecodingContainer.decode(_:)` is declared untyped `throws`,
-            // so `do throws(E)` does not compile; and an unsuccessful probe here means "the
-            // wire value is not this shape", which is the discrimination signal this
-            // discriminator-less union has no other way to obtain.
-            // swiftlint:disable:next no_try_optional
+
             try? container.decode(T.self)
         }
 
-        // REASON: `Swift.Encodable.encode(to:)` is declared with untyped `throws`
-        // upstream; a conforming implementation is signature-forced and cannot
-        // express `throws(E)`.
         public func encode(to encoder: Encoder) throws {
             var container = encoder.singleValueContainer()
             switch self {
@@ -199,8 +176,7 @@ extension Mailgun.Reporting.Logs.Analytics {
             public let timestamp: Time.Epoch?
             public let action: String?
             public let count: Int?
-            // Attributes would contain arbitrary JSON, simplified for now
-            // public let attributes: [String: AnyCodable]?
+
         }
 
         public struct Meta: Sendable, Decodable, Equatable {

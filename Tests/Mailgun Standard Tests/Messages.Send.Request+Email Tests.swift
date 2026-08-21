@@ -1,10 +1,3 @@
-//
-//  Messages.Send.Request+Email Tests.swift
-//  swift-mailgun-types
-//
-//  Tests for Email to Mailgun.Messages.Send.Request conversion
-//
-
 import Email_Standard
 import Mailgun_Standard
 import RFC_2046
@@ -13,8 +6,6 @@ import Time_Primitive
 
 @Suite("Messages.Send.Request+Email Integration Tests")
 struct MessagesSendRequestEmailTests {
-
-    // MARK: - Basic Email Conversion
 
     @Test("Converts simple text email")
     func convertSimpleTextEmail() throws {
@@ -80,8 +71,6 @@ struct MessagesSendRequestEmailTests {
         #expect(request.html == "<h1>HTML version</h1>")
     }
 
-    // MARK: - Multiple Recipients
-
     @Test("Converts email with multiple TO recipients")
     func convertMultipleRecipients() throws {
         let email = try Email(
@@ -146,8 +135,6 @@ struct MessagesSendRequestEmailTests {
         #expect(request.bcc?[1].address == "bcc2@example.com")
     }
 
-    // MARK: - Reply-To Handling
-
     @Test("Converts email with Reply-To header")
     func convertWithReplyTo() throws {
         let email = try Email(
@@ -179,8 +166,6 @@ struct MessagesSendRequestEmailTests {
 
         #expect(request.headers?["Reply-To"] == nil)
     }
-
-    // MARK: - Additional Headers
 
     @Test("Converts email with additional headers")
     func convertWithAdditionalHeaders() throws {
@@ -238,8 +223,6 @@ struct MessagesSendRequestEmailTests {
         #expect(request.headers?.count == 2)
     }
 
-    // MARK: - Display Names
-
     @Test("Converts email with display names")
     func convertWithDisplayNames() throws {
         let email = try Email(
@@ -257,8 +240,6 @@ struct MessagesSendRequestEmailTests {
         #expect(request.to[0].displayName == "Recipient Name")
         #expect(request.to[0].address == "recipient@example.com")
     }
-
-    // MARK: - Mailgun-Specific Options
 
     @Test("Adds Mailgun-specific options to email")
     func convertWithMailgunOptions() throws {
@@ -326,8 +307,6 @@ struct MessagesSendRequestEmailTests {
         #expect(request.deliveryTime == deliveryDate)
     }
 
-    // MARK: - Edge Cases
-
     @Test("Converts email with internationalized addresses")
     func convertInternationalizedEmail() throws {
         let email = try Email(
@@ -378,8 +357,6 @@ struct MessagesSendRequestEmailTests {
         #expect(request.subject.count == 200)
     }
 
-    // MARK: - Convenience Initializer
-
     @Test("Convenience initializer creates request with defaults")
     func convertWithConvenienceInit() throws {
         let email = try Email(
@@ -392,13 +369,11 @@ struct MessagesSendRequestEmailTests {
 
         let request = Mailgun.Messages.Send.Request(email: email)
 
-        // Should have basic fields set
         #expect(request.from.address == "sender@example.com")
         #expect(request.to.count == 1)
         #expect(request.subject == "Test Subject")
         #expect(request.text == "Hello!")
 
-        // Should have no Mailgun-specific options set
         #expect(request.tags == nil)
         #expect(request.tracking == nil)
         #expect(request.testMode == nil)
