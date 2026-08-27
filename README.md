@@ -121,7 +121,7 @@ Institute Standards/Primitives types instead:
 
 | Wire form | Mailgun field examples | Swift type |
 | --- | --- | --- |
-| Unix-epoch seconds | `Messages.Send.Request.deliveryTime`, `Routes.Route.createdAt`, `Reporting.Events.List.begin` | `Time.Epoch` (`Time Primitive`, swift-time-primitives) |
+| Unix-epoch seconds | `Messages.Send.Request.deliveryTime`, `Routes.Route.createdAt`, `Reporting.Events.List.begin` | `Time.Epoch` (`Time Primitive`, swift-time) |
 | Binary payload | `Messages.Attachment.Data.data`, `Suppressions.Bounces.Import.Request.file` | `[UInt8]` |
 | Pagination link | `Lists.Paging.first`, `Reporting.Tags.*.Paging.first` | `RFC_3986.URI` (`RFC 3986`, swift-rfc-3986) |
 | Email address | every `address`/`from`/`to`/`cc`/`bcc` field | `EmailAddress` (`EmailAddress Standard`, swift-emailaddress-standard) |
@@ -131,9 +131,9 @@ Institute Standards/Primitives types instead:
 `Mailgun_Standard` defines contracts only. The per-resource `*.API.swift` URLRouting
 routers and `*.Client.swift` witnesses that previously lived in this package are
 being rebuilt at their correct layers: HTTP request construction in
-[swift-mailgun-http](https://github.com/swift-foundations/swift-mailgun-http)'s
+[swift-mailgun-http](https://github.com/swift-compositions/swift-mailgun-http)'s
 `Mailgun HTTP` rebuild, and typed clients in
-[swift-mailgun](https://github.com/swift-foundations/swift-mailgun)'s domain
+[swift-mailgun](https://github.com/swift-compositions/swift-mailgun)'s domain
 rebuild. No deprecated per-resource `Mailgun <Resource> Types` products or the
 `Mailgun Types` umbrella product are provided.
 

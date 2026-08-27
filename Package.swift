@@ -34,7 +34,7 @@ let package = Package(
         .package(url: "https://github.com/swift-ietf/swift-rfc-3986.git", branch: "main"),
 
         .package(
-            url: "https://github.com/swift-primitives/swift-time-primitives.git",
+            url: "https://github.com/swift-molecules/swift-time.git",
             branch: "main"
         ),
     ],
@@ -48,7 +48,7 @@ let package = Package(
 
                 .product(name: "RFC 3986", package: "swift-rfc-3986"),
 
-                .product(name: "Time Primitive", package: "swift-time-primitives"),
+                .product(name: "Time Primitive", package: "swift-time"),
             ]
         ),
         .testTarget(
