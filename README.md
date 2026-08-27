@@ -117,7 +117,7 @@ let listRequest = Mailgun.Domains.Domains.List.Request(
 ## Wire-type mapping
 
 Foundation is not imported. Fields whose wire form is a Foundation type map onto
-Institute Standards/Primitives types instead:
+Institute Standards/Molecules types instead:
 
 | Wire form | Mailgun field examples | Swift type |
 | --- | --- | --- |
