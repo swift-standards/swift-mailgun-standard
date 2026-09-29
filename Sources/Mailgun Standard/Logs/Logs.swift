@@ -1,4 +1,4 @@
-import Time_Primitive
+public import Time
 
 extension Mailgun.Reporting {
     public enum Logs {}
@@ -12,8 +12,8 @@ extension Mailgun.Reporting.Logs.Analytics {
     public struct Request: Sendable, Codable, Equatable {
         public let action: String?
         public let groupBy: String?
-        public let startDate: Time.Epoch?
-        public let endDate: Time.Epoch?
+        public let startDate: Instant?
+        public let endDate: Instant?
         public let filter: Filter?
         public let include: [Include]?
         public let page: Page?
@@ -21,8 +21,8 @@ extension Mailgun.Reporting.Logs.Analytics {
         public init(
             action: String? = nil,
             groupBy: String? = nil,
-            startDate: Time.Epoch? = nil,
-            endDate: Time.Epoch? = nil,
+            startDate: Instant? = nil,
+            endDate: Instant? = nil,
             filter: Filter? = nil,
             include: [Include]? = nil,
             page: Page? = nil
@@ -96,7 +96,7 @@ extension Mailgun.Reporting.Logs.Analytics {
         case bool(Bool)
         case array([String])
 
-        public init(from decoder: Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.singleValueContainer()
 
             if let stringValue = Self.decoded(String.self, from: container) {
@@ -125,7 +125,7 @@ extension Mailgun.Reporting.Logs.Analytics {
             try? container.decode(T.self)
         }
 
-        public func encode(to encoder: Encoder) throws {
+        public func encode(to encoder: any Encoder) throws {
             var container = encoder.singleValueContainer()
             switch self {
             case .string(let value):
@@ -173,7 +173,7 @@ extension Mailgun.Reporting.Logs.Analytics {
         public let meta: Meta?
 
         public struct LogEntry: Sendable, Decodable, Equatable {
-            public let timestamp: Time.Epoch?
+            public let timestamp: Instant?
             public let action: String?
             public let count: Int?
 

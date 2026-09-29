@@ -1,4 +1,5 @@
-import RFC_3986
+public import RFC_3986
+import RFC_3986_Foundation_Integration
 
 extension Mailgun.Reporting {
     public enum Tags {}

@@ -1,4 +1,4 @@
-import Time_Primitive
+public import Time
 
 extension Mailgun {
     public enum IPAddressWarmup {}
@@ -8,10 +8,10 @@ extension Mailgun.IPAddressWarmup {
     public struct IPWarmup: Sendable, Codable, Equatable {
         public let ip: String
         public let enabled: Bool
-        public let created: Time.Epoch
-        public let modified: Time.Epoch?
-        public let startedAt: Time.Epoch?
-        public let completedAt: Time.Epoch?
+        public let created: Instant
+        public let modified: Instant?
+        public let startedAt: Instant?
+        public let completedAt: Instant?
         public let volumeDailyCapacity: Int?
         public let volumeCurrentDaily: Int?
         public let status: Status?
@@ -19,10 +19,10 @@ extension Mailgun.IPAddressWarmup {
         public init(
             ip: String,
             enabled: Bool,
-            created: Time.Epoch,
-            modified: Time.Epoch? = nil,
-            startedAt: Time.Epoch? = nil,
-            completedAt: Time.Epoch? = nil,
+            created: Instant,
+            modified: Instant? = nil,
+            startedAt: Instant? = nil,
+            completedAt: Instant? = nil,
             volumeDailyCapacity: Int? = nil,
             volumeCurrentDaily: Int? = nil,
             status: Status? = nil

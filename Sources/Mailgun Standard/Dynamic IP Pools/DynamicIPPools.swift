@@ -1,4 +1,4 @@
-import Time_Primitive
+public import Time
 
 extension Mailgun {
     public enum DynamicIPPools {}
@@ -7,7 +7,7 @@ extension Mailgun {
 extension Mailgun.DynamicIPPools {
     public struct HistoryRecord: Sendable, Codable, Equatable {
         public let domain: String
-        public let timestamp: Time.Epoch
+        public let timestamp: Instant
         public let movedFrom: String?
         public let movedTo: String
         public let reason: String?
@@ -15,7 +15,7 @@ extension Mailgun.DynamicIPPools {
 
         public init(
             domain: String,
-            timestamp: Time.Epoch,
+            timestamp: Instant,
             movedFrom: String?,
             movedTo: String,
             reason: String? = nil,

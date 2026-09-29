@@ -169,7 +169,7 @@ extension Mailgun.Domains.Domains.List {
             self.totalCount = totalCount
         }
 
-        public init(from decoder: Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             self.items =
                 try container.decodeIfPresent(

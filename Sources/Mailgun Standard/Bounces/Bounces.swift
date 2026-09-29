@@ -1,4 +1,6 @@
-import EmailAddress_Standard
+public import Byte
+public import EmailAddress_Standard
+import EmailAddress_Foundation_Integration
 
 extension Mailgun.Suppressions {
     public enum Bounces {}
@@ -46,9 +48,9 @@ extension Mailgun.Suppressions.Bounces {
 
 extension Mailgun.Suppressions.Bounces.Import {
     public struct Request: Sendable, Codable, Equatable {
-        public let file: [UInt8]
+        public let file: [Byte]
 
-        public init(file: [UInt8]) {
+        public init(file: [Byte]) {
             self.file = file
         }
     }

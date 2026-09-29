@@ -1,5 +1,8 @@
-import Domain_Standard
-import EmailAddress_Standard
+public import Byte
+public import Domain_Standard
+import Domain_Foundation_Integration
+public import EmailAddress_Standard
+import EmailAddress_Foundation_Integration
 
 extension Mailgun.Suppressions {
     public enum Allowlist {}
@@ -112,18 +115,18 @@ extension Mailgun.Suppressions.Allowlist.Create {
             case domain
         }
 
-        public func encode(to encoder: Encoder) throws {
+        public func encode(to encoder: any Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
             switch self {
             case .address(let email):
                 try container.encode(email.address, forKey: .address)
 
             case .domain(let domain):
-                try container.encode(domain.rawValue, forKey: .domain)
+                try container.encode(domain.name, forKey: .domain)
             }
         }
 
-        public init(from decoder: Decoder) throws {
+        public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             if let address = try container.decodeIfPresent(String.self, forKey: .address) {
                 self = .address(try EmailAddress(address))
@@ -196,9 +199,9 @@ extension Mailgun.Suppressions.Allowlist {
 
 extension Mailgun.Suppressions.Allowlist.Import {
     public struct Request: Sendable, Codable, Equatable {
-        public let file: [UInt8]
+        public let file: [Byte]
 
-        public init(file: [UInt8]) {
+        public init(file: [Byte]) {
             self.file = file
         }
     }

@@ -1,6 +1,8 @@
-import EmailAddress_Standard
-import RFC_3986
-import Time_Primitive
+public import EmailAddress_Standard
+import EmailAddress_Foundation_Integration
+public import RFC_3986
+import RFC_3986_Foundation_Integration
+public import Time
 
 extension Mailgun.Reporting.Events {
     public enum List {}
@@ -22,8 +24,8 @@ extension Mailgun.Reporting.Events.List {
 
 extension Mailgun.Reporting.Events.List {
     public struct Query: Sendable, Equatable {
-        public let begin: Time.Epoch?
-        public let end: Time.Epoch?
+        public let begin: Instant?
+        public let end: Instant?
         public let ascending: Mailgun.Reporting.Events.List.Query.Ascending?
         public let limit: Int?
         public let event: Mailgun.Reporting.Events.Event.Variant?
@@ -40,8 +42,8 @@ extension Mailgun.Reporting.Events.List {
         public let severity: Severity?
 
         public init(
-            begin: Time.Epoch? = nil,
-            end: Time.Epoch? = nil,
+            begin: Instant? = nil,
+            end: Instant? = nil,
             ascending: Mailgun.Reporting.Events.List.Query.Ascending? = nil,
             limit: Int? = nil,
             event: Mailgun.Reporting.Events.Event.Variant? = nil,

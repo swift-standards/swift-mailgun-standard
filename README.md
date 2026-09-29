@@ -117,12 +117,12 @@ let listRequest = Mailgun.Domains.Domains.List.Request(
 ## Wire-type mapping
 
 Foundation is not imported. Fields whose wire form is a Foundation type map onto
-Institute Standards/Molecules types instead:
+Institute Standards/Atoms types instead:
 
 | Wire form | Mailgun field examples | Swift type |
 | --- | --- | --- |
-| Unix-epoch seconds | `Messages.Send.Request.deliveryTime`, `Routes.Route.createdAt`, `Reporting.Events.List.begin` | `Time.Epoch` (`Time Primitive`, swift-time) |
-| Binary payload | `Messages.Attachment.Data.data`, `Suppressions.Bounces.Import.Request.file` | `[UInt8]` |
+| Unix-epoch seconds | `Messages.Send.Request.deliveryTime`, `Routes.Route.createdAt`, `Reporting.Events.List.begin` | `Instant` (`Time`, swift-time) |
+| Binary payload | `Messages.Attachment.Data.data`, `Suppressions.Bounces.Import.Request.file` | `[Byte]` (`Byte`, swift-byte) |
 | Pagination link | `Lists.Paging.first`, `Reporting.Tags.*.Paging.first` | `RFC_3986.URI` (`RFC 3986`, swift-rfc-3986) |
 | Email address | every `address`/`from`/`to`/`cc`/`bcc` field | `EmailAddress` (`EmailAddress Standard`, swift-emailaddress-standard) |
 

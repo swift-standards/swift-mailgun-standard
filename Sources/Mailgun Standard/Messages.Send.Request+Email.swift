@@ -1,5 +1,10 @@
-import Email_Standard
-import Time_Primitive
+import Byte
+public import Email_Standard
+import EmailAddress_Standard
+import RFC_2045
+import RFC_2046
+import RFC_5322
+public import Time
 
 extension Mailgun.Messages.Send.Request {
 
@@ -16,7 +21,7 @@ extension Mailgun.Messages.Send.Request {
         dkim: Bool? = nil,
         secondaryDkim: String? = nil,
         secondaryDkimPublic: String? = nil,
-        deliveryTime: Time.Epoch? = nil,
+        deliveryTime: Instant? = nil,
         deliveryTimeOptimizePeriod: String? = nil,
         timeZoneLocalize: String? = nil,
         testMode: Bool? = nil,

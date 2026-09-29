@@ -1,4 +1,5 @@
-import EmailAddress_Standard
+public import EmailAddress_Standard
+import EmailAddress_Foundation_Integration
 
 extension Mailgun {
     public enum AccountManagement {}

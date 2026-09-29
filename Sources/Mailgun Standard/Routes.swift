@@ -1,4 +1,4 @@
-import Time_Primitive
+public import Time
 
 extension Mailgun {
     public enum Routes {}
@@ -11,7 +11,7 @@ extension Mailgun.Routes {
         public let description: String
         public let expression: String
         public let actions: [String]
-        public let createdAt: Time.Epoch
+        public let createdAt: Instant
 
         public init(
             id: String,
@@ -19,7 +19,7 @@ extension Mailgun.Routes {
             description: String,
             expression: String,
             actions: [String],
-            createdAt: Time.Epoch
+            createdAt: Instant
         ) {
             self.id = id
             self.priority = priority
@@ -162,7 +162,7 @@ extension Mailgun.Routes.Update {
         public let description: String
         public let expression: String
         public let actions: [String]
-        public let createdAt: Time.Epoch
+        public let createdAt: Instant
         public let message: String
 
         public init(
@@ -171,7 +171,7 @@ extension Mailgun.Routes.Update {
             description: String,
             expression: String,
             actions: [String],
-            createdAt: Time.Epoch,
+            createdAt: Instant,
             message: String
         ) {
             self.id = id

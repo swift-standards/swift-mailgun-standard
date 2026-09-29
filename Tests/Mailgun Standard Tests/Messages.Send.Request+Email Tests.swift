@@ -1,14 +1,16 @@
 import Email_Standard
+import EmailAddress_Standard
 import Mailgun_Standard
 import RFC_2046
+import RFC_5322
 import Testing
-import Time_Primitive
+import Time
 
-@Suite("Messages.Send.Request+Email Integration Tests")
-struct MessagesSendRequestEmailTests {
+@Suite
+struct `Email Conversion Tests` {
 
-    @Test("Converts simple text email")
-    func convertSimpleTextEmail() throws {
+    @Test
+    func `a text email converts to a send request`() throws {
         let email = try Email(
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
@@ -27,8 +29,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.html == nil)
     }
 
-    @Test("Converts simple HTML email")
-    func convertSimpleHTMLEmail() throws {
+    @Test
+    func `an html email converts to a send request`() throws {
         let email = try Email(
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
@@ -47,8 +49,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.text == nil)
     }
 
-    @Test("Converts multipart email (text + HTML)")
-    func convertMultipartEmail() throws {
+    @Test
+    func `a multipart email converts to both text and html`() throws {
         let multipart = try RFC_2046.Multipart.alternative(
             textContent: "Plain text version",
             htmlContent: "<h1>HTML version</h1>"
@@ -71,8 +73,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.html == "<h1>HTML version</h1>")
     }
 
-    @Test("Converts email with multiple TO recipients")
-    func convertMultipleRecipients() throws {
+    @Test
+    func `multiple to recipients carry across`() throws {
         let email = try Email(
             to: [
                 EmailAddress("recipient1@example.com"),
@@ -93,8 +95,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.to[2].address == "recipient3@example.com")
     }
 
-    @Test("Converts email with CC recipients")
-    func convertWithCCRecipients() throws {
+    @Test
+    func `cc recipients carry across`() throws {
         let email = try Email(
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
@@ -114,8 +116,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.cc?[1].address == "cc2@example.com")
     }
 
-    @Test("Converts email with BCC recipients")
-    func convertWithBCCRecipients() throws {
+    @Test
+    func `bcc recipients carry across`() throws {
         let email = try Email(
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
@@ -135,8 +137,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.bcc?[1].address == "bcc2@example.com")
     }
 
-    @Test("Converts email with Reply-To header")
-    func convertWithReplyTo() throws {
+    @Test
+    func `a reply-to address becomes a header`() throws {
         let email = try Email(
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
@@ -152,8 +154,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.headers?["Reply-To"] == "replyto@example.com")
     }
 
-    @Test("Email without Reply-To has no Reply-To header")
-    func convertWithoutReplyTo() throws {
+    @Test
+    func `an email without reply-to has no reply-to header`() throws {
         let email = try Email(
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
@@ -167,8 +169,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.headers?["Reply-To"] == nil)
     }
 
-    @Test("Converts email with additional headers")
-    func convertWithAdditionalHeaders() throws {
+    @Test
+    func `additional headers carry across`() throws {
         let email = try Email(
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
@@ -187,8 +189,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.headers?["X-Priority"] == "1")
     }
 
-    @Test("Email with no additional headers results in nil headers")
-    func convertWithNoAdditionalHeaders() throws {
+    @Test
+    func `an email with no additional headers has no headers`() throws {
         let email = try Email(
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
@@ -202,8 +204,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.headers == nil)
     }
 
-    @Test("Combines Reply-To and additional headers")
-    func convertWithReplyToAndAdditionalHeaders() throws {
+    @Test
+    func `reply-to and additional headers combine`() throws {
         let email = try Email(
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
@@ -223,8 +225,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.headers?.count == 2)
     }
 
-    @Test("Converts email with display names")
-    func convertWithDisplayNames() throws {
+    @Test
+    func `display names carry across`() throws {
         let email = try Email(
             to: [EmailAddress(displayName: "Recipient Name", "recipient@example.com")],
             from: EmailAddress(displayName: "Sender Name", "sender@example.com"),
@@ -241,8 +243,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.to[0].address == "recipient@example.com")
     }
 
-    @Test("Adds Mailgun-specific options to email")
-    func convertWithMailgunOptions() throws {
+    @Test
+    func `mailgun options are added alongside the email`() throws {
         let email = try Email(
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
@@ -267,8 +269,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.testMode == true)
     }
 
-    @Test("Adds Mailgun variables to email")
-    func convertWithMailgunVariables() throws {
+    @Test
+    func `mailgun variables are added alongside the email`() throws {
         let email = try Email(
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
@@ -286,8 +288,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.variables?["campaign"] == "summer-sale")
     }
 
-    @Test("Adds Mailgun scheduled delivery")
-    func convertWithScheduledDelivery() throws {
+    @Test
+    func `a scheduled delivery time is added alongside the email`() throws {
         let email = try Email(
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
@@ -296,9 +298,7 @@ struct MessagesSendRequestEmailTests {
             body: "Hello!"
         )
 
-        let deliveryDate = Time.Epoch(
-            referenceDate: Time(Instant(secondsSinceUnixEpoch: 1_700_000_000))
-        )
+        let deliveryDate = Instant(secondsSinceUnixEpoch: 1_700_000_000)
         let request = Mailgun.Messages.Send.Request(
             email: email,
             deliveryTime: deliveryDate
@@ -307,8 +307,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.deliveryTime == deliveryDate)
     }
 
-    @Test("Converts email with internationalized addresses")
-    func convertInternationalizedEmail() throws {
+    @Test
+    func `internationalized addresses carry across`() throws {
         let email = try Email(
             to: [EmailAddress("用户@example.com")],
             from: EmailAddress("发送者@example.com"),
@@ -325,8 +325,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.text == "你好世界!")
     }
 
-    @Test("Converts email with special characters in subject")
-    func convertSpecialCharactersSubject() throws {
+    @Test
+    func `a subject with special characters carries across`() throws {
         let email = try Email(
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),
@@ -340,8 +340,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.subject == "Test with émojis 🎉 and spëcial çhars!")
     }
 
-    @Test("Converts email with very long subject")
-    func convertLongSubject() throws {
+    @Test
+    func `a very long subject carries across`() throws {
         let longSubject = String(repeating: "A", count: 200)
         let email = try Email(
             to: [EmailAddress("recipient@example.com")],
@@ -357,8 +357,8 @@ struct MessagesSendRequestEmailTests {
         #expect(request.subject.count == 200)
     }
 
-    @Test("Convenience initializer creates request with defaults")
-    func convertWithConvenienceInit() throws {
+    @Test
+    func `the convenience initializer leaves mailgun options unset`() throws {
         let email = try Email(
             to: [EmailAddress("recipient@example.com")],
             from: EmailAddress("sender@example.com"),

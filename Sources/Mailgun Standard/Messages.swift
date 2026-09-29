@@ -1,5 +1,7 @@
-import EmailAddress_Standard
-import Time_Primitive
+public import Byte
+public import EmailAddress_Standard
+import EmailAddress_Foundation_Integration
+public import Time
 
 extension Mailgun {
     public enum Messages {}
@@ -29,7 +31,7 @@ extension Mailgun.Messages.Send {
         public let dkim: Bool?
         public let secondaryDkim: String?
         public let secondaryDkimPublic: String?
-        public let deliveryTime: Time.Epoch?
+        public let deliveryTime: Instant?
         public let deliveryTimeOptimizePeriod: String?
         public let timeZoneLocalize: String?
         public let testMode: Bool?
@@ -100,7 +102,7 @@ extension Mailgun.Messages.Send {
             dkim: Bool? = nil,
             secondaryDkim: String? = nil,
             secondaryDkimPublic: String? = nil,
-            deliveryTime: Time.Epoch? = nil,
+            deliveryTime: Instant? = nil,
             deliveryTimeOptimizePeriod: String? = nil,
             timeZoneLocalize: String? = nil,
             testMode: Bool? = nil,
@@ -165,7 +167,7 @@ extension Mailgun.Messages.Send {
     public enum Mime {
         public struct Request: Sendable, Equatable, Codable {
             public let to: [EmailAddress]
-            public let message: [UInt8]
+            public let message: [Byte]
             public let template: String?
             public let templateVersion: String?
             public let templateText: Bool?
@@ -174,7 +176,7 @@ extension Mailgun.Messages.Send {
             public let dkim: Bool?
             public let secondaryDkim: String?
             public let secondaryDkimPublic: String?
-            public let deliveryTime: Time.Epoch?
+            public let deliveryTime: Instant?
             public let deliveryTimeOptimizePeriod: String?
             public let timeZoneLocalize: String?
             public let testMode: Bool?
@@ -220,7 +222,7 @@ extension Mailgun.Messages.Send {
 
             public init(
                 to: [EmailAddress],
-                message: [UInt8],
+                message: [Byte],
                 template: String? = nil,
                 templateVersion: String? = nil,
                 templateText: Bool? = nil,
@@ -229,7 +231,7 @@ extension Mailgun.Messages.Send {
                 dkim: Bool? = nil,
                 secondaryDkim: String? = nil,
                 secondaryDkimPublic: String? = nil,
-                deliveryTime: Time.Epoch? = nil,
+                deliveryTime: Instant? = nil,
                 deliveryTimeOptimizePeriod: String? = nil,
                 timeZoneLocalize: String? = nil,
                 testMode: Bool? = nil,
@@ -278,11 +280,11 @@ extension Mailgun.Messages.Send {
 extension Mailgun.Messages {
     public enum Attachment {
         public struct Data: Sendable, Codable, Equatable {
-            public let data: [UInt8]
+            public let data: [Byte]
             public let filename: String
             public let contentType: String
 
-            public init(data: [UInt8], filename: String, contentType: String) {
+            public init(data: [Byte], filename: String, contentType: String) {
                 self.data = data
                 self.filename = filename
                 self.contentType = contentType
@@ -392,10 +394,10 @@ extension Mailgun.Messages {
             }
 
             public struct DisabledInfo: Sendable, Decodable, Equatable {
-                public let until: Time.Epoch
+                public let until: Instant
                 public let reason: String
 
-                public init(until: Time.Epoch, reason: String) {
+                public init(until: Instant, reason: String) {
                     self.until = until
                     self.reason = reason
                 }
