@@ -31,7 +31,7 @@ extension Mailgun.Messages.Send {
         public let dkim: Bool?
         public let secondaryDkim: String?
         public let secondaryDkimPublic: String?
-        public let deliveryTime: Instant?
+        public let deliveryTime: Time.Instant?
         public let deliveryTimeOptimizePeriod: String?
         public let timeZoneLocalize: String?
         public let testMode: Bool?
@@ -102,7 +102,7 @@ extension Mailgun.Messages.Send {
             dkim: Bool? = nil,
             secondaryDkim: String? = nil,
             secondaryDkimPublic: String? = nil,
-            deliveryTime: Instant? = nil,
+            deliveryTime: Time.Instant? = nil,
             deliveryTimeOptimizePeriod: String? = nil,
             timeZoneLocalize: String? = nil,
             testMode: Bool? = nil,
@@ -176,7 +176,7 @@ extension Mailgun.Messages.Send {
             public let dkim: Bool?
             public let secondaryDkim: String?
             public let secondaryDkimPublic: String?
-            public let deliveryTime: Instant?
+            public let deliveryTime: Time.Instant?
             public let deliveryTimeOptimizePeriod: String?
             public let timeZoneLocalize: String?
             public let testMode: Bool?
@@ -231,7 +231,7 @@ extension Mailgun.Messages.Send {
                 dkim: Bool? = nil,
                 secondaryDkim: String? = nil,
                 secondaryDkimPublic: String? = nil,
-                deliveryTime: Instant? = nil,
+                deliveryTime: Time.Instant? = nil,
                 deliveryTimeOptimizePeriod: String? = nil,
                 timeZoneLocalize: String? = nil,
                 testMode: Bool? = nil,
@@ -394,10 +394,10 @@ extension Mailgun.Messages {
             }
 
             public struct DisabledInfo: Sendable, Decodable, Equatable {
-                public let until: Instant
+                public let until: Time.Instant
                 public let reason: String
 
-                public init(until: Instant, reason: String) {
+                public init(until: Time.Instant, reason: String) {
                     self.until = until
                     self.reason = reason
                 }

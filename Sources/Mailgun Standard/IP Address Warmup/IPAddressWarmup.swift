@@ -8,10 +8,10 @@ extension Mailgun.IPAddressWarmup {
     public struct IPWarmup: Sendable, Codable, Equatable {
         public let ip: String
         public let enabled: Bool
-        public let created: Instant
-        public let modified: Instant?
-        public let startedAt: Instant?
-        public let completedAt: Instant?
+        public let created: Time.Instant
+        public let modified: Time.Instant?
+        public let startedAt: Time.Instant?
+        public let completedAt: Time.Instant?
         public let volumeDailyCapacity: Int?
         public let volumeCurrentDaily: Int?
         public let status: Status?
@@ -19,10 +19,10 @@ extension Mailgun.IPAddressWarmup {
         public init(
             ip: String,
             enabled: Bool,
-            created: Instant,
-            modified: Instant? = nil,
-            startedAt: Instant? = nil,
-            completedAt: Instant? = nil,
+            created: Time.Instant,
+            modified: Time.Instant? = nil,
+            startedAt: Time.Instant? = nil,
+            completedAt: Time.Instant? = nil,
             volumeDailyCapacity: Int? = nil,
             volumeCurrentDaily: Int? = nil,
             status: Status? = nil

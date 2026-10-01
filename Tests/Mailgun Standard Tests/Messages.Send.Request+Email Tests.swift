@@ -298,7 +298,7 @@ struct `Email Conversion Tests` {
             body: "Hello!"
         )
 
-        let deliveryDate = Instant(secondsSinceUnixEpoch: 1_700_000_000)
+        let deliveryDate = Time.Instant(secondsSinceUnixEpoch: 1_700_000_000)
         let request = Mailgun.Messages.Send.Request(
             email: email,
             deliveryTime: deliveryDate

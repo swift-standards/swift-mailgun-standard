@@ -128,8 +128,8 @@ extension Mailgun.Suppressions.Allowlist.Create {
 
         public init(from decoder: any Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            if let address = try container.decodeIfPresent(String.self, forKey: .address) {
-                self = .address(try EmailAddress(address))
+            if let address = try container.decodeIfPresent(EmailAddress.self, forKey: .address) {
+                self = .address(address)
             } else if let domain = try container.decodeIfPresent(String.self, forKey: .domain) {
                 self = .domain(try Domain(domain))
             } else {

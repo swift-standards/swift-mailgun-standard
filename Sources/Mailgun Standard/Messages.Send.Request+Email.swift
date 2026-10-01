@@ -21,7 +21,7 @@ extension Mailgun.Messages.Send.Request {
         dkim: Bool? = nil,
         secondaryDkim: String? = nil,
         secondaryDkimPublic: String? = nil,
-        deliveryTime: Instant? = nil,
+        deliveryTime: Time.Instant? = nil,
         deliveryTimeOptimizePeriod: String? = nil,
         timeZoneLocalize: String? = nil,
         testMode: Bool? = nil,

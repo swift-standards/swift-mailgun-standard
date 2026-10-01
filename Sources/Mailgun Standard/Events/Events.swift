@@ -11,7 +11,7 @@ extension Mailgun.Reporting.Events {
         public let method: String?
         public let event: Event.Variant?
         public let id: String?
-        public let timestamp: Instant?
+        public let timestamp: Time.Instant?
         public let logLevel: Event.LogLevel?
         public let flags: [String: Bool]?
         public let reject: Reject?
@@ -40,7 +40,7 @@ extension Mailgun.Reporting.Events {
             method: String? = nil,
             event: Event.Variant?,
             id: String? = nil,
-            timestamp: Instant? = nil,
+            timestamp: Time.Instant? = nil,
             logLevel: Event.LogLevel? = nil,
             flags: [String: Bool]? = nil,
             reject: Reject? = nil,
@@ -196,7 +196,7 @@ extension Mailgun.Reporting.Events.Event {
         public let headers: Headers
         public let attachments: [Attachment]?
         public let size: Int?
-        public let scheduledFor: Instant?
+        public let scheduledFor: Time.Instant?
         public let storage: Mailgun.Reporting.Events.Event.Storage?
 
         private enum CodingKeys: String, CodingKey {
@@ -211,7 +211,7 @@ extension Mailgun.Reporting.Events.Event {
             headers: Headers,
             attachments: [Attachment]?,
             size: Int?,
-            scheduledFor: Instant? = nil,
+            scheduledFor: Time.Instant? = nil,
             storage: Mailgun.Reporting.Events.Event.Storage? = nil
         ) {
             self.headers = headers

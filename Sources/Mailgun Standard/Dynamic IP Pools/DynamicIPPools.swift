@@ -7,7 +7,7 @@ extension Mailgun {
 extension Mailgun.DynamicIPPools {
     public struct HistoryRecord: Sendable, Codable, Equatable {
         public let domain: String
-        public let timestamp: Instant
+        public let timestamp: Time.Instant
         public let movedFrom: String?
         public let movedTo: String
         public let reason: String?
@@ -15,7 +15,7 @@ extension Mailgun.DynamicIPPools {
 
         public init(
             domain: String,
-            timestamp: Instant,
+            timestamp: Time.Instant,
             movedFrom: String?,
             movedTo: String,
             reason: String? = nil,

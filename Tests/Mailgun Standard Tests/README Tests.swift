@@ -77,7 +77,7 @@ struct `README Tests` {
             ],
             tags: ["newsletter", "monthly"],
 
-            deliveryTime: Instant(secondsSinceUnixEpoch: 1_700_003_600),
+            deliveryTime: Time.Instant(secondsSinceUnixEpoch: 1_700_003_600),
             tracking: true,
             trackingClicks: .htmlOnly,
             trackingOpens: true,

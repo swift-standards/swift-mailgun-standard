@@ -24,8 +24,8 @@ extension Mailgun.Reporting.Events.List {
 
 extension Mailgun.Reporting.Events.List {
     public struct Query: Sendable, Equatable {
-        public let begin: Instant?
-        public let end: Instant?
+        public let begin: Time.Instant?
+        public let end: Time.Instant?
         public let ascending: Mailgun.Reporting.Events.List.Query.Ascending?
         public let limit: Int?
         public let event: Mailgun.Reporting.Events.Event.Variant?
@@ -42,8 +42,8 @@ extension Mailgun.Reporting.Events.List {
         public let severity: Severity?
 
         public init(
-            begin: Instant? = nil,
-            end: Instant? = nil,
+            begin: Time.Instant? = nil,
+            end: Time.Instant? = nil,
             ascending: Mailgun.Reporting.Events.List.Query.Ascending? = nil,
             limit: Int? = nil,
             event: Mailgun.Reporting.Events.Event.Variant? = nil,

@@ -11,7 +11,7 @@ extension Mailgun.Routes {
         public let description: String
         public let expression: String
         public let actions: [String]
-        public let createdAt: Instant
+        public let createdAt: Time.Instant
 
         public init(
             id: String,
@@ -19,7 +19,7 @@ extension Mailgun.Routes {
             description: String,
             expression: String,
             actions: [String],
-            createdAt: Instant
+            createdAt: Time.Instant
         ) {
             self.id = id
             self.priority = priority
@@ -162,7 +162,7 @@ extension Mailgun.Routes.Update {
         public let description: String
         public let expression: String
         public let actions: [String]
-        public let createdAt: Instant
+        public let createdAt: Time.Instant
         public let message: String
 
         public init(
@@ -171,7 +171,7 @@ extension Mailgun.Routes.Update {
             description: String,
             expression: String,
             actions: [String],
-            createdAt: Instant,
+            createdAt: Time.Instant,
             message: String
         ) {
             self.id = id

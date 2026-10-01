@@ -12,8 +12,8 @@ extension Mailgun.Reporting.Logs.Analytics {
     public struct Request: Sendable, Codable, Equatable {
         public let action: String?
         public let groupBy: String?
-        public let startDate: Instant?
-        public let endDate: Instant?
+        public let startDate: Time.Instant?
+        public let endDate: Time.Instant?
         public let filter: Filter?
         public let include: [Include]?
         public let page: Page?
@@ -21,8 +21,8 @@ extension Mailgun.Reporting.Logs.Analytics {
         public init(
             action: String? = nil,
             groupBy: String? = nil,
-            startDate: Instant? = nil,
-            endDate: Instant? = nil,
+            startDate: Time.Instant? = nil,
+            endDate: Time.Instant? = nil,
             filter: Filter? = nil,
             include: [Include]? = nil,
             page: Page? = nil
@@ -173,7 +173,7 @@ extension Mailgun.Reporting.Logs.Analytics {
         public let meta: Meta?
 
         public struct LogEntry: Sendable, Decodable, Equatable {
-            public let timestamp: Instant?
+            public let timestamp: Time.Instant?
             public let action: String?
             public let count: Int?
 
