@@ -11,8 +11,8 @@ struct `README Tests` {
     @Test
     func `a send request carries a from address, recipients, a subject and html`() throws {
         let request = Mailgun.Messages.Send.Request(
-            from: try .init("hello@yourdomain.com"),
-            to: [try .init("user@example.com")],
+            from: try emailAddress(localPart: "hello", domain: "yourdomain.com"),
+            to: [try emailAddress(localPart: "user", domain: "example.com")],
             subject: "Welcome to swift-mailgun-types!",
             html: "<h1>Type-safe emails</h1><p>Built with Swift</p>"
         )
@@ -27,8 +27,8 @@ struct `README Tests` {
     @Test
     func `a plain text send request needs only four fields`() throws {
         let simpleEmail = Mailgun.Messages.Send.Request(
-            from: try .init("noreply@yourdomain.com"),
-            to: [try .init("user@example.com")],
+            from: try emailAddress(localPart: "noreply", domain: "yourdomain.com"),
+            to: [try emailAddress(localPart: "user", domain: "example.com")],
             subject: "Hello!",
             text: "Welcome to our service."
         )
@@ -45,10 +45,10 @@ struct `README Tests` {
         let logoData: [Byte] = .init(utf8: "PNG content")
 
         let richEmail = Mailgun.Messages.Send.Request(
-            from: try .init("Newsletter <news@yourdomain.com>"),
+            from: try emailAddress(displayName: "Newsletter", localPart: "news", domain: "yourdomain.com"),
             to: [
-                try .init("subscriber1@example.com"),
-                try .init("subscriber2@example.com"),
+                try emailAddress(localPart: "subscriber1", domain: "example.com"),
+                try emailAddress(localPart: "subscriber2", domain: "example.com"),
             ],
             subject: "Monthly Newsletter",
             html: """
@@ -57,8 +57,8 @@ struct `README Tests` {
                     <img src="cid:logo.png">
                 """,
             text: "Your Monthly Update - Check out our latest features!",
-            cc: [try .init("manager@yourdomain.com")],
-            bcc: [try .init("archive@yourdomain.com")],
+            cc: [try emailAddress(localPart: "manager", domain: "yourdomain.com")],
+            bcc: [try emailAddress(localPart: "archive", domain: "yourdomain.com")],
             template: "monthly-newsletter",
             templateVariables: #"{"month":"January","year":"2024"}"#,
             attachments: [
@@ -151,7 +151,7 @@ struct `README Tests` {
     @Test
     func `a bounce is suppressed with its SMTP code and error text`() throws {
         let bounce = Mailgun.Suppressions.Bounces.Create.Request(
-            address: try .init("invalid@example.com"),
+            address: try emailAddress(localPart: "invalid", domain: "example.com"),
             code: "550",
             error: "Mailbox does not exist"
         )
@@ -164,7 +164,7 @@ struct `README Tests` {
     @Test
     func `an address is added to the unsubscribe list for a tag`() throws {
         let unsubscribe = Mailgun.Suppressions.Unsubscribe.Create.Request(
-            address: try .init("user@example.com"),
+            address: try emailAddress(localPart: "user", domain: "example.com"),
             tags: ["newsletter"]
         )
 
@@ -175,7 +175,7 @@ struct `README Tests` {
     @Test
     func `an allowlist entry is either an address or a domain`() throws {
         let allowlist = Mailgun.Suppressions.Allowlist.Create.Request.address(
-            try .init("vip@partner.com")
+            try emailAddress(localPart: "vip", domain: "partner.com")
         )
 
         if case .address(let email) = allowlist {

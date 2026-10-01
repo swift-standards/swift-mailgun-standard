@@ -52,11 +52,14 @@ dependencies: [
 ## Usage
 
 ```swift
+import EmailAddress_Standard
 import Mailgun_Standard
+import RFC_1123
+import RFC_6531
 
 let request = Mailgun.Messages.Send.Request(
-    from: try .init("hello@yourdomain.com"),
-    to: [try .init("user@example.com")],
+    from: EmailAddress(localPart: try RFC_6531.Mailbox.LocalPart("hello"), domain: try RFC_1123.Domain("yourdomain.com")),
+    to: [EmailAddress(localPart: try RFC_6531.Mailbox.LocalPart("user"), domain: try RFC_1123.Domain("example.com"))],
     subject: "Welcome to swift-mailgun-standard!",
     html: "<h1>Type-safe emails</h1><p>Built with Swift</p>"
 )
@@ -77,13 +80,13 @@ let template = Mailgun.Templates.Create.Request(
 
 ```swift
 let bounce = Mailgun.Suppressions.Bounces.Create.Request(
-    address: try .init("invalid@example.com"),
+    address: EmailAddress(localPart: try RFC_6531.Mailbox.LocalPart("invalid"), domain: try RFC_1123.Domain("example.com")),
     code: "550",
     error: "Mailbox does not exist"
 )
 
 let allowlist = Mailgun.Suppressions.Allowlist.Create.Request.address(
-    try .init("vip@partner.com")
+    EmailAddress(localPart: try RFC_6531.Mailbox.LocalPart("vip"), domain: try RFC_1123.Domain("partner.com"))
 )
 ```
 

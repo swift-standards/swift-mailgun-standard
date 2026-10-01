@@ -12,8 +12,8 @@ struct `Email Conversion Tests` {
     @Test
     func `a text email converts to a send request`() throws {
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
             body: "Hello, World!"
@@ -32,8 +32,8 @@ struct `Email Conversion Tests` {
     @Test
     func `an html email converts to a send request`() throws {
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
             body: .html("<h1>Hello, World!</h1>")
@@ -57,8 +57,8 @@ struct `Email Conversion Tests` {
         )
 
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
             body: .multipart(multipart)
@@ -77,11 +77,11 @@ struct `Email Conversion Tests` {
     func `multiple to recipients carry across`() throws {
         let email = try Email(
             to: [
-                EmailAddress("recipient1@example.com"),
-                EmailAddress("recipient2@example.com"),
-                EmailAddress("recipient3@example.com"),
+                try emailAddress(localPart: "recipient1", domain: "example.com"),
+                try emailAddress(localPart: "recipient2", domain: "example.com"),
+                try emailAddress(localPart: "recipient3", domain: "example.com"),
             ],
-            from: EmailAddress("sender@example.com"),
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
             body: "Hello!"
@@ -98,11 +98,11 @@ struct `Email Conversion Tests` {
     @Test
     func `cc recipients carry across`() throws {
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
             cc: [
-                EmailAddress("cc1@example.com"),
-                EmailAddress("cc2@example.com"),
+                try emailAddress(localPart: "cc1", domain: "example.com"),
+                try emailAddress(localPart: "cc2", domain: "example.com"),
             ],
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
@@ -119,11 +119,11 @@ struct `Email Conversion Tests` {
     @Test
     func `bcc recipients carry across`() throws {
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
             bcc: [
-                EmailAddress("bcc1@example.com"),
-                EmailAddress("bcc2@example.com"),
+                try emailAddress(localPart: "bcc1", domain: "example.com"),
+                try emailAddress(localPart: "bcc2", domain: "example.com"),
             ],
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
@@ -140,9 +140,9 @@ struct `Email Conversion Tests` {
     @Test
     func `a reply-to address becomes a header`() throws {
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
-            replyTo: EmailAddress("replyto@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
+            replyTo: try emailAddress(localPart: "replyto", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
             body: "Hello!"
@@ -157,8 +157,8 @@ struct `Email Conversion Tests` {
     @Test
     func `an email without reply-to has no reply-to header`() throws {
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
             body: "Hello!"
@@ -172,8 +172,8 @@ struct `Email Conversion Tests` {
     @Test
     func `additional headers carry across`() throws {
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
             body: "Hello!",
@@ -192,8 +192,8 @@ struct `Email Conversion Tests` {
     @Test
     func `an email with no additional headers has no headers`() throws {
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
             body: "Hello!"
@@ -207,9 +207,9 @@ struct `Email Conversion Tests` {
     @Test
     func `reply-to and additional headers combine`() throws {
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
-            replyTo: EmailAddress("replyto@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
+            replyTo: try emailAddress(localPart: "replyto", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
             body: "Hello!",
@@ -228,8 +228,8 @@ struct `Email Conversion Tests` {
     @Test
     func `display names carry across`() throws {
         let email = try Email(
-            to: [EmailAddress(displayName: "Recipient Name", "recipient@example.com")],
-            from: EmailAddress(displayName: "Sender Name", "sender@example.com"),
+            to: [try emailAddress(displayName: "Recipient Name", localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(displayName: "Sender Name", localPart: "sender", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
             body: "Hello!"
@@ -246,8 +246,8 @@ struct `Email Conversion Tests` {
     @Test
     func `mailgun options are added alongside the email`() throws {
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
             body: "Hello!"
@@ -272,8 +272,8 @@ struct `Email Conversion Tests` {
     @Test
     func `mailgun variables are added alongside the email`() throws {
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
             body: "Hello!"
@@ -291,8 +291,8 @@ struct `Email Conversion Tests` {
     @Test
     func `a scheduled delivery time is added alongside the email`() throws {
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
             body: "Hello!"
@@ -310,8 +310,8 @@ struct `Email Conversion Tests` {
     @Test
     func `internationalized addresses carry across`() throws {
         let email = try Email(
-            to: [EmailAddress("用户@example.com")],
-            from: EmailAddress("发送者@example.com"),
+            to: [try emailAddress(localPart: "用户", domain: "example.com")],
+            from: try emailAddress(localPart: "发送者", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "国际化测试",
             body: "你好世界!"
@@ -328,8 +328,8 @@ struct `Email Conversion Tests` {
     @Test
     func `a subject with special characters carries across`() throws {
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test with émojis 🎉 and spëcial çhars!",
             body: "Hello!"
@@ -344,8 +344,8 @@ struct `Email Conversion Tests` {
     func `a very long subject carries across`() throws {
         let longSubject = String(repeating: "A", count: 200)
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: longSubject,
             body: "Hello!"
@@ -360,8 +360,8 @@ struct `Email Conversion Tests` {
     @Test
     func `the convenience initializer leaves mailgun options unset`() throws {
         let email = try Email(
-            to: [EmailAddress("recipient@example.com")],
-            from: EmailAddress("sender@example.com"),
+            to: [try emailAddress(localPart: "recipient", domain: "example.com")],
+            from: try emailAddress(localPart: "sender", domain: "example.com"),
             date: RFC_5322.DateTime(secondsSinceEpoch: 1_609_459_200),
             subject: "Test Subject",
             body: "Hello!"
