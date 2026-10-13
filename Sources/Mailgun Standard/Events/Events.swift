@@ -1,4 +1,4 @@
-public import EmailAddress_Standard
+import EmailAddress_Standard
 import EmailAddress_Foundation_Integration
 public import Time
 
