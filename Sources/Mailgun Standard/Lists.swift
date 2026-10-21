@@ -1,5 +1,5 @@
-public import EmailAddress_Standard
 import EmailAddress_Foundation_Integration
+public import EmailAddress_Standard
 public import RFC_3986
 import RFC_3986_Foundation_Integration
 

@@ -1,5 +1,5 @@
-import EmailAddress_Standard
 import EmailAddress_Foundation_Integration
+import EmailAddress_Standard
 public import Time
 
 extension Mailgun.Reporting {

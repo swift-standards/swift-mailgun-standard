@@ -1,6 +1,6 @@
 public import Byte
-public import EmailAddress_Standard
 import EmailAddress_Foundation_Integration
+public import EmailAddress_Standard
 
 extension Mailgun.Suppressions {
     public enum Bounces {}

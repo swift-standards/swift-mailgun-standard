@@ -1,5 +1,5 @@
-import Email_Standard
 import EmailAddress_Standard
+import Email_Standard
 import Mailgun_Standard
 import RFC_2046
 import RFC_5322
