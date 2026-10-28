@@ -50,10 +50,6 @@ let package = Package(
             name: "Mailgun Standard",
             dependencies: [
                 .product(name: "Byte", package: "swift-byte"),
-                .product(
-                    name: "Byte",
-                    package: "swift-byte"
-                ),
 
                 .product(name: "Domain Standard", package: "swift-domain-standard"),
                 .product(
@@ -85,10 +81,6 @@ let package = Package(
                 .target(name: "Mailgun Standard"),
 
                 .product(name: "Byte", package: "swift-byte"),
-                .product(
-                    name: "Byte",
-                    package: "swift-byte"
-                ),
                 .product(name: "Email Standard", package: "swift-email-standard"),
                 .product(name: "EmailAddress Standard", package: "swift-emailaddress-standard"),
                 .product(name: "RFC 1123", package: "swift-rfc-1123"),
